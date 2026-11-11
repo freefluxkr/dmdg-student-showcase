@@ -1,5 +1,6 @@
 // app.js - DMDG Aurora Student Projects Showcase
 (() => {
+  const SHOW_SCORES = false; // manifest.json 점수는 유지하되 화면 노출은 숨김
   let manifest = null;
   let activeTabId = "stage1";
   let activeFilter = "all";
@@ -156,12 +157,16 @@
         const presCount = p.presentations.length + p.datasets.length + p.audios.length;
         const fbName = p.feedbacks.length ? p.feedbacks[0].name : "피드백.pdf";
 
+        const gradeHtml = SHOW_SCORES
+          ? `<span class="grade-badge ${gradeClass(p.grade)}">${esc(p.grade)} · ${p.score}점</span>`
+          : "";
+
         return `
         <article class="project-card">
           <div>
             <div class="card-top-meta">
               <div class="author-chips">${authorsHtml}</div>
-              <span class="grade-badge ${gradeClass(p.grade)}">${esc(p.grade)} · ${p.score}점</span>
+              ${gradeHtml}
             </div>
             <h3 class="card-title">${esc(p.title)}</h3>
             <p class="card-summary">${esc(p.summary)}</p>
@@ -198,7 +203,9 @@
     activeSubtab = subtab;
     selectedFileIndex = 0;
     $("modalTitle").textContent = proj.title;
-    $("modalSub").textContent = `참여자: ${proj.authors.join(", ")} · 종합 평가: ${proj.grade} (${proj.score}점) · 총 ${proj.allFiles.length}개 파일`;
+    $("modalSub").textContent = SHOW_SCORES
+      ? `참여자: ${proj.authors.join(", ")} · 종합 평가: ${proj.grade} (${proj.score}점) · 총 ${proj.allFiles.length}개 파일`
+      : `참여자: ${proj.authors.join(", ")} · 총 ${proj.allFiles.length}개 파일`;
     $("detailModal").classList.add("show");
     document.body.style.overflow = "hidden";
     updateSubtabsUI();
