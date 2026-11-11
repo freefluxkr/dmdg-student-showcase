@@ -1,6 +1,10 @@
 // app.js - DMDG Aurora Student Projects Showcase
 (() => {
-  const SHOW_SCORES = false; // manifest.json 점수는 유지하되 화면 노출은 숨김
+  const MODE = window.PORTAL_MODE || { showScores: false, allowDownload: false, assetBase: "." };
+  const SHOW_SCORES = Boolean(MODE.showScores);
+  const ALLOW_DOWNLOAD = Boolean(MODE.allowDownload);
+  const ASSET_BASE = String(MODE.assetBase || ".").replace(/\/$/, "");
+
   let manifest = null;
   let activeTabId = "stage1";
   let activeFilter = "all";
@@ -38,16 +42,34 @@
   function encodeUrlPath(u) {
     if (!u) return "#";
     if (u.startsWith("http://") || u.startsWith("https://")) return u;
-    return u.split("/").map((seg, i) => (i === 0 && seg === ".") ? "." : encodeURIComponent(seg)).join("/");
+    const clean = u.replace(/^\.\//, "");
+    const encoded = clean.split("/").map((seg) => encodeURIComponent(seg)).join("/");
+    return `${ASSET_BASE}/${encoded}`;
+  }
+
+  function pdfEmbedUrl(u) {
+    const base = encodeUrlPath(u);
+    return ALLOW_DOWNLOAD ? base : `${base}#toolbar=0&navpanes=0`;
   }
 
   async function init() {
-    const res = await fetch("./data/manifest.json");
+    const res = await fetch(`${ASSET_BASE}/data/manifest.json`);
     manifest = await res.json();
 
     $("siteTitle").textContent = manifest.siteTitle;
-    $("repoLink").href = manifest.repoUrl;
+    if ($("repoLink")) $("repoLink").href = manifest.repoUrl;
     $("generatedAt").textContent = manifest.generatedAt;
+
+    // 모드별(공개용 vs /admin) UI 제어
+    if (!ALLOW_DOWNLOAD) {
+      if ($("btnAllFilesIndex")) $("btnAllFilesIndex").style.display = "none";
+      if ($("repoLink")) $("repoLink").style.display = "none";
+      const dlSubtab = document.querySelector('#modalSubtabs [data-subtab="downloads"]');
+      if (dlSubtab) dlSubtab.style.display = "none";
+      if ($("kpiFilesLabel")) $("kpiFilesLabel").textContent = "등록된 자료 파일";
+    } else {
+      if ($("kpiFilesLabel")) $("kpiFilesLabel").textContent = "다운로드 제공 파일";
+    }
 
     const s = manifest.stats;
     $("kpiProjects").textContent = `${s.totalProjects}건`;
@@ -100,6 +122,9 @@
       return;
     }
     const r = tab.commonResources[0];
+    const dlBtn = ALLOW_DOWNLOAD
+      ? `<a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(r.downloadUrl)}" download="${esc(r.name)}">⬇ 배점표 다운로드</a>`
+      : "";
     wrap.innerHTML = `
       <div class="common-info-banner">
         <div>
@@ -109,8 +134,8 @@
           </div>
         </div>
         <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-          <a class="nav-pill-btn pill-cyan" href="${encodeUrlPath(r.previewUrl)}" target="_blank">👁️ 배점표 열람</a>
-          <a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(r.downloadUrl)}" download="${esc(r.name)}">⬇ 배점표 다운로드</a>
+          <a class="nav-pill-btn pill-cyan" href="${encodeUrlPath(r.previewUrl)}" target="_blank" rel="noopener noreferrer">👁️ 배점표 열람</a>
+          ${dlBtn}
         </div>
       </div>`;
   }
@@ -155,11 +180,20 @@
           : `<span class="svc-pill svc-missing">미제공</span>`;
 
         const presCount = p.presentations.length + p.datasets.length + p.audios.length;
+        const presBadgeText = ALLOW_DOWNLOAD ? `${presCount}개 파일 열람·다운로드` : `${presCount}개 파일 열람 가능`;
         const fbName = p.feedbacks.length ? p.feedbacks[0].name : "피드백.pdf";
 
         const gradeHtml = SHOW_SCORES
           ? `<span class="grade-badge ${gradeClass(p.grade)}">${esc(p.grade)} · ${p.score}점</span>`
           : "";
+
+        const zipHtml = ALLOW_DOWNLOAD
+          ? `<a class="btn-zip-dl" href="${encodeUrlPath(p.bundleZipUrl)}" download="bundle_${p.id}.zip" title="프로젝트 파일 일괄 ZIP (${fmtBytes(p.bundleZipBytes)})">
+              ⬇ ZIP (${fmtBytes(p.bundleZipBytes)})
+            </a>`
+          : "";
+
+        const rowStyle = ALLOW_DOWNLOAD ? "" : 'style="grid-template-columns: 1fr;"';
 
         return `
         <article class="project-card">
@@ -174,7 +208,7 @@
             <div class="service-status-panel">
               <div class="svc-row">
                 <span class="svc-label">📄 내용 발표 자료</span>
-                <span class="svc-pill svc-ok">${presCount}개 파일 열람·다운로드</span>
+                <span class="svc-pill svc-ok">${presBadgeText}</span>
               </div>
               <div class="svc-row">
                 <span class="svc-label">🎬 시연 영상</span>
@@ -187,11 +221,9 @@
             </div>
           </div>
 
-          <div class="card-actions-row">
+          <div class="card-actions-row" ${rowStyle}>
             <button class="btn-open-modal" data-open="${p.id}" type="button">🔍 자료 · 영상 · 피드백 열람</button>
-            <a class="btn-zip-dl" href="${encodeUrlPath(p.bundleZipUrl)}" download="bundle_${p.id}.zip" title="프로젝트 파일 일괄 ZIP (${fmtBytes(p.bundleZipBytes)})">
-              ⬇ ZIP (${fmtBytes(p.bundleZipBytes)})
-            </a>
+            ${zipHtml}
           </div>
         </article>`;
       })
@@ -229,15 +261,21 @@
       ? `<a class="nav-pill-btn pill-cyan" href="${esc(file.externalUrl)}" target="_blank" rel="noopener noreferrer">🌐 외부 사이트 열기</a>`
       : "";
     const newTabUrl = encodeUrlPath(file.previewUrl || file.downloadUrl);
+
+    const actionButtons = ALLOW_DOWNLOAD
+      ? `${extBtn}
+         <a class="nav-pill-btn pill-cyan" href="${newTabUrl}" target="_blank" rel="noopener noreferrer">↗ 새 탭에서 보기</a>
+         <a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(file.downloadUrl)}" download="${esc(file.name)}">⬇ 원본 다운로드</a>`
+      : `${extBtn}
+         <span class="svc-pill svc-pdf" style="padding:0.3rem 0.75rem;">👁️ 열람 전용 (다운로드 비활성화)</span>`;
+
     return `
       <div class="viewer-toolbar">
         <div style="font-size:0.82rem; font-weight:700; color:#e2e8f0; word-break:break-all;">
           ${esc(file.name)} <span style="color:#94a3b8;">(${fmtBytes(file.sizeBytes)})</span>
         </div>
-        <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
-          ${extBtn}
-          <a class="nav-pill-btn pill-cyan" href="${newTabUrl}" target="_blank" rel="noopener noreferrer">↗ 새 탭에서 보기</a>
-          <a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(file.downloadUrl)}" download="${esc(file.name)}">⬇ 원본 다운로드</a>
+        <div style="display:flex; gap:0.45rem; flex-wrap:wrap; align-items:center;">
+          ${actionButtons}
         </div>
       </div>`;
   }
@@ -245,25 +283,30 @@
   function renderFilePreviewElement(file) {
     const url = encodeUrlPath(file.previewUrl || file.downloadUrl);
     if (file.ext === "png" || file.ext === "jpg" || file.ext === "jpeg") {
+      const noCtx = ALLOW_DOWNLOAD ? "" : 'oncontextmenu="return false;" draggable="false"';
       return `<div class="single-panel-scroll" style="text-align:center;">
-        <img src="${url}" alt="${esc(file.name)}" style="max-width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.2);" />
+        <img src="${url}" alt="${esc(file.name)}" ${noCtx} style="max-width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.2);" />
       </div>`;
     }
     if (file.ext === "m4a") {
+      const audioAttr = ALLOW_DOWNLOAD ? "controls" : 'controls controlsList="nodownload" oncontextmenu="return false;"';
       return `<div class="single-panel-scroll" style="text-align:center; padding-top:3rem;">
         <div style="font-size:1.1rem; font-weight:800; color:#bae6fd; margin-bottom:1rem;">🎧 AI 오디오 브리핑 (${esc(file.name)})</div>
-        <audio controls style="width:100%; max-width:560px;" src="${url}"></audio>
+        <audio ${audioAttr} style="width:100%; max-width:560px;" src="${url}"></audio>
       </div>`;
     }
     if (file.ext === "csv") {
+      const csvAction = ALLOW_DOWNLOAD
+        ? `<a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(file.downloadUrl)}" download="${esc(file.name)}">⬇ CSV 원본 다운로드</a>`
+        : `<span class="svc-pill svc-missing" style="padding:0.4rem 0.95rem; font-size:0.84rem;">원천 데이터셋(CSV) 다운로드는 관리자(/admin) 전용입니다</span>`;
       return `<div class="single-panel-scroll" style="text-align:center; padding-top:3rem;">
         <div style="font-size:1.05rem; font-weight:800; color:#fde68a; margin-bottom:0.6rem;">📊 대용량 원천 데이터셋 (${esc(file.name)})</div>
-        <p style="color:#cbd5e1; font-size:0.86rem;">파일 크기: ${fmtBytes(file.sizeBytes)} · GitHub Releases 고속 CDN에서 직접 다운로드할 수 있습니다.</p>
-        <a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(file.downloadUrl)}" download="${esc(file.name)}">⬇ CSV 원본 다운로드</a>
+        <p style="color:#cbd5e1; font-size:0.86rem;">파일 크기: ${fmtBytes(file.sizeBytes)}</p>
+        ${csvAction}
       </div>`;
     }
     if (file.ext === "pdf") {
-      return `<iframe class="viewer-frame" src="${url}" title="${esc(file.name)}"></iframe>`;
+      return `<iframe class="viewer-frame" src="${pdfEmbedUrl(file.previewUrl || file.downloadUrl)}" title="${esc(file.name)}"></iframe>`;
     }
     return `<iframe class="viewer-frame" src="${url}" title="${esc(file.name)}" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>`;
   }
@@ -288,7 +331,7 @@
           const badge = f.ext.toUpperCase();
           return `<button class="file-select-item ${act}" data-fidx="${idx}" type="button">
             <div class="file-item-name">[${badge}] ${esc(f.relPath || f.name)}</div>
-            <div class="file-item-meta">${fmtBytes(f.sizeBytes)} · ${f.hostedOn === "releases" ? "GitHub Releases" : "GitHub Pages"}</div>
+            <div class="file-item-meta">${fmtBytes(f.sizeBytes)}</div>
           </button>`;
         })
         .join("");
@@ -332,6 +375,13 @@
 
       const v = p.demoVideo.files[0];
       const vUrl = encodeUrlPath(v.previewUrl || v.downloadUrl);
+      const videoDlBtn = ALLOW_DOWNLOAD
+        ? `<a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(v.downloadUrl)}" download="${esc(v.name)}">⬇ 시연영상 원본 다운로드</a>`
+        : `<span class="svc-pill svc-pdf" style="padding:0.3rem 0.75rem;">👁️ 스트리밍 열람 전용</span>`;
+      const videoAttrs = ALLOW_DOWNLOAD
+        ? 'controls playsinline preload="metadata"'
+        : 'controls playsinline preload="metadata" controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;"';
+
       body.innerHTML = `
         <div class="single-panel-scroll">
           <div class="video-player-wrap">
@@ -340,9 +390,9 @@
                 <strong style="color:#6ee7b7; font-size:0.95rem;">🎬 ${esc(v.name)}</strong>
                 <span style="color:#94a3b8; font-size:0.8rem; margin-left:0.5rem;">(${fmtBytes(v.sizeBytes)})</span>
               </div>
-              <a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(v.downloadUrl)}" download="${esc(v.name)}">⬇ 시연영상 원본 다운로드</a>
+              ${videoDlBtn}
             </div>
-            <video controls playsinline preload="metadata" src="${vUrl}"></video>
+            <video ${videoAttrs} src="${vUrl}"></video>
           </div>
         </div>`;
     } else if (activeSubtab === "feedback") {
@@ -354,12 +404,13 @@
       }
       if (selectedFileIndex >= fbs.length) selectedFileIndex = 0;
       const cur = fbs[selectedFileIndex];
+      const fbSrc = pdfEmbedUrl(cur.previewUrl);
 
       if (fbs.length === 1) {
         body.innerHTML = `
           <div class="viewer-pane" style="flex:1;">
             ${renderViewerToolbar(cur)}
-            <iframe class="viewer-frame" src="${encodeUrlPath(cur.previewUrl)}" title="${esc(cur.name)}"></iframe>
+            <iframe class="viewer-frame" src="${fbSrc}" title="${esc(cur.name)}"></iframe>
           </div>`;
       } else {
         const sidebar = fbs
@@ -373,11 +424,15 @@
             <div class="file-sidebar">${sidebar}</div>
             <div class="viewer-pane">
               ${renderViewerToolbar(cur)}
-              <iframe class="viewer-frame" src="${encodeUrlPath(cur.previewUrl)}" title="${esc(cur.name)}"></iframe>
+              <iframe class="viewer-frame" src="${fbSrc}" title="${esc(cur.name)}"></iframe>
             </div>
           </div>`;
       }
     } else if (activeSubtab === "downloads") {
+      if (!ALLOW_DOWNLOAD) {
+        body.innerHTML = `<div class="single-panel-scroll">다운로드는 관리자(/admin) 페이지에서만 제공됩니다.</div>`;
+        return;
+      }
       const rows = p.allFiles
         .map((f) => `
           <tr>
@@ -417,6 +472,7 @@
   }
 
   function openAllFilesIndexModal() {
+    if (!ALLOW_DOWNLOAD) return;
     currentProject = null;
     $("modalTitle").textContent = "📦 전체 3단계 프로젝트 자료 통합 인덱스";
     $("modalSub").textContent = `총 ${manifest.stats.totalProjects}개 프로젝트 · ${manifest.stats.totalFiles}개 파일 다운로드 지원`;
@@ -498,7 +554,9 @@
       renderModalBody();
     });
 
-    $("btnAllFilesIndex").addEventListener("click", openAllFilesIndexModal);
+    if ($("btnAllFilesIndex")) {
+      $("btnAllFilesIndex").addEventListener("click", openAllFilesIndexModal);
+    }
     $("modalCloseBtn").addEventListener("click", closeModal);
     $("detailModal").addEventListener("click", (e) => {
       if (e.target === $("detailModal")) closeModal();
@@ -513,4 +571,3 @@
     $("projectsGrid").innerHTML = `<div class="project-card">데이터 로드 오류: ${esc(err.message)}</div>`;
   });
 })();
-
