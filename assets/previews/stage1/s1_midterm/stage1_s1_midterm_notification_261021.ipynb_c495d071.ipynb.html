@@ -1,0 +1,3028 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>notification_261021.ipynb - Notebook 뷰어</title>
+<style>
+  body { margin:0; padding:20px; background:#0b1936; color:#e2e8f0; font-family:'Pretendard', sans-serif; }
+  .nb-wrap { max-width:960px; margin:0 auto; display:flex; flex-direction:column; gap:12px; }
+  .nb-head { padding:14px 18px; border-radius:14px; background:rgba(15,26,52,0.8); border:1px solid rgba(167,139,250,0.4); }
+  .nb-head h1 { margin:0; font-size:16px; color:#c4b5fd; }
+  .cell-md, .cell-code { background:rgba(15,26,52,0.72); border:1px solid rgba(255,255,255,0.14); border-radius:12px; padding:12px 14px; }
+  .cell-tag { font-size:11px; font-weight:800; color:#34d399; margin-bottom:6px; }
+  pre { margin:0; white-space:pre-wrap; word-break:break-word; font-family:Consolas, monospace; font-size:12.5px; line-height:1.48; }
+  .md-pre { font-family:'Pretendard', sans-serif; color:#f1f5f9; font-size:13.5px; }
+  .code-pre { background:#020617; padding:10px 12px; border-radius:8px; color:#93c5fd; border-left:3px solid #38bdf8; }
+  .out-txt { margin-top:8px; background:rgba(2,6,23,0.65); padding:8px 10px; border-radius:8px; color:#cbd5e1; font-size:12px; }
+  .out-img { margin-top:8px; max-width:100%; border-radius:8px; background:#fff; padding:4px; }
+</style>
+</head>
+<body>
+  <div class="nb-wrap">
+    <div class="nb-head"><h1>📓 notification_261021.ipynb (총 79 셀)</h1></div>
+    <div class="cell-md"><div class="cell-tag">MD [1]</div><pre class="md-pre">## 1. 데이터 파일 경로 설정 및 파일 존재 여부 확인
+
+Google Drive에 저장된 훈련용·검증용 CSV 파일의 경로를 설정한다.  
+또한 지정한 경로에 파일이 실제로 존재하는지 확인한다.</pre></div><div class="cell-code"><div class="cell-tag">In [1]</div><pre class="code-pre"># @title
+from google.colab import drive
+drive.mount(&#x27;/content/drive&#x27;)</pre><pre class="out-txt">Mounted at /content/drive
+</pre></div><div class="cell-code"><div class="cell-tag">In [2]</div><pre class="code-pre"># @title
+# 파일 경로를 다루기 위한 Path를 가져옵니다.
+from pathlib import Path
+
+# CSV 데이터를 처리하기 위해 pandas를 가져옵니다.
+import pandas as pd
+
+
+
+# 훈련용 2021년 1분기 CSV 파일의 전체 경로입니다.
+TRAIN_FILE = Path(
+    &quot;/content/drive/MyDrive/project/data/&quot;
+    &quot;금융거래이상탐지/&quot;
+    &quot;3.개방데이터/&quot;
+    &quot;1.데이터/&quot;
+    &quot;Training/&quot;
+    &quot;02.라벨링데이터/&quot;
+    &quot;TL_카드거래/&quot;
+    &quot;21-2_카드데이터_2021_1분기.csv&quot;
+)
+
+
+# 검증용 2021년 1분기 CSV 파일의 전체 경로입니다.
+VAL_FILE = Path(
+    &quot;/content/drive/MyDrive/project/data/&quot;
+    &quot;금융거래이상탐지/&quot;
+    &quot;3.개방데이터/&quot;
+    &quot;1.데이터/&quot;
+    &quot;Validation/&quot;
+    &quot;02.라벨링데이터/&quot;
+    &quot;VL_카드거래/&quot;
+    &quot;21-2_카드데이터_2021_1분기.csv&quot;
+)
+
+
+# 두 CSV 파일이 실제로 존재하는지 확인합니다.
+print(&quot;훈련 파일 존재 여부:&quot;, TRAIN_FILE.exists())
+print(&quot;검증 파일 존재 여부:&quot;, VAL_FILE.exists())</pre><pre class="out-txt">훈련 파일 존재 여부: True
+검증 파일 존재 여부: True
+</pre></div><div class="cell-md"><div class="cell-tag">MD [5]</div><pre class="md-pre">## 2. CSV 데이터 불러오기 및 데이터 구조 확인
+
+훈련용·검증용 CSV 파일을 각각 `train_df`, `val_df`로 불러온다.  
+데이터의 행과 열 개수를 확인하고, 훈련 데이터의 앞부분을 출력하여 컬럼과 값이 정상적으로 불러와졌는지 확인한다.</pre></div><div class="cell-code"><div class="cell-tag">In [3]</div><pre class="code-pre"># @title
+# 훈련용 CSV 파일을 읽어 train_df라는 표로 저장합니다.
+train_df = pd.read_csv(
+    TRAIN_FILE,        # 앞에서 지정한 훈련 CSV 경로
+    low_memory=False   # 컬럼 자료형 관련 경고를 줄이는 설정
+)
+
+
+# 검증용 CSV 파일을 읽어 val_df라는 표로 저장합니다.
+val_df = pd.read_csv(
+    VAL_FILE,          # 앞에서 지정한 검증 CSV 경로
+    low_memory=False
+)
+
+
+# 각각 몇 개의 행과 열을 가지고 있는지 확인합니다.
+print(&quot;훈련 데이터 크기:&quot;, train_df.shape)
+print(&quot;검증 데이터 크기:&quot;, val_df.shape)
+
+
+# 훈련 데이터의 앞쪽 3개 행을 확인합니다.
+display(train_df.head(3))</pre><pre class="out-txt">훈련 데이터 크기: (105167, 32)
+검증 데이터 크기: (13215, 32)
+</pre><pre class="out-txt">     기준년월      승인일자  승인SEQ  승인시간대     카드KEY  통합승인금액  개인법인구분코드_회원  국내해외여부  \
+0  202102  20210207      2      9  CD001231    8000          1.0       0   
+1  202102  20210219     17     17  CD000104   19000          1.0       0   
+2  202101  20210111      8     12  CD000965    8000          1.0       0   
+
+     카드이용한도금액  가맹점광역시도코드  ...  경과일수_최종이용일자  가맹점상태코드 가맹점형태구분코드  로고구분코드  \
+0  10000000.0       13.0  ...         32.0     30.0        00       2   
+1         0.0       13.0  ...         33.0     30.0        00       2   
+2   5000000.0        9.0  ...         32.0     30.0        00       1   
+
+  일시불할부구분코드 전월_매출건수 카드구분코드 할부가능개월수    가맹점KEY    전월_매출금액  
+0         A    48.0      1    24.0  ST001180  1350000.0  
+1         A    55.0      1    24.0  ST000266  1894000.0  
+2         A    53.0      1    24.0  ST000375  1575000.0  
+
+[3 rows x 32 columns]</pre></div><div class="cell-md"><div class="cell-tag">MD [8]</div><pre class="md-pre">## 3. 전체 데이터 통합 및 Train·Test 분할
+
+기존 Training 데이터와 Validation 데이터를 하나로 합친 후, 전체 데이터를 `Train 80%`와 `Test 20%`로 다시 분할한다.
+
+`stratify`를 사용하여 Train과 Test에 정상거래와 이상거래의 비율이 비슷하게 유지되도록 한다.  
+또한 `random_state=42`를 지정하여 코드를 다시 실행해도 동일하게 분할되도록 설정한다.
+
+- **Train 데이터:** 모델 학습에 사용
+- **Test 데이터:** 학습이 끝난 모델의 최종 성능 평가에 사용</pre></div><div class="cell-code"><div class="cell-tag">In [4]</div><pre class="code-pre"># @title
+# 3번 셀만 수정
+
+from sklearn.model_selection import train_test_split
+
+# Training과 기존 Validation 데이터 결합
+all_df = pd.concat(
+    [train_df, val_df],
+    ignore_index=True
+)
+
+# Test 20% 분리
+train_valid_df, test_df = train_test_split(
+    all_df,
+    test_size=0.20,
+    stratify=all_df[&quot;이상거래여부&quot;],
+    random_state=42
+)
+
+# 남은 데이터에서 Validation 12.5% 분리
+# 최종 비율: Train 70% / Validation 10% / Test 20%
+train_df, valid_df = train_test_split(
+    train_valid_df,
+    test_size=0.125,
+    stratify=train_valid_df[&quot;이상거래여부&quot;],
+    random_state=42
+)
+
+train_df = train_df.reset_index(drop=True)
+valid_df = valid_df.reset_index(drop=True)
+test_df = test_df.reset_index(drop=True)
+
+print(train_df.shape)
+print(valid_df.shape)
+print(test_df.shape)</pre><pre class="out-txt">(82866, 32)
+(11839, 32)
+(23677, 32)
+</pre></div><div class="cell-md"><div class="cell-tag">MD [10]</div><pre class="md-pre">
+
+### 데이터 누수 방지 원칙
+
+- 결측치 대체에 사용하는 중앙값은 Train 데이터에서만 계산한다.
+- 카드별 평균 승인금액도 Train 데이터에서만 계산한다.
+- RobustScaler는 Train 데이터로만 학습한 뒤 Test 데이터에 적용한다.
+- SMOTENC는 Train 데이터에만 적용한다.
+- Test 데이터에는 오버샘플링을 적용하지 않고 원본 클래스 분포를 유지한다.
+
+### 결론
+
+Train 데이터는 모델 학습에 사용하고, Test 데이터는 학습 과정에서 사용하지 않은 최종 평가 데이터로 활용한다. 이를 통해 모델이 학습하지 않은 새로운 거래에서도 이상거래를 탐지할 수 있는지 확인한다.</pre></div><div class="cell-md"><div class="cell-tag">MD [12]</div><pre class="md-pre">## 4. 입력·정답 데이터 분리 및 데이터 누수 방지
+
+모델 학습에 사용할 입력 변수(`X`)와 모델이 예측해야 하는 정답(`y`)을 분리한다.
+
+`이상거래유형`과 `이상거래설명`은 이상거래 여부를 직접적으로 암시할 수 있으므로 모델 입력에서 제외한다. 이러한 컬럼이 포함되면 모델이 거래 특징이 아닌 정답 정보를 이용하게 되어 데이터 누수가 발생할 수 있다.
+
+현재 선택한 원본 변수는 승인금액, 카드 이용한도, 거래시간, 국내외 여부 등 실제 거래 시점에 확인할 수 있는 정보로 구성하였다.
+
+마지막으로 `assert`를 이용하여 정답 및 누수 위험 컬럼이 모델 입력에 포함되지 않았는지 확인한다.</pre></div><div class="cell-code"><div class="cell-tag">In [5]</div><pre class="code-pre"># @title
+### 정답 분리 및 누수 컬럼 제외
+
+# 정답 컬럼 이름을 먼저 지정한다.
+TARGET = &quot;이상거래여부&quot;
+
+# 정답을 직접 암시하는 컬럼을 제외한다.
+LEAKAGE_COLUMNS = [
+    &quot;이상거래유형&quot;,
+    &quot;이상거래설명&quot;,
+]
+
+# 파생변수 생성에 사용할 원본 변수이다.
+SOURCE_FEATURES = [
+    &quot;승인일자&quot;,
+    &quot;승인시간대&quot;,
+    &quot;카드KEY&quot;,
+    &quot;통합승인금액&quot;,
+    &quot;국내해외여부&quot;,
+    &quot;카드이용한도금액&quot;,
+    &quot;가맹점여부_신규&quot;,
+    &quot;인터넷판매여부&quot;,
+    &quot;경과일수_최종이용일자&quot;,
+]
+
+# 입력 변수 분리
+X_train_raw = train_df[SOURCE_FEATURES].copy()
+X_valid_raw = valid_df[SOURCE_FEATURES].copy()
+X_test_raw = test_df[SOURCE_FEATURES].copy()
+
+# 정답 분리
+y_train = train_df[TARGET].copy()
+y_valid = valid_df[TARGET].copy()
+y_test = test_df[TARGET].copy()
+
+# 누수 컬럼 포함 여부 확인
+for column in [TARGET, *LEAKAGE_COLUMNS]:
+    assert column not in X_train_raw.columns
+    assert column not in X_valid_raw.columns
+    assert column not in X_test_raw.columns
+
+print(&quot;Train 입력:&quot;, X_train_raw.shape)
+print(&quot;Validation 입력:&quot;, X_valid_raw.shape)
+print(&quot;Test 입력:&quot;, X_test_raw.shape)</pre><pre class="out-txt">Train 입력: (82866, 9)
+Validation 입력: (11839, 9)
+Test 입력: (23677, 9)
+</pre></div><div class="cell-md"><div class="cell-tag">MD [15]</div><pre class="md-pre">## 5. 데이터 누수를 방지한 카드별 평균 결제금액 계산
+
+고객의 평소 결제금액과 현재 승인금액의 차이를 계산하기 위해 카드별 평균 결제금액을 구한다.
+
+Train 데이터에서는 현재 거래가 자신의 평균 계산에 포함되지 않도록 해당 거래를 제외한 평균을 계산한다. Test 데이터의 카드별 평균은 Test의 정보를 사용하지 않고 Train 데이터에서 계산한 평균만 연결한다.
+
+거래가 한 번뿐이거나 Train에 존재하지 않는 새로운 카드의 경우에는 Train 전체 승인금액의 중앙값으로 대체한다. 이를 통해 Test 정보가 Train 전처리에 들어가는 데이터 누수를 방지한다.</pre></div><div class="cell-code"><div class="cell-tag">In [6]</div><pre class="code-pre"># @title
+
+# 승인금액을 숫자형으로 변환
+train_amount = pd.to_numeric(
+    X_train_raw[&quot;통합승인금액&quot;],
+    errors=&quot;coerce&quot;,
+)
+
+test_amount = pd.to_numeric(
+    X_test_raw[&quot;통합승인금액&quot;],
+    errors=&quot;coerce&quot;,
+)
+
+
+# 훈련 승인금액의 전체 중앙값
+global_amount_median = train_amount.median()
+
+
+# 각 Train 행이 속한 카드의 결제금액 합계와 거래 횟수
+train_card_sum = train_amount.groupby(
+    X_train_raw[&quot;카드KEY&quot;]
+).transform(&quot;sum&quot;)
+
+train_card_count = train_amount.groupby(
+    X_train_raw[&quot;카드KEY&quot;]
+).transform(&quot;count&quot;)
+
+
+# 현재 거래 자신을 제외한 카드별 평균금액
+train_card_avg = (
+    (train_card_sum - train_amount)
+    / (train_card_count - 1)
+).fillna(global_amount_median)
+
+
+# Test에 적용할 카드별 평균은 Train 데이터로만 계산
+card_mean_from_train = train_amount.groupby(
+    X_train_raw[&quot;카드KEY&quot;]
+).mean()
+
+
+# Test의 카드KEY와 Train 카드별 평균금액 연결
+test_card_avg = X_test_raw[&quot;카드KEY&quot;].map(
+    card_mean_from_train
+).fillna(global_amount_median)
+
+
+# 결과 확인
+print(&quot;전체 Train 승인금액 중앙값:&quot;, f&quot;{global_amount_median:,.0f}원&quot;)
+print(&quot;Train 카드 평균 결측치:&quot;, train_card_avg.isna().sum())
+print(&quot;Test 카드 평균 결측치:&quot;, test_card_avg.isna().sum())</pre><pre class="out-txt">전체 Train 승인금액 중앙값: 9,000원
+Train 카드 평균 결측치: 0
+Test 카드 평균 결측치: 0
+</pre></div><div class="cell-md"><div class="cell-tag">MD [18]</div><pre class="md-pre">## 6. 원본 변수 변환 및 이상거래 탐지를 위한 파생변수 생성
+
+원본 거래 데이터를 숫자형과 날짜형으로 변환하고, 이상거래의 특징을 더 잘 나타낼 수 있도록 새로운 파생변수를 생성한다.
+
+사용한 주요 파생변수는 다음과 같다.
+
+- `amt_to_limit_ratio`: 카드 한도 대비 승인금액 비율
+- `limit_is_zero`: 카드 이용한도가 0인지 여부
+- `is_midnight`: 거래시간이 00시부터 05시 사이인지 여부
+- `is_weekend`: 주말에 발생한 거래인지 여부
+- `amt_diff_from_user_avg`: 현재 승인금액과 카드별 평균 결제금액의 차이
+- `overseas_online_risk`: 해외 거래이면서 온라인 거래인지 여부
+
+동일한 `make_features()` 함수를 Train과 Test에 적용하여 두 데이터가 같은 피처 구조를 가지도록 한다.</pre></div><div class="cell-code"><div class="cell-tag">In [7]</div><pre class="code-pre"># @title
+### 원본 변수와 파생변수 생성
+
+def make_features(raw_df, card_avg):
+    &quot;&quot;&quot;원본 거래 데이터로 모델 입력 변수를 생성합니다.&quot;&quot;&quot;
+
+    # 승인금액을 숫자형으로 변환합니다.
+    amount = pd.to_numeric(
+        raw_df[&quot;통합승인금액&quot;],
+        errors=&quot;coerce&quot;,
+    )
+
+    # 카드 이용한도를 숫자형으로 변환합니다.
+    limit_ = pd.to_numeric(
+        raw_df[&quot;카드이용한도금액&quot;],
+        errors=&quot;coerce&quot;,
+    )
+
+    # 승인시간대를 숫자형으로 변환합니다.
+    hour = pd.to_numeric(
+        raw_df[&quot;승인시간대&quot;],
+        errors=&quot;coerce&quot;,
+    )
+
+    # 국내외 여부를 숫자형으로 변환합니다.
+    overseas = pd.to_numeric(
+        raw_df[&quot;국내해외여부&quot;],
+        errors=&quot;coerce&quot;,
+    )
+
+    # 신규 가맹점 여부를 숫자형으로 변환합니다.
+    new_merchant = pd.to_numeric(
+        raw_df[&quot;가맹점여부_신규&quot;],
+        errors=&quot;coerce&quot;,
+    )
+
+    # 온라인 판매 여부를 숫자형으로 변환합니다.
+    online = pd.to_numeric(
+        raw_df[&quot;인터넷판매여부&quot;],
+        errors=&quot;coerce&quot;,
+    )
+
+    # 최근 이용 후 경과일을 숫자형으로 변환합니다.
+    days = pd.to_numeric(
+        raw_df[&quot;경과일수_최종이용일자&quot;],
+        errors=&quot;coerce&quot;,
+    )
+
+    # 승인일자를 날짜형으로 변환합니다.
+    date = pd.to_datetime(
+        raw_df[&quot;승인일자&quot;].astype(&quot;string&quot;),
+        format=&quot;%Y%m%d&quot;,
+        errors=&quot;coerce&quot;,
+    )
+
+    # 원본 변수와 파생변수를 하나의 데이터프레임으로 생성합니다.
+    return pd.DataFrame({
+        &quot;amt&quot;: amount,
+        &quot;limit&quot;: limit_,
+        &quot;hour&quot;: hour,
+        &quot;is_overseas&quot;: overseas,
+        &quot;is_new_merchant&quot;: new_merchant,
+        &quot;is_online&quot;: online,
+        &quot;days_since_last&quot;: days,
+
+        # 카드 한도 대비 승인금액 비율입니다.
+        &quot;amt_to_limit_ratio&quot;: amount / limit_.where(limit_ &gt; 0),
+
+        # 카드 이용한도가 0인지 나타냅니다.
+        &quot;limit_is_zero&quot;: limit_.eq(0).astype(int),
+
+        # 0시부터 5시 사이의 거래인지 나타냅니다.
+        &quot;is_midnight&quot;: hour.between(0, 5).astype(int),
+
+        # 주말 거래인지 나타냅니다.
+        &quot;is_weekend&quot;: date.dt.dayofweek.ge(5).astype(int),
+
+        # 카드별 평균 결제금액과 현재 결제금액의 차이입니다.
+        &quot;amt_diff_from_user_avg&quot;: amount - card_avg,
+
+        # 해외 온라인 거래인지 나타냅니다.
+        &quot;overseas_online_risk&quot;: (
+            overseas.eq(1) &amp; online.eq(1)
+        ).astype(int),
+    })
+
+
+# Validation 카드별 평균금액을 Train 기준으로 계산합니다.
+valid_card_avg = (
+    X_valid_raw[&quot;카드KEY&quot;]
+    .map(card_mean_from_train)
+    .fillna(global_amount_median)
+)
+
+# Test 카드별 평균금액도 Train 기준으로 계산합니다.
+test_card_avg = (
+    X_test_raw[&quot;카드KEY&quot;]
+    .map(card_mean_from_train)
+    .fillna(global_amount_median)
+)
+
+
+# Train 피처를 생성합니다.
+X_train = make_features(
+    X_train_raw,
+    train_card_avg,
+)
+
+# Validation 피처를 생성합니다.
+X_valid = make_features(
+    X_valid_raw,
+    valid_card_avg,
+)
+
+# Test 피처를 생성합니다.
+X_test = make_features(
+    X_test_raw,
+    test_card_avg,
+)
+
+
+# 생성된 피처의 크기를 확인합니다.
+print(&quot;Train 피처:&quot;, X_train.shape)
+print(&quot;Validation 피처:&quot;, X_valid.shape)
+print(&quot;Test 피처:&quot;, X_test.shape)
+
+# Train 피처 일부를 확인합니다.
+display(X_train.head())</pre><pre class="out-txt">Train 피처: (82866, 13)
+Validation 피처: (11839, 13)
+Test 피처: (23677, 13)
+</pre><pre class="out-txt">     amt      limit  hour  is_overseas  is_new_merchant  is_online  \
+0   9000  1000000.0    20            0              0.0        0.0   
+1  20000  5000000.0    18            0              0.0        0.0   
+2   8000  5000000.0    12            0              0.0        0.0   
+3   4000        0.0    16            0              0.0        0.0   
+4   4000        0.0    12            0              0.0        0.0   
+
+   days_since_last  amt_to_limit_ratio  limit_is_zero  is_midnight  \
+0             31.0              0.0090              0            0   
+1             32.0              0.0040              0            0   
+2             32.0              0.0016              0            0   
+3             32.0                 NaN              1            0   
+4             32.0                 NaN              1            0   
+
+   is_weekend  amt_diff_from_user_avg  overseas_online_risk  
+0           0            -4120.000000                     0  
+1           1           -22352.941176                     0  
+2           1           -13066.666667                     0  
+3           1            -3989.247312                     0  
+4           0            -6987.096774                     0  </pre></div><div class="cell-md"><div class="cell-tag">MD [21]</div><pre class="md-pre">## 데이터 전처리 및 피처 구성
+
+### 1. 데이터 불러오기
+
+AI Hub에서 제공한 2021년 1분기 카드거래 Training 및 Validation CSV를 불러온 뒤 하나로 합쳤다.
+
+### 2. Train/Test 분할
+
+전체 데이터를 Train 80%, Test 20%로 분할하였다.
+
+| 데이터 | 비율 | 용도 |
+|---|---:|---|
+| Train | 80% | 전처리, SMOTENC, 모델 학습 |
+| Test | 20% | 최종 모델 성능 평가 |
+
+분할 시 `stratify`를 적용하여 Train과 Test의 이상거래 비율이 약 3.8%로 동일하게 유지되도록 하였다.
+
+### 3. 데이터 누수 컬럼 제외
+
+모델이 정답을 미리 알게 되는 것을 방지하기 위해 다음 컬럼을 입력 변수에서 제외하였다.
+
+- `이상거래여부`: 모델이 예측해야 하는 정답으로만 사용
+- `이상거래유형`: 이상거래 정답을 직접 암시
+- `이상거래설명`: 이상거래 정답을 직접 암시
+
+### 4. 사용한 원본 변수
+
+| 원본 변수 | 의미 |
+|---|---|
+| `통합승인금액` | 승인금액 |
+| `카드이용한도금액` | 카드 이용한도 |
+| `승인시간대` | 거래 발생 시간 |
+| `국내해외여부` | 해외 거래 여부 |
+| `가맹점여부_신규` | 신규 가맹점 여부 |
+| `인터넷판매여부` | 온라인 거래 여부 |
+| `경과일수_최종이용일자` | 최근 카드 이용 후 경과일 |
+
+`승인일자`와 `카드KEY`는 파생변수 계산에만 사용하고 모델에는 직접 입력하지 않았다.
+
+### 5. 생성한 파생변수
+
+| 파생변수 | 의미 | 생성 목적 |
+|---|---|---|
+| `amt_to_limit_ratio` | 승인금액 ÷ 카드한도 | 한도 대비 과도한 결제 탐지 |
+| `limit_is_zero` | 카드한도가 0인지 여부 | 비율 계산이 불가능한 거래 구분 |
+| `is_midnight` | 00~05시 거래 여부 | 심야 시간대 이상거래 탐지 |
+| `is_weekend` | 주말 거래 여부 | 요일에 따른 거래패턴 반영 |
+| `amt_diff_from_user_avg` | 승인금액과 카드 평균금액의 차이 | 평소보다 큰 결제 탐지 |
+| `overseas_online_risk` | 해외이면서 온라인인 거래 여부 | 해외·온라인 복합위험 반영 |
+
+카드별 평균 승인금액은 데이터 누수를 방지하기 위해 Train 데이터만 사용하여 계산하였다.
+
+### 6. 모델 입력 변수
+
+최종 모델 입력은 원본 변수 7개와 파생변수 6개를 합친 총 13개 피처로 구성하였다.
+
+### 7. 기타 원본 변수 제외 이유
+
+식별자, 해석이 필요한 코드형 변수, 중복 정보 및 편향 가능성이 있는 변수는 1차 기준 모델에서 제외하였다.
+
+- `승인SEQ`, `가맹점KEY` 등은 단순 식별자이므로 제외
+- `이상거래유형`, `이상거래설명`은 정답 누수 위험으로 제외
+- `남녀구분코드`, `연령`은 편향 가능성을 고려해 제외
+- 가맹점·거래·카드 관련 세부 코드형 변수는 후속 실험 대상으로 보류
+
+먼저 핵심 피처 13개로 기준 모델을 만든 뒤, 성능이 부족하면 제외한 변수를 단계적으로 추가하여 F1-score와 PR-AUC의 개선 여부를 비교할 예정이다.</pre></div><div class="cell-md"><div class="cell-tag">MD [22]</div><pre class="md-pre">## 7. 기타 원본 변수 제외 이유
+
+식별자, 정답 정보, 고유 코드, 개인정보성 변수는 모델이 실제 이상거래 패턴이 아닌 특정 값 자체를 외우거나, 정답을 미리 알아내는 문제가 발생할 수 있다. 따라서 1차 기준 모델에서는 해당 변수를 제외하였다.
+
+- `승인SEQ`
+  - 거래를 구분하기 위한 일련번호이다.
+  - 거래의 이상 여부와 직접적인 관련이 없으며, 단순히 행의 순서를 나타낼 가능성이 높다.
+  - 모델에 포함하면 특정 번호 범위나 데이터 수집 순서에 의존할 수 있으므로 제외하였다.
+
+- `가맹점KEY`
+  - 가맹점을 식별하기 위한 고유 키이다.
+  - 키 값 자체에는 가맹점의 업종, 위치, 거래 특성에 대한 의미가 부족하다.
+  - 고유값이 너무 많아 모델이 특정 가맹점의 과거 정답 패턴을 외우거나 과적합할 가능성이 있어 제외하였다.
+
+- `이상거래유형`, `이상거래설명`
+  - 이상거래의 종류나 사유를 직접적으로 나타내는 변수이다.
+  - 실제 서비스에서 거래가 발생하는 시점에는 알 수 없는 사후 정보일 수 있다.
+  - 모델이 거래 패턴을 학습하는 대신 정답에 가까운 정보를 그대로 이용하는 정답 누수가 발생할 수 있어 제외하였다.
+
+- `남녀구분코드`, `연령`
+  - 고객의 성별과 나이를 나타내는 개인정보성 변수이다.
+  - 거래 자체의 이상 여부보다 특정 성별이나 연령대에 따라 위험도를 판단하는 편향이 생길 수 있다.
+  - 특정 집단의 거래에 경고가 과도하게 발생하는 공정성 문제가 생길 수 있어 1차 모델에서는 제외하였다.
+
+- 가맹점·거래·카드 관련 세부 코드형 변수
+  - 값의 종류가 많고 각 코드가 실제로 무엇을 의미하는지 해석하기 어려운 변수가 포함될 수 있다.
+  - 범주 수가 많으면 희귀한 코드에 과적합하거나 새로운 코드에 대응하지 못할 가능성이 있다.
+  - 먼저 해석하기 쉬운 핵심 피처만으로 기준 모델을 만든 후, 성능 향상 여부와 과적합 여부를 확인하면서 후속 실험 대상으로 추가하기로 하였다.
+
+따라서 1차 모델은 결제금액, 거래시간, 주말 여부, 해외·온라인 거래 여부, 평소 결제금액과의 차이처럼 실제 거래 행동을 나타내는 핵심 피처를 중심으로 구성하였다.
+
+이후 성능이 부족한 경우에는 제외한 변수를 하나씩 추가하고, F1-score와 PR-AUC뿐만 아니라 과적합 여부와 변수별 영향도도 함께 비교할 예정이다.</pre></div><div class="cell-md"><div class="cell-tag">MD [24]</div><pre class="md-pre">## 7. 숫자형·범주형 피처 구분 및 결측치 처리
+
+모델에 사용할 피처를 숫자형과 범주형으로 구분한 후, 무한대와 결측치를 처리한다.
+
+숫자형 피처의 무한대 값은 결측치로 변경하고, Train 데이터에서 계산한 중앙값으로 대체한다. Test 데이터에도 Train에서 계산한 동일한 중앙값을 적용하여 데이터 누수를 방지한다.
+
+범주형 피처는 다음 기준으로 처리한다.
+
+- `0`: 아니오
+- `1`: 예
+- `2`: 알 수 없음(`UNKNOWN`)
+
+마지막으로 Train과 Test에 남아 있는 결측치 개수와 피처 크기를 확인한다.</pre></div><div class="cell-code"><div class="cell-tag">In [8]</div><pre class="code-pre"># @title
+import numpy as np
+
+
+# 연속형 피처
+numeric_cols = [
+    &quot;amt&quot;,
+    &quot;limit&quot;,
+    &quot;hour&quot;,
+    &quot;days_since_last&quot;,
+    &quot;amt_to_limit_ratio&quot;,
+    &quot;amt_diff_from_user_avg&quot;,
+]
+
+
+# 범주형 피처
+categorical_cols = [
+    &quot;is_overseas&quot;,
+    &quot;is_new_merchant&quot;,
+    &quot;is_online&quot;,
+    &quot;limit_is_zero&quot;,
+    &quot;is_midnight&quot;,
+    &quot;is_weekend&quot;,
+    &quot;overseas_online_risk&quot;,
+]
+
+
+# Train, Validation, Test 데이터 복사
+X_train_clean = X_train.copy()
+X_valid_clean = X_valid.copy()
+X_test_clean = X_test.copy()
+
+
+# 무한대 값을 결측치로 변경
+for data in [X_train_clean, X_valid_clean, X_test_clean]:
+    data[numeric_cols] = data[numeric_cols].replace(
+        [np.inf, -np.inf],
+        np.nan,
+    )
+
+
+# Train 데이터에서만 중앙값 계산
+train_medians = X_train_clean[numeric_cols].median()
+
+
+# 숫자형 결측치를 Train 중앙값으로 대체
+for data in [X_train_clean, X_valid_clean, X_test_clean]:
+    data[numeric_cols] = data[numeric_cols].fillna(train_medians)
+
+
+# 범주형 결측치를 2로 대체
+for data in [X_train_clean, X_valid_clean, X_test_clean]:
+    data[categorical_cols] = data[categorical_cols].fillna(2)
+
+
+# 결측치 처리 결과 확인
+print(&quot;Train 결측치:&quot;, X_train_clean.isna().sum().sum())
+print(&quot;Validation 결측치:&quot;, X_valid_clean.isna().sum().sum())
+print(&quot;Test 결측치:&quot;, X_test_clean.isna().sum().sum())
+
+print(&quot;Train 피처:&quot;, X_train_clean.shape)
+print(&quot;Validation 피처:&quot;, X_valid_clean.shape)
+print(&quot;Test 피처:&quot;, X_test_clean.shape)</pre><pre class="out-txt">Train 결측치: 0
+Validation 결측치: 0
+Test 결측치: 0
+Train 피처: (82866, 13)
+Validation 피처: (11839, 13)
+Test 피처: (23677, 13)
+</pre></div><div class="cell-md"><div class="cell-tag">MD [26]</div><pre class="md-pre">### 범주형 결측치를 숫자 2로 처리한 이유
+
+범주형 변수는 일반적으로 다음과 같이 구성되어 있다.
+
+- `0`: 아니오
+- `1`: 예
+- `2`: 알 수 없음(UNKNOWN)
+
+결측치를 `0`으로 채우면 실제로 ‘아니오’인 값과 구분할 수 없다.  
+따라서 결측치에는 별도의 값인 `2`를 부여하여, 모델이 이를 `UNKNOWN`이라는 독립적인 범주로 인식하도록 처리하였다.
+
+단, 원본 데이터에서 숫자 `2`가 이미 다른 의미로 사용된다면 `-1`과 같은 새로운 값을 사용해야 한다.</pre></div><div class="cell-md"><div class="cell-tag">MD [28]</div><pre class="md-pre">## 8. 숫자형 피처 스케일링 — RobustScaler
+
+숫자형 피처 간 값의 범위 차이를 줄이고 이상치의 영향을 완화하기 위해 `RobustScaler`를 적용한다.
+
+`RobustScaler`는 평균과 표준편차 대신 중앙값과 사분위수 범위를 사용하므로, 승인금액처럼 큰 이상치가 존재할 수 있는 금융 데이터에 적합하다.
+
+데이터 누수를 방지하기 위해 Train 데이터로만 스케일링 기준을 학습하고, 동일한 기준을 Test 데이터에 적용한다. `0`, `1`, `2`로 구성된 범주형 피처에는 스케일링을 적용하지 않는다.</pre></div><div class="cell-code"><div class="cell-tag">In [9]</div><pre class="code-pre"># @title
+# 숫자형 피처의 범위를 조정하기 위해 RobustScaler를 가져옵니다.
+from sklearn.preprocessing import RobustScaler
+
+
+# RobustScaler를 생성합니다.
+scaler = RobustScaler()
+
+
+# Train, Validation, Test 데이터를 복사합니다.
+X_train_scaled = X_train_clean.copy()
+X_valid_scaled = X_valid_clean.copy()
+X_test_scaled = X_test_clean.copy()
+
+
+# Train 데이터로만 중앙값과 사분위수 범위를 계산하고 변환합니다.
+X_train_scaled[numeric_cols] = scaler.fit_transform(
+    X_train_clean[numeric_cols]
+)
+
+
+# Train 기준을 Validation에 적용합니다.
+X_valid_scaled[numeric_cols] = scaler.transform(
+    X_valid_clean[numeric_cols]
+)
+
+
+# Train 기준을 Test에 적용합니다.
+X_test_scaled[numeric_cols] = scaler.transform(
+    X_test_clean[numeric_cols]
+)
+
+
+# 처리 결과를 확인합니다.
+print(&quot;Train 크기:&quot;, X_train_scaled.shape)
+print(&quot;Validation 크기:&quot;, X_valid_scaled.shape)
+print(&quot;Test 크기:&quot;, X_test_scaled.shape)
+
+
+# Train 데이터 일부를 확인합니다.
+display(X_train_scaled.head())</pre><pre class="out-txt">Train 크기: (82866, 13)
+Validation 크기: (11839, 13)
+Test 크기: (23677, 13)
+</pre><pre class="out-txt">   amt     limit  hour  is_overseas  is_new_merchant  is_online  \
+0  0.0 -0.444444   1.0            0              0.0        0.0   
+1  1.1  0.000000   0.6            0              0.0        0.0   
+2 -0.1  0.000000  -0.6            0              0.0        0.0   
+3 -0.5 -0.555556   0.2            0              0.0        0.0   
+4 -0.5 -0.555556  -0.6            0              0.0        0.0   
+
+   days_since_last  amt_to_limit_ratio  limit_is_zero  is_midnight  \
+0             -1.0             1.12500              0            0   
+1              0.0             0.34375              0            0   
+2              0.0            -0.03125              0            0   
+3              0.0             0.00000              1            0   
+4              0.0             0.00000              1            0   
+
+   is_weekend  amt_diff_from_user_avg  overseas_online_risk  
+0           0                0.056578                     0  
+1           1               -0.640434                     0  
+2           1               -0.285437                     0  
+3           1                0.061576                     0  
+4           0               -0.053026                     0  </pre></div><div class="cell-md"><div class="cell-tag">MD [31]</div><pre class="md-pre">## 9. SMOTENC를 이용한 Train 클래스 불균형 처리</pre></div><div class="cell-md"><div class="cell-tag">MD [32]</div><pre class="md-pre">여기서 sampling_strategy=0.2는 이상거래가 전체의 20%라는 뜻이 아니라, 이상거래 개수를 정상거래 개수의 20%까지 늘린다는 뜻입니다.
+ Test에는 SMOTENC를 적용하지 않습니다.</pre></div><div class="cell-code"><div class="cell-tag">In [10]</div><pre class="code-pre"># @title
+# 숫자형과 범주형 피처를 함께 처리하는 SMOTENC를 가져옵니다.
+from imblearn.over_sampling import SMOTENC
+
+
+# 범주형 피처의 열 번호를 찾습니다.
+categorical_indices = [
+    X_train_scaled.columns.get_loc(col)
+    for col in categorical_cols
+]
+
+
+# 이상거래 수가 정상거래 수의 20%가 되도록 설정합니다.
+smotenc = SMOTENC(
+    categorical_features=categorical_indices,
+    sampling_strategy=0.2,
+    random_state=42,
+)
+
+
+# SMOTENC 적용 전 클래스 개수를 확인합니다.
+print(&quot;[SMOTENC 적용 전]&quot;)
+print(y_train.value_counts().sort_index())
+
+
+# SMOTENC는 Train 데이터에만 적용합니다.
+X_train_resampled, y_train_resampled = smotenc.fit_resample(
+    X_train_scaled,
+    y_train,
+)
+
+
+# 적용 후 클래스 개수와 데이터 크기를 확인합니다.
+print(&quot;\n[SMOTENC 적용 후]&quot;)
+print(y_train_resampled.value_counts().sort_index())
+
+print(&quot;\n변경된 Train 크기:&quot;, X_train_resampled.shape)
+print(&quot;Validation 크기:&quot;, X_valid_scaled.shape)
+print(&quot;Test 크기:&quot;, X_test_scaled.shape)</pre><pre class="out-txt">[SMOTENC 적용 전]
+이상거래여부
+0    79728
+1     3138
+Name: count, dtype: int64
+
+[SMOTENC 적용 후]
+이상거래여부
+0    79728
+1    15945
+Name: count, dtype: int64
+
+변경된 Train 크기: (95673, 13)
+Validation 크기: (11839, 13)
+Test 크기: (23677, 13)
+</pre></div><div class="cell-code"><div class="cell-tag">In [34]</div><pre class="code-pre"># @title
+print(&quot;전체 통합 데이터:&quot;, all_df.shape)
+print(&quot;분할된 Train:&quot;, train_df.shape)
+print(&quot;분할된 Test:&quot;, test_df.shape)</pre><pre class="out-txt">전체 통합 데이터: (118382, 32)
+분할된 Train: (82866, 32)
+분할된 Test: (23677, 32)
+</pre></div><div class="cell-md"><div class="cell-tag">MD [35]</div><pre class="md-pre">## SMOTENC 미적용 LightGBM 단일모델 성능 평가
+
+SMOTENC를 적용하지 않고 원본 Train 데이터만 사용하여 LightGBM을 학습한다.
+
+SMOTENC 적용 모델과 동일한 LightGBM 설정을 사용하여, 데이터 증강 여부가 이상거래 탐지 성능에 미치는 영향을 비교한다.</pre></div><div class="cell-code"><div class="cell-tag">In [11]</div><pre class="code-pre"># @title
+# LightGBM 설치
+!pip install -q lightgbm
+
+# LightGBM 분류 모델 불러오기
+from lightgbm import LGBMClassifier
+
+# 분류 성능 평가 도구를 가져옵니다.
+from sklearn.metrics import (
+    classification_report,
+    average_precision_score,
+)</pre></div><div class="cell-code"><div class="cell-tag">In [12]</div><pre class="code-pre"># @title
+# SMOTENC를 적용하지 않은 LightGBM 모델을 생성합니다.
+lgb_no_smote = LGBMClassifier(
+    n_estimators=300,
+    learning_rate=0.05,
+    max_depth=6,
+    num_leaves=31,
+    random_state=42,
+    n_jobs=-1,
+    verbosity=-1,
+)
+
+
+# 원본 Train 데이터로만 모델을 학습합니다.
+lgb_no_smote.fit(
+    X_train_scaled,
+    y_train,
+)
+
+print(&quot;SMOTENC 미적용 LightGBM 학습 완료&quot;)
+
+
+# Validation과 Test의 이상거래 확률을 예측합니다.
+valid_prob_no_smote = lgb_no_smote.predict_proba(
+    X_valid_scaled
+)[:, 1]
+
+test_prob_no_smote = lgb_no_smote.predict_proba(
+    X_test_scaled
+)[:, 1]
+
+
+# 임계값 0.5를 적용합니다.
+valid_pred_no_smote = (
+    valid_prob_no_smote &gt;= 0.5
+).astype(int)
+
+test_pred_no_smote = (
+    test_prob_no_smote &gt;= 0.5
+).astype(int)
+
+
+# Validation 결과를 출력합니다.
+print(&quot;[SMOTENC 미적용 Validation 결과]&quot;)
+print(classification_report(
+    y_valid,
+    valid_pred_no_smote,
+    target_names=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+    digits=4,
+))
+
+print(
+    &quot;Validation PR-AUC:&quot;,
+    round(
+        average_precision_score(
+            y_valid,
+            valid_prob_no_smote,
+        ),
+        4,
+    ),
+)
+
+
+# Test 결과를 출력합니다.
+print(&quot;\n[SMOTENC 미적용 Test 결과]&quot;)
+print(classification_report(
+    y_test,
+    test_pred_no_smote,
+    target_names=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+    digits=4,
+))
+
+print(
+    &quot;Test PR-AUC:&quot;,
+    round(
+        average_precision_score(
+            y_test,
+            test_prob_no_smote,
+        ),
+        4,
+    ),
+)</pre><pre class="out-txt">SMOTENC 미적용 LightGBM 학습 완료
+[SMOTENC 미적용 Validation 결과]
+              precision    recall  f1-score   support
+
+        정상거래     0.9861    0.9953    0.9907     11391
+        이상거래     0.8446    0.6429    0.7300       448
+
+    accuracy                         0.9820     11839
+   macro avg     0.9153    0.8191    0.8604     11839
+weighted avg     0.9807    0.9820    0.9808     11839
+
+Validation PR-AUC: 0.7694
+
+[SMOTENC 미적용 Test 결과]
+              precision    recall  f1-score   support
+
+        정상거래     0.9858    0.9947    0.9902     22780
+        이상거래     0.8251    0.6366    0.7187       897
+
+    accuracy                         0.9811     23677
+   macro avg     0.9055    0.8156    0.8545     23677
+weighted avg     0.9797    0.9811    0.9799     23677
+
+Test PR-AUC: 0.7635
+</pre></div><div class="cell-md"><div class="cell-tag">MD [38]</div><pre class="md-pre">## SMOTENC 미적용 LightGBM 모델 평가 결과
+
+SMOTENC를 적용하지 않고 원본 Train 데이터만 사용하여 LightGBM을 학습하였다.
+
+### Validation 결과
+
+- 이상거래 Precision: `0.8446`
+- 이상거래 Recall: `0.6429`
+- 이상거래 F1-score: `0.7300`
+- PR-AUC: `0.7694`
+- Accuracy: `0.9820`
+
+Validation 데이터의 실제 이상거래 448건 중 약 288건을 탐지하였다.  
+이상거래로 예측한 거래 중 약 84%가 실제 이상거래였으며, 일부 이상거래는 탐지하지 못했다.
+
+### Test 결과
+
+- 이상거래 Precision: `0.8251`
+- 이상거래 Recall: `0.6366`
+- 이상거래 F1-score: `0.7187`
+- PR-AUC: `0.7635`
+- Accuracy: `0.9811`
+
+Test 데이터의 실제 이상거래 897건 중 약 571건을 탐지하였다.  
+정상거래는 약 99%의 높은 Recall로 정확하게 분류했지만, 실제 이상거래의 약 36%는 놓쳤다.
+
+### SMOTENC 적용 모델과 비교
+
+SMOTENC를 적용하면 이상거래 Recall은 `0.6366`에서 `0.6511`로 상승하였다.  
+또한 F1-score와 PR-AUC도 소폭 향상되어 이상거래 탐지 성능이 조금 개선되었다.
+
+반면 Precision은 `0.8251`에서 `0.8077`로 감소하여 정상거래를 이상거래로 잘못 판단하는 오탐이 증가하였다.
+
+따라서 이상거래를 최대한 놓치지 않는 것이 중요하다면 SMOTENC 적용 모델이 더 적합하다.  
+현재 결과는 임계값 0.5를 사용했으므로, 이후 Validation 데이터에서 임계값을 조정하여 두 모델의 성능을 추가로 비교할 수 있다.</pre></div><div class="cell-md"><div class="cell-tag">MD [39]</div><pre class="md-pre">## LightGBM 분류 모델 설정
+
+SMOTENC를 적용한 Train 데이터를 학습하기 위해 LightGBM 분류 모델을 생성한다.
+
+- `n_estimators=300`: 생성할 결정 트리의 개수
+- `learning_rate=0.05`: 각 트리가 이전 오류를 보정하는 학습률
+- `max_depth=6`: 결정 트리의 최대 깊이
+- `num_leaves=31`: 각 트리의 최대 잎 노드 수
+- `random_state=42`: 실행할 때마다 같은 결과를 얻기 위한 난수 고정
+- `n_jobs=-1`: 사용 가능한 모든 CPU 코어 사용
+- `verbosity=-1`: 학습 과정의 불필요한 출력과 경고 숨김
+
+이 설정으로 모델을 생성한 뒤, 다음 단계에서 SMOTENC가 적용된 Train 데이터로 학습한다.</pre></div><div class="cell-code"><div class="cell-tag">In [13]</div><pre class="code-pre"># @title
+# LightGBM 분류 모델을 생성합니다.
+lgb_model = LGBMClassifier(
+
+    # 생성할 결정 트리의 개수입니다.
+    # 트리가 많을수록 더 자세히 학습하지만 과적합과 학습시간이 증가할 수 있습니다.
+    n_estimators=300,
+
+    # 새로운 트리가 기존 모델의 오류를 얼마나 강하게 보정할지 정합니다.
+    # 값이 작을수록 천천히 안정적으로 학습합니다.
+    learning_rate=0.05,
+
+    # 각 결정 트리가 내려갈 수 있는 최대 깊이입니다.
+    # 깊이를 제한하여 지나치게 복잡해지는 것을 방지합니다.
+    max_depth=6,
+
+    # 한 트리가 가질 수 있는 최대 잎 노드 개수입니다.
+    # 값이 클수록 복잡한 패턴을 학습하지만 과적합 위험도 커집니다.
+    num_leaves=31,
+
+    # 코드를 다시 실행해도 같은 결과가 나오도록 난수를 고정합니다.
+    random_state=42,
+
+    # 사용 가능한 CPU 코어를 모두 사용하여 학습 속도를 높입니다.
+    n_jobs=-1,
+
+    # LightGBM의 학습 메시지와 경고 출력을 줄입니다.
+    verbosity=-1,
+)</pre></div><div class="cell-md"><div class="cell-tag">MD [42]</div><pre class="md-pre">## 11. LightGBM 모델 성능 평가</pre></div><div class="cell-code"><div class="cell-tag">In [14]</div><pre class="code-pre"># @title
+# SMOTENC가 적용된 Train 데이터로 LightGBM을 학습합니다.
+lgb_model.fit(
+    X_train_resampled,
+    y_train_resampled,
+)
+
+print(&quot;LightGBM 학습 완료&quot;)
+
+
+# 분류 성능 평가 도구를 가져옵니다.
+from sklearn.metrics import (
+    classification_report,
+    average_precision_score,
+)
+
+
+# 임계값을 설정합니다.
+threshold = 0.5
+
+
+# Validation 데이터의 이상거래 확률을 예측합니다.
+valid_prob = lgb_model.predict_proba(
+    X_valid_scaled
+)[:, 1]
+
+# Validation 예측 결과를 생성합니다.
+valid_pred = (valid_prob &gt;= threshold).astype(int)
+
+
+# Validation 성능을 출력합니다.
+print(&quot;[Validation 결과]&quot;)
+print(classification_report(
+    y_valid,
+    valid_pred,
+    target_names=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+    digits=4,
+))
+
+print(
+    &quot;Validation PR-AUC:&quot;,
+    round(
+        average_precision_score(y_valid, valid_prob),
+        4,
+    ),
+)
+
+
+# Test 데이터의 이상거래 확률을 예측합니다.
+test_prob = lgb_model.predict_proba(
+    X_test_scaled
+)[:, 1]
+
+# Test 예측 결과를 생성합니다.
+test_pred = (test_prob &gt;= threshold).astype(int)
+
+
+# Test 최종 성능을 출력합니다.
+print(&quot;\n[Test 최종 결과]&quot;)
+print(classification_report(
+    y_test,
+    test_pred,
+    target_names=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+    digits=4,
+))
+
+print(
+    &quot;Test PR-AUC:&quot;,
+    round(
+        average_precision_score(y_test, test_prob),
+        4,
+    ),
+)</pre><pre class="out-txt">LightGBM 학습 완료
+[Validation 결과]
+              precision    recall  f1-score   support
+
+        정상거래     0.9869    0.9955    0.9912     11391
+        이상거래     0.8534    0.6629    0.7462       448
+
+    accuracy                         0.9829     11839
+   macro avg     0.9202    0.8292    0.8687     11839
+weighted avg     0.9818    0.9829    0.9819     11839
+
+Validation PR-AUC: 0.7818
+
+[Test 최종 결과]
+              precision    recall  f1-score   support
+
+        정상거래     0.9864    0.9939    0.9901     22780
+        이상거래     0.8077    0.6511    0.7210       897
+
+    accuracy                         0.9809     23677
+   macro avg     0.8971    0.8225    0.8556     23677
+weighted avg     0.9796    0.9809    0.9799     23677
+
+Test PR-AUC: 0.765
+</pre></div><div class="cell-md"><div class="cell-tag">MD [44]</div><pre class="md-pre">## LightGBM + SMOTENC 모델 평가 결과
+
+임계값을 0.5로 설정하고 Validation과 Test 데이터에서 모델 성능을 평가하였다.
+
+### Validation 결과
+
+- 이상거래 Precision: `0.8534`
+- 이상거래 Recall: `0.6629`
+- 이상거래 F1-score: `0.7462`
+- PR-AUC: `0.7818`
+- Accuracy: `0.9829`
+
+Validation 데이터의 실제 이상거래 448건 중 약 297건을 탐지하였다.  
+이상거래로 예측한 거래 중 약 85%가 실제 이상거래였으며, 이상거래 탐지와 오탐 방지 사이의 균형이 양호하게 나타났다.
+
+### Test 결과
+
+- 이상거래 Precision: `0.8077`
+- 이상거래 Recall: `0.6511`
+- 이상거래 F1-score: `0.7210`
+- PR-AUC: `0.7650`
+- Accuracy: `0.9809`
+
+Test 데이터의 실제 이상거래 897건 중 약 584건을 탐지하였다.  
+Validation 결과보다 성능이 소폭 낮아졌지만, PR-AUC가 `0.7650`으로 나타나 새로운 데이터에서도 이상거래를 구분하는 성능이 일정하게 유지되었다.
+
+### 종합 해석
+
+모델은 정상거래를 약 99%의 높은 Recall로 정확하게 분류하였다.  
+반면 이상거래 Recall은 약 65%로, 실제 이상거래의 일부를 놓치는 한계가 있다.
+
+Accuracy는 높지만 정상거래의 비율이 높기 때문에, 이상거래 탐지 성능은 Accuracy보다 Recall, F1-score, PR-AUC를 중심으로 판단하였다.
+
+현재 결과는 임계값 0.5를 사용한 결과이며, 이후 Validation 데이터에서 임계값을 조정하면 이상거래 Recall과 Precision의 균형을 개선할 수 있다.</pre></div><div class="cell-md"><div class="cell-tag">MD [45]</div><pre class="md-pre">## SMOTENC 미적용 LightGBM 모델 평가 결과
+
+SMOTENC를 적용하지 않고 원본 Train 데이터만 사용하여 LightGBM을 학습하였다.
+
+### Validation 결과
+
+- 이상거래 Precision: `0.8446`
+- 이상거래 Recall: `0.6429`
+- 이상거래 F1-score: `0.7300`
+- PR-AUC: `0.7694`
+- Accuracy: `0.9820`
+
+Validation 데이터의 실제 이상거래 448건 중 약 288건을 탐지하였다.  
+이상거래로 예측한 거래 중 약 84%가 실제 이상거래였으며, 일부 이상거래는 탐지하지 못했다.
+
+### Test 결과
+
+- 이상거래 Precision: `0.8251`
+- 이상거래 Recall: `0.6366`
+- 이상거래 F1-score: `0.7187`
+- PR-AUC: `0.7635`
+- Accuracy: `0.9811`
+
+Test 데이터의 실제 이상거래 897건 중 약 571건을 탐지하였다.  
+정상거래는 약 99%의 높은 Recall로 정확하게 분류했지만, 실제 이상거래의 약 36%는 놓쳤다.
+
+### SMOTENC 적용 모델과 비교
+
+SMOTENC를 적용하면 이상거래 Recall은 `0.6366`에서 `0.6511`로 상승하였다.  
+또한 F1-score와 PR-AUC도 소폭 향상되어 이상거래 탐지 성능이 조금 개선되었다.
+
+반면 Precision은 `0.8251`에서 `0.8077`로 감소하여 정상거래를 이상거래로 잘못 판단하는 오탐이 증가하였다.
+
+따라서 이상거래를 최대한 놓치지 않는 것이 중요하다면 SMOTENC 적용 모델이 더 적합하다.  
+현재 결과는 임계값 0.5를 사용했으므로, 이후 Validation 데이터에서 임계값을 조정하여 두 모델의 성능을 추가로 비교할 수 있다.</pre></div><div class="cell-code"><div class="cell-tag">In [15]</div><pre class="code-pre"># @title
+# 임계값별 성능 비교를 위해 평가 지표를 가져옵니다.
+from sklearn.metrics import (
+    precision_score,
+    recall_score,
+    f1_score,
+    accuracy_score,
+)
+
+
+# 비교할 임계값 목록을 설정합니다.
+thresholds = [
+    0.20,
+    0.25,
+    0.30,
+    0.35,
+    0.40,
+    0.45,
+    0.50,
+    0.55,
+    0.60,
+    0.65,
+    0.70,
+]
+
+
+# 임계값별 Validation 결과를 저장합니다.
+threshold_results = []
+
+
+# 각 임계값에 대한 성능을 계산합니다.
+for threshold in thresholds:
+
+    # 현재 임계값을 기준으로 이상거래를 분류합니다.
+    valid_pred = (
+        valid_prob &gt;= threshold
+    ).astype(int)
+
+    # 성능 지표를 계산합니다.
+    threshold_results.append({
+        &quot;threshold&quot;: threshold,
+        &quot;precision&quot;: precision_score(
+            y_valid,
+            valid_pred,
+            zero_division=0,
+        ),
+        &quot;recall&quot;: recall_score(
+            y_valid,
+            valid_pred,
+            zero_division=0,
+        ),
+        &quot;f1&quot;: f1_score(
+            y_valid,
+            valid_pred,
+            zero_division=0,
+        ),
+        &quot;accuracy&quot;: accuracy_score(
+            y_valid,
+            valid_pred,
+        ),
+    })
+
+
+# 결과를 표로 정리합니다.
+threshold_table = pd.DataFrame(
+    threshold_results
+)
+
+
+# F1-score가 높은 순서로 정렬합니다.
+threshold_table = threshold_table.sort_values(
+    &quot;f1&quot;,
+    ascending=False,
+)
+
+
+# 임계값별 성능을 출력합니다.
+display(
+    threshold_table.style.format({
+        &quot;threshold&quot;: &quot;{:.2f}&quot;,
+        &quot;precision&quot;: &quot;{:.4f}&quot;,
+        &quot;recall&quot;: &quot;{:.4f}&quot;,
+        &quot;f1&quot;: &quot;{:.4f}&quot;,
+        &quot;accuracy&quot;: &quot;{:.4f}&quot;,
+    })
+)
+
+
+# Validation F1-score가 가장 높은 임계값을 선택합니다.
+best_threshold = threshold_table.iloc[0][&quot;threshold&quot;]
+
+print(
+    f&quot;선택된 최적 임계값: {best_threshold:.2f}&quot;
+)</pre><pre class="out-txt">&lt;pandas.io.formats.style.Styler at 0x7aa41573b770&gt;</pre><pre class="out-txt">선택된 최적 임계값: 0.50
+</pre></div><div class="cell-md"><div class="cell-tag">MD [47]</div><pre class="md-pre">## 최종 임계값 선택 결과
+
+여러 임계값을 Validation 데이터에서 비교한 결과, 임계값 `0.5`에서 F1-score가 `0.7462`로 가장 높게 나타났다.
+
+따라서 Precision과 Recall의 균형을 고려하여 임계값 `0.5`를 최종 임계값으로 선택하였다.
+
+임계값을 낮추면 실제 이상거래를 더 많이 탐지할 수 있지만, 정상거래를 이상거래로 잘못 판단하는 오탐이 증가할 수 있다.
+
+반대로 임계값을 높이면 오탐은 줄어들 수 있지만, 실제 이상거래를 놓치는 미탐이 증가할 수 있다.
+
+본 실험에서는 이상거래 탐지율만 높이는 것보다 Precision과 Recall의 균형이 중요하다고 판단하여 임계값 `0.5`를 사용하였다.
+
+다만 실제 운영 환경에서 이상거래 미탐을 줄이는 것이 더 중요하다면, 더 낮은 임계값을 적용하는 방안도 고려할 수 있다.
+
+
+이상거래 확률이 0.5 이상이면 이상거래로 분류
+이상거래 확률이 0.5 미만이면 정상거래로 분류</pre></div><div class="cell-md"><div class="cell-tag">MD [49]</div><pre class="md-pre">## Random Forest와 XGBoost 모델 비교
+
+LightGBM과의 비교를 위해 동일한 SMOTENC 적용 Train 데이터를 사용하여 Random Forest와 XGBoost를 학습한다.
+
+세 모델 모두 동일한 Validation/Test 데이터와 임계값 0.5를 사용하여 성능을 비교한다.</pre></div><div class="cell-md"><div class="cell-tag">MD [50]</div><pre class="md-pre">## Random Forest + SMOTENC 모델 평가
+
+SMOTENC가 적용된 Train 데이터를 사용하여 Random Forest 모델을 학습하고, 임계값 0.5에서 성능을 평가한다.</pre></div><div class="cell-code"><div class="cell-tag">In [16]</div><pre class="code-pre"># @title
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import (
+    classification_report,
+    average_precision_score,
+)
+
+
+# Random Forest 모델을 생성합니다.
+rf_model = RandomForestClassifier(
+    n_estimators=300,
+    max_depth=12,
+    min_samples_leaf=2,
+    random_state=42,
+    n_jobs=-1,
+)
+
+
+# SMOTENC가 적용된 Train 데이터로 학습합니다.
+rf_model.fit(
+    X_train_resampled,
+    y_train_resampled,
+)
+
+print(&quot;Random Forest 학습 완료&quot;)
+
+
+# Validation과 Test 확률을 예측합니다.
+rf_valid_prob = rf_model.predict_proba(
+    X_valid_scaled
+)[:, 1]
+
+rf_test_prob = rf_model.predict_proba(
+    X_test_scaled
+)[:, 1]
+
+
+# 임계값 0.5를 적용합니다.
+rf_valid_pred = (
+    rf_valid_prob &gt;= 0.5
+).astype(int)
+
+rf_test_pred = (
+    rf_test_prob &gt;= 0.5
+).astype(int)
+
+
+# Validation 결과를 출력합니다.
+print(&quot;[Random Forest Validation 결과]&quot;)
+print(classification_report(
+    y_valid,
+    rf_valid_pred,
+    target_names=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+    digits=4,
+))
+
+print(
+    &quot;Validation PR-AUC:&quot;,
+    round(
+        average_precision_score(
+            y_valid,
+            rf_valid_prob,
+        ),
+        4,
+    ),
+)
+
+
+# Test 결과를 출력합니다.
+print(&quot;\n[Random Forest Test 결과]&quot;)
+print(classification_report(
+    y_test,
+    rf_test_pred,
+    target_names=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+    digits=4,
+))
+
+print(
+    &quot;Test PR-AUC:&quot;,
+    round(
+        average_precision_score(
+            y_test,
+            rf_test_prob,
+        ),
+        4,
+    ),
+)</pre><pre class="out-txt">Random Forest 학습 완료
+[Random Forest Validation 결과]
+              precision    recall  f1-score   support
+
+        정상거래     0.9882    0.9915    0.9898     11391
+        이상거래     0.7634    0.6987    0.7296       448
+
+    accuracy                         0.9804     11839
+   macro avg     0.8758    0.8451    0.8597     11839
+weighted avg     0.9797    0.9804    0.9800     11839
+
+Validation PR-AUC: 0.749
+
+[Random Forest Test 결과]
+              precision    recall  f1-score   support
+
+        정상거래     0.9880    0.9897    0.9888     22780
+        이상거래     0.7261    0.6945    0.7100       897
+
+    accuracy                         0.9785     23677
+   macro avg     0.8570    0.8421    0.8494     23677
+weighted avg     0.9781    0.9785    0.9783     23677
+
+Test PR-AUC: 0.7548
+</pre></div><div class="cell-md"><div class="cell-tag">MD [52]</div><pre class="md-pre">## Random Forest + SMOTENC 모델 평가 결과
+
+SMOTENC가 적용된 Train 데이터를 사용하여 Random Forest를 학습하고, 임계값 0.5에서 성능을 평가하였다.
+
+### Validation 결과
+
+- 이상거래 Precision: `0.7634`
+- 이상거래 Recall: `0.6987`
+- 이상거래 F1-score: `0.7296`
+- PR-AUC: `0.7490`
+- Accuracy: `0.9804`
+
+Validation 데이터의 실제 이상거래 448건 중 약 313건을 탐지하였다.  
+이상거래 Recall은 약 70%로 나타났지만, 이상거래로 예측한 거래 중 실제 이상거래인 비율은 약 76%였다.
+
+### Test 결과
+
+- 이상거래 Precision: `0.7261`
+- 이상거래 Recall: `0.6945`
+- 이상거래 F1-score: `0.7100`
+- PR-AUC: `0.7548`
+- Accuracy: `0.9785`
+
+Test 데이터의 실제 이상거래 897건 중 약 623건을 탐지하였다.  
+실제 이상거래의 약 69%를 탐지했지만, 이상거래로 잘못 판단하는 정상거래가 상대적으로 많이 발생하였다.
+
+### LightGBM과 비교
+
+Random Forest는 LightGBM보다 이상거래 Recall이 높았다.  
+그러나 Precision과 F1-score, PR-AUC는 LightGBM보다 낮게 나타났다.
+
+- Random Forest Test F1-score: `0.7100`
+- LightGBM Test F1-score: `0.7210`
+- Random Forest Test PR-AUC: `0.7548`
+- LightGBM Test PR-AUC: `0.7650`
+
+따라서 이상거래를 더 많이 탐지하는 것이 중요하면 Random Forest를 고려할 수 있지만, Precision과 전체적인 이상거래 구분 성능을 종합하면 현재 실험에서는 LightGBM이 더 우수한 모델로 판단된다.</pre></div><div class="cell-code"><div class="cell-tag">In [17]</div><pre class="code-pre"># @title
+# XGBoost 모델을 가져옵니다.
+from xgboost import XGBClassifier
+
+
+# XGBoost 모델을 생성합니다.
+xgb_model = XGBClassifier(
+    n_estimators=300,
+    learning_rate=0.05,
+    max_depth=6,
+    subsample=0.8,
+    colsample_bytree=0.8,
+    random_state=42,
+    n_jobs=-1,
+    eval_metric=&quot;logloss&quot;,
+    tree_method=&quot;hist&quot;,
+)
+
+
+# SMOTENC가 적용된 Train 데이터로 학습합니다.
+xgb_model.fit(
+    X_train_resampled,
+    y_train_resampled,
+)
+
+print(&quot;XGBoost 학습 완료&quot;)
+
+
+# Validation과 Test의 이상거래 확률을 예측합니다.
+xgb_valid_prob = xgb_model.predict_proba(
+    X_valid_scaled
+)[:, 1]
+
+xgb_test_prob = xgb_model.predict_proba(
+    X_test_scaled
+)[:, 1]
+
+
+# 임계값 0.5를 적용합니다.
+xgb_valid_pred = (
+    xgb_valid_prob &gt;= 0.5
+).astype(int)
+
+xgb_test_pred = (
+    xgb_test_prob &gt;= 0.5
+).astype(int)
+
+
+# Validation 결과를 출력합니다.
+print(&quot;[XGBoost Validation 결과]&quot;)
+print(classification_report(
+    y_valid,
+    xgb_valid_pred,
+    target_names=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+    digits=4,
+))
+
+print(
+    &quot;Validation PR-AUC:&quot;,
+    round(
+        average_precision_score(
+            y_valid,
+            xgb_valid_prob,
+        ),
+        4,
+    ),
+)
+
+
+# Test 결과를 출력합니다.
+print(&quot;\n[XGBoost Test 결과]&quot;)
+print(classification_report(
+    y_test,
+    xgb_test_pred,
+    target_names=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+    digits=4,
+))
+
+print(
+    &quot;Test PR-AUC:&quot;,
+    round(
+        average_precision_score(
+            y_test,
+            xgb_test_prob,
+        ),
+        4,
+    ),
+)</pre><pre class="out-txt">XGBoost 학습 완료
+[XGBoost Validation 결과]
+              precision    recall  f1-score   support
+
+        정상거래     0.9869    0.9954    0.9911     11391
+        이상거래     0.8510    0.6629    0.7453       448
+
+    accuracy                         0.9829     11839
+   macro avg     0.9189    0.8292    0.8682     11839
+weighted avg     0.9817    0.9829    0.9818     11839
+
+Validation PR-AUC: 0.7801
+
+[XGBoost Test 결과]
+              precision    recall  f1-score   support
+
+        정상거래     0.9863    0.9944    0.9903     22780
+        이상거래     0.8209    0.6488    0.7248       897
+
+    accuracy                         0.9813     23677
+   macro avg     0.9036    0.8216    0.8576     23677
+weighted avg     0.9800    0.9813    0.9803     23677
+
+Test PR-AUC: 0.7644
+</pre></div><div class="cell-md"><div class="cell-tag">MD [54]</div><pre class="md-pre">## XGBoost + SMOTENC 모델 평가 결과
+
+SMOTENC가 적용된 Train 데이터를 사용하여 XGBoost를 학습하고, 임계값 0.5에서 성능을 평가하였다.
+
+### Validation 결과
+
+- 이상거래 Precision: `0.8510`
+- 이상거래 Recall: `0.6629`
+- 이상거래 F1-score: `0.7453`
+- PR-AUC: `0.7801`
+- Accuracy: `0.9829`
+
+Validation 데이터의 실제 이상거래 448건 중 약 297건을 탐지하였다.  
+이상거래로 예측한 거래 중 약 85%가 실제 이상거래였으며, Precision과 Recall의 균형이 양호하게 나타났다.
+
+### Test 결과
+
+- 이상거래 Precision: `0.8209`
+- 이상거래 Recall: `0.6488`
+- 이상거래 F1-score: `0.7248`
+- PR-AUC: `0.7644`
+- Accuracy: `0.9813`
+
+Test 데이터의 실제 이상거래 897건 중 약 582건을 탐지하였다.  
+실제 이상거래의 약 65%를 탐지했으며, 이상거래로 예측한 거래 중 약 82%가 실제 이상거래였다.
+
+### 모델 비교
+
+| 모델 | Precision | Recall | F1-score | PR-AUC |
+|---|---:|---:|---:|---:|
+| LightGBM + SMOTENC | 0.8077 | 0.6511 | 0.7210 | 0.7650 |
+| Random Forest + SMOTENC | 0.7261 | 0.6945 | 0.7100 | 0.7548 |
+| XGBoost + SMOTENC | 0.8209 | 0.6488 | **0.7248** | 0.7644 |
+
+### 결론
+
+XGBoost는 세 모델 중 Test F1-score가 `0.7248`로 가장 높았으며, Precision도 `0.8209`로 양호하게 나타났다.
+
+LightGBM은 Recall과 PR-AUC에서 XGBoost보다 근소하게 높았고, XGBoost는 Precision과 F1-score에서 더 높은 성능을 보였다.
+
+따라서 이상거래 탐지와 오탐 방지의 균형을 종합적으로 고려하면 XGBoost를 최종 후보 모델로 선택할 수 있다. 다만 LightGBM과 성능 차이가 크지 않으므로, 실제 서비스에서 이상거래를 놓치는 비용을 중요하게 본다면 Recall이 조금 더 높은 LightGBM도 함께 고려할 수 있다.</pre></div><div class="cell-md"><div class="cell-tag">MD [56]</div><pre class="md-pre">## 세 모델 성능 비교
+
+동일한 Train, Validation, Test 분할과 SMOTENC 적용 조건에서 세 모델의 성능을 비교하였다. 모든 모델은 임계값 0.5를 사용하였다.
+
+### Validation 성능 비교
+
+| 모델 | Precision | Recall | F1-score | PR-AUC | Accuracy |
+|---|---:|---:|---:|---:|---:|
+| LightGBM + SMOTENC | **0.8534** | 0.6629 | **0.7462** | **0.7818** | **0.9829** |
+| Random Forest + SMOTENC | 0.7634 | **0.6987** | 0.7296 | 0.7490 | 0.9804 |
+| XGBoost + SMOTENC | 0.8510 | 0.6629 | 0.7453 | 0.7801 | **0.9829** |
+
+### Test 성능 비교
+
+| 모델 | Precision | Recall | F1-score | PR-AUC | Accuracy |
+|---|---:|---:|---:|---:|---:|
+| LightGBM + SMOTENC | 0.8077 | 0.6511 | 0.7210 | **0.7650** | 0.9809 |
+| Random Forest + SMOTENC | 0.7261 | **0.6945** | 0.7100 | 0.7548 | 0.9785 |
+| XGBoost + SMOTENC | **0.8209** | 0.6488 | **0.7248** | 0.7644 | **0.9813** |
+
+### 모델별 특징
+
+- **LightGBM**
+  - Validation F1-score가 가장 높다.
+  - Validation과 Test의 PR-AUC가 가장 높다.
+  - 이상거래를 구분하는 전체적인 성능이 가장 안정적이다.
+
+- **Random Forest**
+  - Validation과 Test 모두 Recall이 가장 높다.
+  - 실제 이상거래를 가장 많이 탐지한다.
+  - 그러나 Precision과 F1-score가 가장 낮아 오탐이 상대적으로 많다.
+
+- **XGBoost**
+  - Test Precision, F1-score, Accuracy가 가장 높다.
+  - 이상거래로 판단한 결과의 정확도가 가장 좋다.
+  - 다만 Recall과 PR-AUC는 LightGBM보다 근소하게 낮다.
+
+### 종합 결론
+
+세 모델의 성능 차이는 크지 않지만, 평가 기준에 따라 장점이 다르게 나타났다.
+
+실제 이상거래를 최대한 많이 탐지하려면 Recall이 가장 높은 Random Forest가 적합하다.
+
+오탐을 줄이면서 이상거래 예측 결과의 정확도와 F1-score를 높이려면 XGBoost가 적합하다.
+
+이상거래 탐지의 전체적인 구분 성능과 PR-AUC를 중요하게 고려하면 LightGBM이 가장 안정적인 모델로 판단된다.
+
+따라서 본 연구에서는 PR-AUC와 Validation 성능이 가장 안정적으로 나타난 LightGBM을 최종 모델 후보로 선정하고, Random Forest와 XGBoost는 비교 모델로 제시한다.</pre></div><div class="cell-md"><div class="cell-tag">MD [58]</div><pre class="md-pre">## LightGBM 혼동행렬 확인
+
+최종 모델인 LightGBM의 Test 예측 결과를 혼동행렬로 확인한다.
+
+혼동행렬을 통해 정상거래를 이상거래로 잘못 판단한 오탐과, 실제 이상거래를 정상거래로 판단한 미탐을 확인한다.</pre></div><div class="cell-code"><div class="cell-tag">In [18]</div><pre class="code-pre"># @title
+# 한글 폰트를 설치합니다.
+!apt-get -qq update
+!apt-get -qq install fonts-nanum
+!fc-cache -fv</pre><pre class="out-txt">W: Skipping acquire of configured file &#x27;main/source/Sources&#x27; as repository &#x27;https://r2u.stat.illinois.edu/ubuntu noble InRelease&#x27; does not seem to provide it (sources.list entry misspelt?)
+Selecting previously unselected package fonts-nanum.
+(Reading database ... 127332 files and directories currently installed.)
+Preparing to unpack .../fonts-nanum_20200506-1_all.deb ...
+Unpacking fonts-nanum (20200506-1) ...
+Setting up fonts-nanum (20200506-1) ...
+Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+Font directories:
+	/root/.local/share/fonts
+	/usr/local/share/fonts
+	/usr/share/fonts
+	/root/.fonts
+	/usr/share/fonts/truetype
+	/usr/share/fonts/truetype/humor-sans
+	/usr/share/fonts/truetype/liberation
+	/usr/share/fonts/truetype/nanum
+/root/.local/share/fonts: skipping, no such directory
+/usr/local/share/fonts: caching, new cache contents: 0 fonts, 0 dirs
+/usr/share/fonts: caching, new cache contents: 0 fonts, 1 dirs
+/usr/share/fonts/truetype: caching, new cache contents: 0 fonts, 3 dirs
+/usr/share/fonts/truetype/humor-sans: caching, new cache contents: 1 fonts, 0 dirs
+/usr/share/fonts/truetype/liberation: caching, new cache contents: 12 fonts, 0 dirs
+/usr/share/fonts/truetype/nanum: caching, new cache contents: 12 fonts, 0 dirs
+/root/.fonts: skipping, no such directory
+/usr/share/fonts/truetype: skipping, looped directory detected
+/usr/share/fonts/truetype/humor-sans: skipping, looped directory detected
+/usr/share/fonts/truetype/liberation: skipping, looped directory detected
+/usr/share/fonts/truetype/nanum: skipping, looped directory detected
+/var/cache/fontconfig: cleaning cache directory
+/root/.cache/fontconfig: not cleaning non-existent cache directory
+/root/.fontconfig: not cleaning non-existent cache directory
+fc-cache: succeeded
+</pre></div><div class="cell-code"><div class="cell-tag">In [19]</div><pre class="code-pre"># @title
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+
+
+# 한글 폰트 경로를 지정합니다.
+font_path = &quot;/usr/share/fonts/truetype/nanum/NanumGothic.ttf&quot;
+font_prop = fm.FontProperties(fname=font_path)
+
+
+# 혼동행렬을 계산합니다.
+lgb_cm = confusion_matrix(
+    y_test,
+    test_pred,
+)
+
+
+# 혼동행렬을 출력합니다.
+print(&quot;LightGBM 혼동행렬&quot;)
+print(lgb_cm)
+
+
+# 혼동행렬을 그립니다.
+plt.figure(figsize=(7, 6))
+
+ax = sns.heatmap(
+    lgb_cm,
+    annot=True,
+    fmt=&quot;d&quot;,
+    cmap=&quot;Blues&quot;,
+    xticklabels=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+    yticklabels=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+)
+
+
+# 한글 폰트를 각 요소에 직접 적용합니다.
+ax.set_xticklabels(
+    [&quot;정상거래&quot;, &quot;이상거래&quot;],
+    fontproperties=font_prop,
+)
+
+ax.set_yticklabels(
+    [&quot;정상거래&quot;, &quot;이상거래&quot;],
+    fontproperties=font_prop,
+)
+
+plt.xlabel(
+    &quot;예측값&quot;,
+    fontproperties=font_prop,
+)
+
+plt.ylabel(
+    &quot;실제값&quot;,
+    fontproperties=font_prop,
+)
+
+plt.title(
+    &quot;LightGBM + SMOTENC 혼동행렬&quot;,
+    fontproperties=font_prop,
+)
+
+plt.tight_layout()
+plt.show()</pre><pre class="out-txt">LightGBM 혼동행렬
+[[22641   139]
+ [  313   584]]
+</pre><pre class="out-txt">/usr/local/lib/python3.13/dist-packages/seaborn/utils.py:61: UserWarning: Glyph 51221 (\N{HANGUL SYLLABLE JEONG}) missing from font(s) DejaVu Sans.
+  fig.canvas.draw()
+/usr/local/lib/python3.13/dist-packages/seaborn/utils.py:61: UserWarning: Glyph 49345 (\N{HANGUL SYLLABLE SANG}) missing from font(s) DejaVu Sans.
+  fig.canvas.draw()
+/usr/local/lib/python3.13/dist-packages/seaborn/utils.py:61: UserWarning: Glyph 44144 (\N{HANGUL SYLLABLE GEO}) missing from font(s) DejaVu Sans.
+  fig.canvas.draw()
+/usr/local/lib/python3.13/dist-packages/seaborn/utils.py:61: UserWarning: Glyph 47000 (\N{HANGUL SYLLABLE RAE}) missing from font(s) DejaVu Sans.
+  fig.canvas.draw()
+/usr/local/lib/python3.13/dist-packages/seaborn/utils.py:61: UserWarning: Glyph 51060 (\N{HANGUL SYLLABLE I}) missing from font(s) DejaVu Sans.
+  fig.canvas.draw()
+</pre><img class="out-img" src="data:image/png;base64,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N/Tnn39q//79atSokf7zn//Y3bbdtWuXnnnmGe3fv1979uzRmTNnbLeNx44dq2+//VZhYWHasWOHLW3atGmT3W3kzEpMTNQbb7yh1q1by9vb225bmTJlVLhwYW3evNlu/dSpU/XKK69k+Vz34uXlpRkzZqht27YaOXKkwxSvfv36+vPPP3Xy5EnbutTUVM2bN09t27a1a5uYmKgjR46oRo0aGR6rVq1aio2Nzb6LkBQYGKhnn302w4eAJCkmJkbh4eHy8vLK8rFv73PhwgXbuuTkZCUkJMjHxyfDffr37699+/bpwIEDio6OVsmSJe3GiI4cOdKu/RdffKGJEydq3LhxmjJlijp06GAr1osWLao9e/ak20eSbTjEjRs3dPLkSW3cuFHlypXTnj17tGfPngzTWgC4F27NA9lo1qxZ2r59uy197Nixo77++mu7NsHBwWrXrp2k/7tFvmjRItuYzoxcuHBBBQsWtH1eu3atLQW8fv26mjVrprFjx9q2jxo1Sl999ZUOHTqk8PBw/fzzzxket2vXrpoyZYpq164tSdq3b59cXV0VFBR01+vcsWOHOnfubJeCVq9e3fbryZMnq2bNmun2a9GihTZu3KiuXbtq2rRpmjFjhqpVq2bXxmKxqFOnToqKitKQIUMkSStWrFCtWrVsQwtuS0xMVP78+TMcTyrdGrZw6dKlu17LneLj4xUWFmb77OnpqU2bNqVLhwcPHqywsDD16NEj3RjbhIQE5cuXL9PnvFPhwoX1008/afTo0Tp06JAuXLiggIAAPf7445o/f75d2++//972INVtly9f1vnz59MNCZCkpk2bqkGDBipdurQ2btyoBg0aKDk5WTExMWrduvVd+1W3bl0NHz5cn376qTw9PVWgQAGVKlVKLVq0sLVxdXWViwvZBoCsoRAFskliYqJu3ryp0qVL260PDw+3+5w/f367z/7+/jp79uxdj50vXz6dP3/e9rlBgwa2h2qioqL0yy+/2LUfPny4unbtqhs3bmjmzJl6/PHHtXnz5nQF0nPPPafIyEhdvXpV3t7emU5Dw8LCtH37dttni8Wibdu22T3A40hoaKi2bNmicePGqX79+oqJiVGFChXs2rzyyitq0KCBBg8eLIvFoqlTp+rVV19Nd6y8efPqwoULSk5OzrAYPX36tMMkMSP+/v4OH1a6U4ECBfTGG2/o/fff11dffWW3zdfXVwkJCZk+599FRERo/vz5iouLU0REhMNEt2bNmun+W5Okl156KcP2t9sOHTpUAwYM0COPPCJXV1e9+OKLev7555WSkpLh0AdJat269T2L1R07dihv3rx3bQMAf0chCmSTq1evphuHKd39ARXpVhH39yeh/y4iIkLR0dF67LHHstQnLy8vde7cWWvXrtWMGTPUs2fPdNufeuopzZ07Vy+//LLmzZuX7beyM2KxWNS7d2/FxcXp22+/tT15fVvRokVVvnx5rVu3TmFhYYqNjdXMmTPTHcfX11fFixdXTExMht/N1q1bValSJUOuoU+fPgoODk43FvSRRx5RTEyMkpKS7vl7f9tbb71l9xDXbV5eXhmm0/3791e3bt1UsWJFSbceJpozZ452796tK1euyM/PTzVr1rRNWXUnb29vjR8/Pt0x3d3d9d5770m6NV1ZrVq10rVp0qSJTp8+neE1JCYm6tChQ5m+ZgCQKESBbFO4cGG5uLjozz//VJkyZWzrt2zZoipVqmT6OBk9JPT666+rcePG6tatW4bTLd2Ll5dXhkWydOvhoN69eysgIEA1atSQr69vlo/v4uKS6SmE7uTn5+fwIZfbDy099thjat26tcPbvu3atdPnn3+erhBNS0vT2LFj002DlV1y5cqlIUOGKDIy0m78bdGiRdWwYUONGzdO77zzTqaONW7cOEm3HnQqWLBglr7Lfv36aceOHRoyZIiqVaumvHnz6syZM4qOjtaLL76okSNH6vnnn0+33/Xr1zVmzBgtW7ZMN2/etI0BLVq0qNq2basOHTqk22fVqlUO+1GiRAlduXKFQhRAljCgB8gmLi4uGjRokN566y3bU/ATJkzQtm3bVKBAgUwfp0CBAjp58qRSU1Nt64KDgzV06FA1bNhQGzZssGt/r9vAq1at0rJly9S0adMMt1erVk3Xrl3TiBEj1Llz50z3806pqan3fMrearVq586dts+HDx/WlClT1LVr1wzbP/XUU/r11181ceLEu/YrMjJSe/fu1cCBA20TsicmJqpLly5ycXG56zRL/1Tnzp21b98+bdu2zW79xIkT9cMPP2jUqFG6du2abf3169fvOjdr8+bN9b///S9LfZgxY4amTp2qhg0bKl++fHJzc1OxYsXUvn17DRkyRHPmzMlwv9szI6xevVpbt261PaE/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" alt="output"></div><div class="cell-md"><div class="cell-tag">MD [61]</div><pre class="md-pre">## 혼동행렬 위치별 의미
+
+혼동행렬은 행이 실제 거래 유형이고, 열이 모델의 예측 결과이다.
+
+| 위치 | 의미 |
+|---|---|
+| 왼쪽 위 | 실제 정상거래를 정상거래로 정확히 예측한 경우 |
+| 오른쪽 위 | 실제 정상거래를 이상거래로 잘못 예측한 경우이며, **오탐**이다 |
+| 왼쪽 아래 | 실제 이상거래를 정상거래로 잘못 예측한 경우이며, **미탐**이다 |
+| 오른쪽 아래 | 실제 이상거래를 이상거래로 정확히 예측한 경우 |
+
+현재 혼동행렬은 다음과 같다.
+
+| 실제값＼예측값 | 정상거래 | 이상거래 |
+|---|---:|---:|
+| 정상거래 | 22,641 | 139 |
+| 이상거래 | 313 | 584 |
+
+### 결과 해석
+
+- 왼쪽 위 `22,641건`
+  - 정상거래를 정상거래로 정확하게 분류했다.
+  - 정상거래를 잘 구분한 결과이다.
+
+- 오른쪽 위 `139건`
+  - 정상거래인데 이상거래라고 판단했다.
+  - 실제 고객에게 불필요한 경고를 보낸 경우이다.
+  - 이런 오류를 **오탐**이라고 한다.
+
+- 왼쪽 아래 `313건`
+  - 실제 이상거래인데 정상거래로 판단했다.
+  - 이상거래를 놓친 경우이다.
+  - 이런 오류를 **미탐**이라고 한다.
+  - 이상거래 탐지에서는 특히 주의해야 하는 오류이다.
+
+- 오른쪽 아래 `584건`
+  - 이상거래를 이상거래로 정확하게 탐지했다.
+  - 모델이 이상거래를 제대로 찾아낸 결과이다.
+
+### 전체적인 의미
+
+실제 이상거래는 총 `897건`이며, 이 중 `584건`을 찾아냈다.  
+따라서 실제 이상거래의 약 65%를 탐지하고, `313건`은 놓쳤다.
+
+정상거래는 총 `22,780건`이며, 이 중 `22,641건`을 정상거래로 정확하게 분류했다.  
+정상거래를 이상거래로 잘못 판단한 경우는 `139건`으로 비교적 적었다.
+
+즉, 현재 모델은 정상거래를 정확하게 구분하는 데 강점이 있다.  
+하지만 이상거래의 일부를 놓치는 미탐이 발생하므로, 이상거래를 더 많이 탐지하려면 임계값을 낮추는 방법을 고려할 수 있다.
+
+다만 임계값을 낮추면 오탐도 증가할 수 있으므로, 이상거래 미탐과 정상거래 오탐 사이의 균형을 고려해야 한다.</pre></div><div class="cell-md"><div class="cell-tag">MD [63]</div><pre class="md-pre">## LightGBM 변수 중요도 분석
+
+최종 모델인 LightGBM이 이상거래를 탐지할 때 어떤 변수를 중요하게 사용했는지 확인한다.
+
+변수 중요도는 모델이 학습 과정에서 각 변수를 얼마나 많이 활용했는지를 나타내며, 값이 클수록 모델의 예측에 더 큰 영향을 준 변수로 해석할 수 있다.</pre></div><div class="cell-code"><div class="cell-tag">In [20]</div><pre class="code-pre"># @title
+# 변수 중요도를 데이터프레임으로 정리합니다.
+importance_df = pd.DataFrame({
+    &quot;feature&quot;: X_train_scaled.columns,
+    &quot;importance&quot;: lgb_model.booster_.feature_importance(
+        importance_type=&quot;gain&quot;
+    ),
+})
+
+
+# 중요도가 높은 순서로 정렬합니다.
+importance_df = importance_df.sort_values(
+    &quot;importance&quot;,
+    ascending=False,
+).reset_index(drop=True)
+
+
+# 변수 중요도 표를 출력합니다.
+display(importance_df)
+
+
+# 변수 중요도를 시각화합니다.
+plt.figure(figsize=(9, 6))
+
+sns.barplot(
+    data=importance_df,
+    x=&quot;importance&quot;,
+    y=&quot;feature&quot;,
+    color=&quot;steelblue&quot;,
+)
+
+plt.xlabel(&quot;Importance&quot;)
+plt.ylabel(&quot;Feature&quot;)
+plt.title(&quot;LightGBM Feature Importance&quot;)
+plt.tight_layout()
+plt.show()</pre><pre class="out-txt">                   feature     importance
+0                      amt  600697.462590
+1                     hour   75164.720705
+2                    limit   32107.509036
+3          days_since_last   25833.669644
+4       amt_to_limit_ratio   23305.458315
+5   amt_diff_from_user_avg   18864.348975
+6          is_new_merchant    2635.993377
+7                is_online    2009.298965
+8               is_weekend     817.369234
+9              is_overseas      37.813490
+10           limit_is_zero      20.558890
+11             is_midnight       8.812184
+12    overseas_online_risk       0.000000</pre><img class="out-img" src="data:image/png;base64,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QVOmTMk2GN9Y74O2atUqq3Px008/aceOHWrdurWkv+/K1q5dW/Pnz7c6NwcOHNA333yT6wCf0/ktXry4LBaL1TDaEydOaNWqVfk6nmLFiqldu3b66quvtHPnzlvWZ30WOnfubL5a5GYXL140/0MGgAeLO3kAgELlk08+yfZ9XW+88Ua27cePH6+nn35a4eHh6tWrly5cuKD3339f1atXv+0dstupV6+eJCkqKkotW7ZU8eLF9eyzz0qS/ve//6lVq1Zq166dWrdurcjISHl7e+v333/Xt99+q++//978Yn+j3bt363//+58k6dKlS9q4caNWrFihRo0a6Z///GeOtXh6eio6Ojpfx5EbH3zwgRo3bqwaNWqob9++Kl++vP744w9t375dv/32m/kevLZt2+rtt99Wr1691KhRI+3fv1+LFi265Q5chQoV5OXlpQ8//FDu7u5ydXVVgwYNVK5cOfXp00fLly9Xq1at1LlzZx09elT/+9//rB4AcjvFihXTnDlz1Lp1a1WrVk29evVS6dKldfr0aX333Xfy8PAwg/ODFhISosaNG6tfv35KS0vTtGnT5OvrazWMcfLkyWrdurUaNmyo3r17m69QyMs1zumz2aZNG/3f//2fWrVqpW7duuns2bP64IMPFBISon379uXrmMaPH69vvvlGzZo100svvaQqVaooMTFRy5Yt09atW+Xl5aUhQ4boyy+/VNu2bdWzZ0/Vq1dPly9f1v79+7V8+XKdOHHC6k4vgAek4B7sCQDA/y/rUfY5TadOncr2FQqGYRhLly41KleubDg6OhrVq1c3vvzyS+OZZ54xKleubLbJ7vH5WSQZY8aMMeevX79uvP7664afn59hsVhueWT9lStXjGnTphkNGzY0PDw8DDs7OyMgIMBo27atsWjRIuP69eu37PfGyc7OzihfvrwxZMgQq1c/GIb1KxRyktdXKGR3zDc6evSo0aNHDyMgIMCwt7c3SpcubbRt29ZYvny52ebq1avGm2++aZQqVcpwdnY2wsPDje3bt9/y+gPD+Pu1FFWrVjXs7OxuuV5Tp041SpcubTg6Ohrh4eHGzp07c3yFQk7Ht2fPHqNDhw6Gr6+v4ejoaAQFBRmdO3c2Nm7cmOfzkdOrO7JeY3Du3Dmr5S+88ILh6uqabZ9Tp041ypQpYzg6OhpNmjQx9u7de0sN3377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BXon78knn1RQUJBmz56twMBAZWZmqnr16rp27ZrZxt7e3vzbYrFku+zG4Z1FnbOzs3mceXHjOZH+Pi/ZLcvtubJYLFbDHiVZDQ+tW7eujh8/rrVr1+rbb79V586dFRkZqeXLlyslJUWlSpXK9neJXl5e5t+urq65qiVLbj4v3bt3V1RUlN577z0tXrxYNWrUsPqPAvkxfPhwDRo0yJxPTk4m6AEAAKDQKrCQ99dffyk+Pl6zZ882h9Zt3br1rvt1cHDI9cNFJKlKlSpauHChrl69at7N+/HHH++6jnulSpUqun79unbs2GEO18w6d1WrVr1v+/Xz81NiYqI5f/jwYaWmplq18fDwUJcuXdSlSxd17NhRrVq10vnz51W3bl39/vvvsrOzs/qd3t3I7efl6aef1ksvvaR169Zp8eLF6tGjh7muUqVKun79uvbs2aN69epJ+vt3gRcuXLjtvh0dHc1hpwAAAEBhV2DDNb29veXr66uPPvpIR44c0aZNm6zuluRXcHCw9u3bp/j4eP35559Wd5+y061bN1ksFvXt21cHDx7UmjVrNGXKlLuu414JDQ3V008/rb59+2rr1q3au3evnnvuOZUuXVpPP/30fdtv8+bN9f7772vPnj3auXOnXnnlFas7g//3f/+nJUuW6JdfftGvv/6qZcuWKSAgQF5eXoqMjFTDhg3Vrl07ffPNNzpx4oR++OEHjRgxQjt37sxXPbn9vLi6uqpdu3YaNWqUDh06pK5du5rrKleurMjISL300kv66aeftGfPHr300kv5vnsKAAAAFEYFFvKKFSumpUuXateuXapevboGDhyoyZMn33W/ffv2VaVKlRQWFiY/Pz9t27bttu3d3Nz01Vdfaf/+/apTp45GjBih//73v3ddx700d+5c1atXT23btlXDhg1lGIbWrFlzy3DMe2nq1KkqU6aMmjRpom7dumnw4MFycXEx17u7u2vSpEkKCwtT/fr1deLECa1Zs0bFihWTxWLRmjVr1LRpU/Xq1UsVK1bUs88+q5MnT5q/q8yrvHxeunfvrr1796pJkyYqW7as1boFCxbI399fTZs2Vfv27dW3b1+5u7vn6hUOAAAAQFFgMW7+4RXwEPntt99UpkwZffvtt2rRokWutklOTpanp6eeHj5H9k4ud94gF5aN7nrnRgAAAHioZX0PTUpKkoeHR47t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b99eaWlpyszM1IQJE1SuXDk5OzurVq1aWr58udk+JiZGFotFGzduVFhYmFxcXNSoUSPFx8db9Ttx4kT5+/vL3d1dvXv31tWrV+94PgAAAICihJBnw3bu3KmoqCi9/fbbio+P17p169S0adM7btekSRNdunRJe/bskSRt3rxZJUqUsAplmzdvVkREhCTp6NGjatWqlZ555hnt27dPn376qbZu3ar+/fub7fv376/t27dr6dKl2rdvnzp16qRWrVrp8OHDt+z/1KlTatKkiapXr67ly5fL0dFREyZM0IIFC/Thhx/q559/1sCBA/Xcc89p8+bNVtuOGDFCU6dO1c6dO2VnZ6cXX3zRXPfZZ58pOjpa48eP186dO1WqVCnNmDHjjucjLS1NycnJVhMAAABQaBmwOc2aNTPeeOMNY8WKFYaHh4eRnJyc5z7q1q1rTJ482TAMw2jXrp3xn//8x3BwcDAuXbpk/Pbbb4Yk49dffzUMwzB69+5tvPTSS1bbb9myxShWrJhx5coV4+TJk0bx4sWN06dPW7Vp0aKFMXz4cMMwDGPu3LmGp6en8csvvxhlypQxoqKijMzMTMMwDOPq1auGi4uL8cMPP1ht37t3b6Nr166GYRjGd999Z0gyvv32W3P9119/bUgyrly5YhiGYTRs2NB49dVXrfpo0KCBUatWrdueizFjxhiSbpmSkpLueB4BAACAeyUpKSlX30O5k2fDHn/8cQUFBal8+fJ6/vnntWjRIqWmpuZq22bNmikmJkaGYWjLli3q0KGDqlSpoq1bt2rz5s0KDAxUaGioJGnv3r2aN2+e3NzczKlly5bKzMzU8ePHtX//fmVkZKhixYpWbTZv3qyjR4+a+7xy5YqaNGmiDh06aPr06bJYLJKkI0eOKDU1VY8//rjV9gsWLLDaXpJq1qxp/l2qVClJ0tmzZyVJhw4dUoMGDazaN2zY8I7nYvjw4UpKSjKnU6dO5eocAgAAAAWBB6/YMHd3d+3evVsxMTH65ptvNHr0aEVHRys2NvaOryuIiIjQJ598or1798re3l6VK1dWRESEYmJidOHCBTVr1sxsm5KSopdffllRUVG39FO2bFnt27dPxYsX165du1S8eHGr9W5ububfjo6OioyM1OrVqzVkyBCVLl3a7F+Svv76a3PZjdvc6ManimaFxMzMzNse6504Ojresh8A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V69eVXJysjw8PO75/vv166dnnnlGu3fv1j//+U+1a9cuT3cDExIS1K5dO/OuoiQdOXJEqampZnjLcu3aNdWpU8dqWVa4lKSjR48qPT1d4eHh5jJ7e3s9+uijOnToUI41TJgwQWPHjs11zQAAAEBBIuTZOHt7e/Nvi8WS47LMzMz7sv/WrVvr5MmTWrNmjTZs2KAWLVrotdde05QpU+647eXLl/XUU0+pYcOGevvtt83lKSkpkqSvv/5apUuXttrG0dHRav5unzYqScOHD9egQYPM+eTkZJUpU+au+wUAAADuB36Th9tycHBQRkbGXfXh5+enF154Qf/73/80bdo0ffTRR3fcxjAMPffcc8rMzNTChQvNMCpJVatWlaOjoxISEhQSEmI13S58VahQQQ4ODtq2bZu5LD09XbGxsapatWqO2zk6OsrDw8NqAgAAAAor7uThtoKDg7V+/XrFx8fL19dXnp6eVncC72T06NGqV6+eqlWrprS0NK1evVpVqlS543bR0dH69ttv9c033yglJcW8e+fp6Sl3d3cNHjxYAwcOVGZmpho3bqykpCRt27ZNHh4eeuGFF7Lt09XVVf369dOQIUPk4+OjsmXLatKkSUpNTVXv3r1zfUwAAABAYUbIw2317dtXMTExCgsLU0pKir777jtFRETkensHBwcNHz5cJ06ckLOzs5o0aaKlS5fecbvNmzcrJSXllt/vzZ07Vz179tS4cePk5+enCRMm6NixY/Ly8lLdunX1r3/967b9Tpw4UZmZmXr++ed16dIlhYWFaf369fL29s71MQEAAACFmcUwDKOgiwCKkuTkZHl6eiopKYmhmwAAAHhgcvs9lN/kAQAAAIANIeQhT8aPH2++w+7mKevdcw+yHwAAAADWGK6JPDl//rzOnz+f7TpnZ+dbXmlwv/spCAzXBAAAQEHI7fdQHryCPPHx8ZGPj0+h6QcAAACANYZrAgAAAIANIeQBAAAAgA0h5AEAAACADSHkAQAAAIANIeQBAAAAgA0h5AEAAACADSHkAQAAAIANIeQBAAAAgA0h5AEAAACADSHkAQAAAIANIeQBAAAAgA0h5AEAAACADSHkAQAAAIANIeQBAAAAgA0h5AEAAACADSHkAQAAAIANIeQBAAAAgA0h5AEAAACADSHkAQAAAIANIeQBAAAAgA0h5AEAAACADSHkAQAAAIANIeQBAAAAgA0h5NmoiIgIDRgw4IHvNyYmRhaLRRcvXsyxzbx58+Tl5ZWnfvNzPBaLRatWrcrTNgAAAEBRZ1fQBeD+WLlypezt7R/4fhs1aqTExER5enre037vx/HExMToscce04ULF/IcOgEAAIDCipBno3x8fApkvw4ODgoICLjn/RbU8QAAAABFDcM1bdSNwxtnzJih0NBQOTk5yd/fXx07dsx1H6+//roGDBggb29v+fv7a/bs2bp8+bJ69eold3d3hYSEaO3ateY22Q3XnDdvnsqWLSsXFxe1b99ef/31l9V+oqOjVbt2bS1cuFDBwcHy9PTUs88+q0uXLmV7PJKUmJioNm3ayNnZWeXKldPixYsVHBysadOmWfX9559/qn379nJxcVFoaKi+/PJLSdKJEyf02GOPSZK8vb1lsVjUs2fPXJ0XAAAAoDAj5Nm4nTt3KioqSm+//bbi4+O1bt06NW3aNNfbz58/XyVKlNBPP/2k119/Xf369VOnTp3UqFEj7d69W//85z/1/PPPKzU1Ndvtd+zYod69e6t///6Ki4vTY489pn//+9+3tDt69KhWrVql1atXa/Xq1dq8ebMmTpyYY109evTQmTNnFBMToxUrVuijjz7S2bNnb2k3duxYde7cWfv27dMTTzyh7t276/z58ypTpoxWrFghSYqPj1diYqKmT5+e6/MCAAAAFFaEPBuXkJAgV1dXtW3bVkFBQapTp46ioqJyvX2tWrU0cuRIhYaGavjw4XJyclKJEiXUt29fhYaGavTo0frrr7+0b9++bLefPn26WrVqpaFDh6pixYqKiopSy5Ytb2mXmZmpefPmqXr16mrSpImef/55bdy4Mds+f/nlF3377beaPXu2GjRooLp162rOnDm6cuXKLW179uyprl27KiQkROPHj1dKSop++uknFS9e3BwCWrJkSQUEBOT4O8K0tDQlJydbTQAAAEBhRcizcY8//riCgoJUvnx5Pf/881q0aFGOd92yU7NmTfPv4sWLy9fXVzVq1DCX+fv7S1K2d9Ek6dChQ2rQoIHVsoYNG97SLjg4WO7u7uZ8qVKlcuwzPj5ednZ2qlu3rrksJCRE3t7et63f1dVVHh4eOfabkwkTJsjT09OcypQpk6ftAQAAgAeJkGfj3N3dtXv3bi1ZskSlSpXS6NGjVatWrdu+4uBGNz/R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Hh5uLrO3t9ejjz6qQ4cOqXbt2qpSpYp5N2/z5s06e/asOnXqJOnv4X4pKSny9fWVm5ubOR0/flxHjx41+wwKCpKfn585X6tWLbVo0UI1atRQp06dNHv2bF24cEGSdPnyZR09elS9e/e26vPf//63VZ+ffvqpwsPDFRAQIDc3N40cOVIJCQnm+kGDBqlPnz6KjIzUxIkTrba9nUOHDlmdD0kKDw/X4cOHlZGRYS6rWbOm+bfFYlFAQIDOnj2bq31IkouLiypUqGDOlypVytw+t+fgTsLCwm67/k7n6MqVK2rSpIk6dOig6dOny2Kx5NjX8OHDlZSUZE6nTp3KdZ0AAADAg2azIS83unfvboa8xYsXq1WrVvL19ZUkpaSkqFSpUoqLi7Oa4uPjNWTIELMPV1dXqz6LFy+uDRs2aO3atapataree+89VapUScePH1dKSookafbs2VZ9HjhwQD/++KMkafv27erevbueeOIJrV69Wnv27NGIESN07do1cx/R0dH6+eef1aZNG23atElVq1bV559/fs/Oy83DGi0WizIzM+9qe+P/DVfNzTnIjZvP+83udI4cHR0VGRmp1atX6/Tp07fty9HRUR4eHlYTAAAAUFjZbMirUKGCHBwctG3bNnNZenq6YmNjVbVqVUlSt27ddODAAe3atUvLly9X9+7dzbZ169bV77//Ljs7O4WEhFhNJUqUuO2+LRaLwsPDNXbsWO3Zs0cODg76/PPP5e/vr8DAQB07duyWPsuVKydJ+uGHHxQUFKQRI0YoLCxMoaGh5oNgblSxYkUNHDhQ33zzjTp06KC5c+fe8ZxUqVLF6nxI0rZt21SxYkUVL178jtvfC7k5B/fK7c5RsWLFtHDhQtWrV0+PPfaYzpw5c0/3DQAAABQUm32Fgqurq/r166chQ4bIx8dHZcuW1aRJk5SamqrevXtL+vtJko0aNVLv3r2VkZGhp556ytw+MjJSDRs2VLt27TRp0iRVrFhRZ86c0ddff6327dvnOFxwx44d2rhxo/75z3+qZMmS2rFjh86dO6cqVapIksaOHauoqCh5enqqVatWSktL086dO3XhwgUNGjRIoaGhSkhI0NKlS1W/fn19/fXXVnegrly5oiFDhqhjx44qV66cfvvtN8XGxuqZZ5654zl58803Vb9+fY0bN05dunTR9u3b9f777+f6yZb3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" alt="output"></div><div class="cell-md"><div class="cell-tag">MD [65]</div><pre class="md-pre">## LightGBM 변수 중요도 해석
+
+변수 중요도는 LightGBM 모델이 이상거래를 분류할 때 각 변수를 얼마나 많이 활용했는지를 나타낸다.
+
+### 주요 결과
+
+- `amt`
+  - 승인금액의 중요도가 가장 높다.
+  - 현재 모델은 거래금액을 이상거래 판단에 가장 많이 활용하고 있다.
+
+- `hour`
+  - 거래시간이 두 번째로 중요하다.
+  - 특정 시간대에 발생한 거래가 이상거래 판단에 영향을 주는 것으로 나타났다.
+
+- `limit`
+  - 카드 이용한도도 이상거래 판단에 영향을 주는 변수이다.
+
+- `days_since_last`
+  - 최근 이용 이후 경과일수가 중요하게 사용되었다.
+  - 평소 거래 간격과 다른 거래를 판단하는 데 도움이 될 수 있다.
+
+- `amt_to_limit_ratio`
+  - 승인금액이 카드 한도에서 차지하는 비율도 일부 영향을 주었다.
+
+- `amt_diff_from_user_avg`
+  - 현재 승인금액과 카드별 평균 결제금액의 차이도 이상거래 탐지에 활용되었다.
+  - 평소보다 금액이 크게 달라진 거래를 판단하는 데 도움이 될 수 있다.
+
+### 중요도가 낮은 변수
+
+`is_new_merchant`, `is_online`, `is_weekend`, `is_overseas`, `limit_is_zero`, `is_midnight`, `overseas_online_risk`는 상대적으로 중요도가 낮게 나타났다.
+
+이는 해당 변수들이 전혀 필요하지 않다는 뜻은 아니다. 다른 변수들과 함께 사용되면서 일부 거래의 판단에 도움을 줄 수 있지만, 현재 모델에서는 승인금액이나 거래시간보다 영향력이 작았다는 의미이다.
+
+### 종합 해석
+
+현재 모델은 승인금액, 거래시간, 카드한도, 최근 이용 경과일수와 같은 거래 규모와 거래 시점 관련 변수를 중심으로 이상거래를 판단하고 있다.
+
+특히 `amt`의 중요도가 다른 변수보다 매우 높으므로, 승인금액이 이상거래 탐지에 가장 큰 영향을 준 것으로 해석할 수 있다.
+
+단, 변수 중요도는 변수와 이상거래 사이의 인과관계를 의미하지 않는다. 또한 서로 비슷한 정보를 가진 변수끼리는 중요도가 나누어질 수 있으므로, 중요도가 낮다고 해서 해당 변수가 반드시 불필요한 것은 아니다.</pre></div><div class="cell-md"><div class="cell-tag">MD [67]</div><pre class="md-pre">## Soft Voting 확률 평균 앙상블
+
+LightGBM, Random Forest, XGBoost가 예측한 이상거래 확률을 평균내어 최종 확률을 계산한다.
+
+평균 확률이 임계값 `0.5` 이상이면 이상거래로 분류하고, `0.5` 미만이면 정상거래로 분류한다.
+
+각 모델의 최종 예측값만 사용하는 다수결 방식과 달리, 모델이 예측한 확률을 함께 사용한다는 점이 특징이다. 이를 통해 여러 모델의 판단을 종합하여 단일 모델보다 안정적인 예측을 기대할 수 있다.</pre></div><div class="cell-code"><div class="cell-tag">In [21]</div><pre class="code-pre"># @title
+# 세 모델의 Validation 확률을 평균냅니다.
+ensemble_valid_prob = (
+    valid_prob
+    + rf_valid_prob
+    + xgb_valid_prob
+) / 3
+
+
+# 세 모델의 Test 확률을 평균냅니다.
+ensemble_test_prob = (
+    test_prob
+    + rf_test_prob
+    + xgb_test_prob
+) / 3
+
+
+# 임계값 0.5를 적용합니다.
+ensemble_valid_pred = (
+    ensemble_valid_prob &gt;= 0.5
+).astype(int)
+
+ensemble_test_pred = (
+    ensemble_test_prob &gt;= 0.5
+).astype(int)
+
+
+# Validation 결과를 출력합니다.
+print(&quot;[Soft Voting Validation 결과]&quot;)
+print(classification_report(
+    y_valid,
+    ensemble_valid_pred,
+    target_names=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+    digits=4,
+))
+
+print(
+    &quot;Validation PR-AUC:&quot;,
+    round(
+        average_precision_score(
+            y_valid,
+            ensemble_valid_prob,
+        ),
+        4,
+    ),
+)
+
+
+# Test 결과를 출력합니다.
+print(&quot;\n[Soft Voting Test 결과]&quot;)
+print(classification_report(
+    y_test,
+    ensemble_test_pred,
+    target_names=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+    digits=4,
+))
+
+print(
+    &quot;Test PR-AUC:&quot;,
+    round(
+        average_precision_score(
+            y_test,
+            ensemble_test_prob,
+        ),
+        4,
+    ),
+)</pre><pre class="out-txt">[Soft Voting Validation 결과]
+              precision    recall  f1-score   support
+
+        정상거래     0.9873    0.9952    0.9912     11391
+        이상거래     0.8459    0.6741    0.7503       448
+
+    accuracy                         0.9830     11839
+   macro avg     0.9166    0.8346    0.8708     11839
+weighted avg     0.9819    0.9830    0.9821     11839
+
+Validation PR-AUC: 0.7773
+
+[Soft Voting Test 결과]
+              precision    recall  f1-score   support
+
+        정상거래     0.9866    0.9937    0.9902     22780
+        이상거래     0.8049    0.6577    0.7239       897
+
+    accuracy                         0.9810     23677
+   macro avg     0.8958    0.8257    0.8570     23677
+weighted avg     0.9797    0.9810    0.9801     23677
+
+Test PR-AUC: 0.7642
+</pre></div><div class="cell-code"><div class="cell-tag">In [22]</div><pre class="code-pre"># @title
+# LightGBM + XGBoost 확률 평균
+lgb_xgb_valid_prob = (
+    valid_prob
+    + xgb_valid_prob
+) / 2
+
+lgb_xgb_test_prob = (
+    test_prob
+    + xgb_test_prob
+) / 2
+
+
+# LightGBM + Random Forest 확률 평균
+lgb_rf_valid_prob = (
+    valid_prob
+    + rf_valid_prob
+) / 2
+
+lgb_rf_test_prob = (
+    test_prob
+    + rf_test_prob
+) / 2
+
+
+# 임계값 0.5 적용
+lgb_xgb_valid_pred = (
+    lgb_xgb_valid_prob &gt;= 0.5
+).astype(int)
+
+lgb_xgb_test_pred = (
+    lgb_xgb_test_prob &gt;= 0.5
+).astype(int)
+
+lgb_rf_valid_pred = (
+    lgb_rf_valid_prob &gt;= 0.5
+).astype(int)
+
+lgb_rf_test_pred = (
+    lgb_rf_test_prob &gt;= 0.5
+).astype(int)
+
+
+# LightGBM + XGBoost 결과
+print(&quot;[LightGBM + XGBoost Test 결과]&quot;)
+print(classification_report(
+    y_test,
+    lgb_xgb_test_pred,
+    target_names=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+    digits=4,
+))
+
+print(
+    &quot;Test PR-AUC:&quot;,
+    round(
+        average_precision_score(
+            y_test,
+            lgb_xgb_test_prob,
+        ),
+        4,
+    ),
+)
+
+
+# LightGBM + Random Forest 결과
+print(&quot;\n[LightGBM + Random Forest Test 결과]&quot;)
+print(classification_report(
+    y_test,
+    lgb_rf_test_pred,
+    target_names=[&quot;정상거래&quot;, &quot;이상거래&quot;],
+    digits=4,
+))
+
+print(
+    &quot;Test PR-AUC:&quot;,
+    round(
+        average_precision_score(
+            y_test,
+            lgb_rf_test_prob,
+        ),
+        4,
+    ),
+)</pre><pre class="out-txt">[LightGBM + XGBoost Test 결과]
+              precision    recall  f1-score   support
+
+        정상거래     0.9864    0.9945    0.9904     22780
+        이상거래     0.8228    0.6522    0.7276       897
+
+    accuracy                         0.9815     23677
+   macro avg     0.9046    0.8233    0.8590     23677
+weighted avg     0.9802    0.9815    0.9805     23677
+
+Test PR-AUC: 0.7659
+
+[LightGBM + Random Forest Test 결과]
+              precision    recall  f1-score   support
+
+        정상거래     0.9869    0.9934    0.9901     22780
+        이상거래     0.7989    0.6644    0.7255       897
+
+    accuracy                         0.9810     23677
+   macro avg     0.8929    0.8289    0.8578     23677
+weighted avg     0.9798    0.9810    0.9801     23677
+
+Test PR-AUC: 0.7633
+</pre></div><div class="cell-md"><div class="cell-tag">MD [70]</div><pre class="md-pre">## 이중 모델 앙상블 성능 비교
+
+LightGBM과 XGBoost, LightGBM과 Random Forest의 이상거래 확률을 각각 평균내어 Test 성능을 비교하였다. 두 앙상블 모두 임계값 0.5를 사용하였다.
+
+### Test 결과 비교
+
+| 모델 | Precision | Recall | F1-score | PR-AUC | Accuracy |
+|---|---:|---:|---:|---:|---:|
+| LightGBM + XGBoost | **0.8228** | 0.6522 | **0.7276** | **0.7659** | **0.9815** |
+| LightGBM + Random Forest | 0.7989 | **0.6644** | 0.7255 | 0.7633 | 0.9810 |
+
+### LightGBM + XGBoost 해석
+
+LightGBM과 XGBoost 앙상블은 이상거래 Precision `0.8228`, Recall `0.6522`, F1-score `0.7276`, PR-AUC `0.7659`를 기록하였다.
+
+세 모델 평균 앙상블의 F1-score `0.7239`보다 높고, 단일 XGBoost의 F1-score `0.7248`보다도 높았다. 또한 PR-AUC가 `0.7659`로 전체 모델 중 가장 높게 나타났다.
+
+### LightGBM + Random Forest 해석
+
+LightGBM과 Random Forest 앙상블은 Recall이 `0.6644`로 두 앙상블 중 가장 높았다.
+
+따라서 실제 이상거래를 더 많이 탐지할 수 있다는 장점이 있다. 그러나 Precision은 `0.7989`로 LightGBM + XGBoost보다 낮아 정상거래를 이상거래로 잘못 판단하는 오탐이 더 많이 발생하였다.
+
+### 종합 결론
+
+LightGBM + XGBoost 앙상블은 F1-score, PR-AUC, Precision, Accuracy에서 더 높은 성능을 보였다.
+
+LightGBM + Random Forest 앙상블은 Recall이 더 높아 이상거래를 놓치지 않는 것이 중요한 경우에 적합하다.
+
+전체적인 성능과 Precision, F1-score, PR-AUC를 종합하면 **LightGBM + XGBoost 앙상블을 최종 앙상블 후보로 선택하는 것이 적절하다.**</pre></div><div class="cell-md"><div class="cell-tag">MD [72]</div><pre class="md-pre">## SMOTENC 비율별 LightGBM 성능 비교
+
+SMOTENC의 `sampling_strategy`를 변경하여 이상거래 데이터 증강 비율에 따른 LightGBM 성능 변화를 비교한다.
+
+각 비율의 성능은 Validation 데이터로 비교하고, 가장 높은 F1-score를 보인 비율을 선택하여 Test 데이터에서 최종 평가한다.</pre></div><div class="cell-code"><div class="cell-tag">In [23]</div><pre class="code-pre"># @title
+# SMOTENC를 가져옵니다.
+from imblearn.over_sampling import SMOTENC
+
+# LightGBM을 가져옵니다.
+from lightgbm import LGBMClassifier
+
+# 평가 지표를 가져옵니다.
+from sklearn.metrics import (
+    precision_score,
+    recall_score,
+    f1_score,
+    average_precision_score,
+)
+
+# 결과 저장용 리스트를 만듭니다.
+results = []
+
+# SMOTENC 비율을 하나씩 실험합니다.
+for ratio in [0.1, 0.2, 0.3, 0.5]:
+
+    # 현재 비율로 SMOTENC를 생성합니다.
+    smote = SMOTENC(
+        categorical_features=categorical_indices,
+        sampling_strategy=ratio,
+        random_state=42,
+    )
+
+    # Train 데이터에만 SMOTENC를 적용합니다.
+    X_res, y_res = smote.fit_resample(
+        X_train_scaled,
+        y_train,
+    )
+
+    # LightGBM 모델을 생성합니다.
+    model = LGBMClassifier(
+        n_estimators=300,
+        learning_rate=0.05,
+        max_depth=6,
+        num_leaves=31,
+        random_state=42,
+        n_jobs=-1,
+        verbosity=-1,
+    )
+
+    # SMOTENC가 적용된 Train 데이터로 학습합니다.
+    model.fit(X_res, y_res)
+
+    # Validation 이상거래 확률을 예측합니다.
+    prob = model.predict_proba(
+        X_valid_scaled
+    )[:, 1]
+
+    # 임계값 0.5로 최종 분류합니다.
+    pred = (prob &gt;= 0.5).astype(int)
+
+    # 현재 비율의 성능을 저장합니다.
+    results.append({
+        &quot;SMOTENC 비율&quot;: ratio,
+        &quot;Precision&quot;: precision_score(
+            y_valid,
+            pred,
+        ),
+        &quot;Recall&quot;: recall_score(
+            y_valid,
+            pred,
+        ),
+        &quot;F1-score&quot;: f1_score(
+            y_valid,
+            pred,
+        ),
+        &quot;PR-AUC&quot;: average_precision_score(
+            y_valid,
+            prob,
+        ),
+    })
+
+# 실험 결과를 표로 변환합니다.
+ratio_table = pd.DataFrame(results)
+
+# F1-score가 높은 순서로 정렬합니다.
+ratio_table = ratio_table.sort_values(
+    &quot;F1-score&quot;,
+    ascending=False,
+)
+
+# 비율별 성능을 출력합니다.
+display(ratio_table)
+
+# 가장 좋은 SMOTENC 비율을 출력합니다.
+print(
+    &quot;최적 비율:&quot;,
+    ratio_table.iloc[0][&quot;SMOTENC 비율&quot;],
+)</pre><pre class="out-txt">   SMOTENC 비율  Precision    Recall  F1-score    PR-AUC
+1         0.2   0.853448  0.662946  0.746231  0.781754
+2         0.3   0.837989  0.669643  0.744417  0.782553
+0         0.1   0.843931  0.651786  0.735516  0.779662
+3         0.5   0.814208  0.665179  0.732187  0.768207</pre><pre class="out-txt">최적 비율: 0.2
+</pre></div><div class="cell-md"><div class="cell-tag">MD [74]</div><pre class="md-pre">## 20. 금융 이상거래 3단계 경보 시연
+
+기존 **LightGBM `test_prob`** 예측 결과를 그대로 사용합니다.
+
+- 녹색: 예측 확률 30% 미만 / 노랑: 30~50% 미만 / 적색: 50% 이상
+- 임계값은 시연용 기준이며 실제 결제 차단은 구현하지 않았습니다.
+- 음성은 `gTTS`를 이용하므로 생성 시 인터넷 접속이 필요합니다. 재생은 오디오 플레이어의 ▶ 버튼을 누릅니다.
+- 학습 때 저장한 모델과 `test_prob`, `test_df`가 이미 준비되어 있어야 합니다.</pre></div><div class="cell-code"><div class="cell-tag">In [4]</div><pre class="code-pre"># 처음 한 번만 실행: 음성을 만들기 위한 도구 설치
+!pip -q install gTTS pydub</pre></div><div class="cell-code"><div class="cell-tag">In [2]</div><pre class="code-pre"># 1. 사용할 라이브러리
+import numpy as np
+import pandas as pd
+from html import escape
+from io import BytesIO
+from IPython.display import display, HTML, Audio
+from gtts import gTTS
+from pydub import AudioSegment
+from pydub.generators import Sine
+
+# 2. 경보를 나누는 기준 (시연용)
+CAUTION = 0.30
+BLOCK = 0.50
+
+# 3. 앞에서 계산한 LightGBM 예측 확률을 가져오기
+if &quot;test_prob&quot; not in globals() or &quot;test_df&quot; not in globals():
+    raise RuntimeError(&quot;먼저 LightGBM Test 예측 셀을 실행하세요.&quot;)
+
+prob = np.asarray(test_prob, dtype=float)
+if len(prob) != len(test_df):
+    raise ValueError(&quot;예측 확률과 Test 데이터 행 수가 다릅니다.&quot;)
+
+# 4. 확률 구간별 거래 위치 찾기
+valid = np.isfinite(prob) &amp; (prob &gt;= 0) &amp; (prob &lt;= 1)
+green_rows = np.where(valid &amp; (prob &lt; CAUTION))[0]
+yellow_rows = np.where(valid &amp; (prob &gt;= CAUTION) &amp; (prob &lt; BLOCK))[0]
+red_rows = np.where(valid &amp; (prob &gt;= BLOCK))[0]
+
+# 5. 단계별 화면 색상, 메시지, 음성 안내
+# 각 단계별로: 제목, 글자색, 배경색, 안내문, 음성문, 경고음 횟수, 음높이
+# 5. 단계별 화면 색상 및 음성 안내
+# 제목, 글자색, 배경색, 음성문, 경고음 횟수, 음높이
+ALERTS = {
+    &quot;green&quot;: (
+        &quot;정상거래&quot;, &quot;#116329&quot;, &quot;#EDF8EF&quot;,
+        &quot;안내합니다. 정상 거래로 예측되었습니다. 거래 내역을 확인해 주세요.&quot;,
+        1, 540
+    ),
+    &quot;yellow&quot;: (
+        &quot;이상거래 의심&quot;, &quot;#995100&quot;, &quot;#FFF2DB&quot;,
+        &quot;주의하세요. 이상 거래가 의심됩니다. 본인이 결제한 거래인지 확인해 주세요.&quot;,
+        2, 750
+    ),
+    &quot;red&quot;: (
+        &quot;위험거래 차단&quot;, &quot;#9F1D1D&quot;, &quot;#FFF0F0&quot;,
+        &quot;긴급 경고입니다. 높은 위험의 이상 거래가 예측되었습니다. &quot;
+        &quot;차단 경보 시연이며 실제 거래는 차단되지 않았습니다. 카드사에 문의해 주세요.&quot;,
+        3, 980
+    )
+}
+
+
+# 6. 선택한 단계의 시각·청각 경보 표시
+def show_alert(level):
+
+    # 해당 경보 단계의 Test 거래 위치 가져오기
+    rows = {
+        &quot;green&quot;: green_rows,
+        &quot;yellow&quot;: yellow_rows,
+        &quot;red&quot;: red_rows
+    }[level]
+
+    # 해당 단계에 거래가 없는 경우
+    if len(rows) == 0:
+        print(&quot;이 단계에 해당하는 Test 거래가 없습니다:&quot;, level)
+        return
+
+    # 정상거래는 21번과 동일한 기준으로 선택
+    if level == &quot;green&quot;:
+
+        # 0번을 제외하고 예측 확률 0.1%~10%인 거래 찾기
+        candidates = rows[
+            (rows != 0) &amp;
+            (prob[rows] &gt;= 0.001) &amp;
+            (prob[rows] &lt; 0.10)
+        ]
+
+        if len(candidates) &gt; 0:
+
+            # 3%에 가장 가까운 실제 정상거래 선택
+            i = int(candidates[
+                np.argmin(np.abs(prob[candidates] - 0.03))
+            ])
+
+        else:
+
+            # 조건에 맞는 거래가 없으면 다른 정상거래 선택
+            candidates = rows[rows != 0]
+
+            if len(candidates) == 0:
+                print(&quot;0번을 제외한 정상거래가 없습니다.&quot;)
+                return
+
+            i = int(candidates[np.argmax(prob[candidates])])
+
+    else:
+        # 노란색과 적색 단계는 첫 번째 거래 선택
+        i = int(rows[0])
+
+    # 선택한 실제 Test 거래 가져오기
+    row = test_df.iloc[i]
+    risk = prob[i]
+
+
+    # 경보 단계별 설정 불러오기
+    title, color, bg, voice, repeat, hz = ALERTS[level]
+
+    # 결제 금액 가져오기
+    amount = pd.to_numeric(
+        row.get(&quot;통합승인금액&quot;),
+        errors=&quot;coerce&quot;
+    )
+
+    amount_text = (
+        f&quot;{amount:,.0f}원&quot;
+        if pd.notna(amount)
+        else &quot;정보 없음&quot;
+    )
+
+    # 거래 날짜 가져오기
+    date_value = pd.to_datetime(
+        str(row.get(&quot;승인일자&quot;)),
+        format=&quot;%Y%m%d&quot;,
+        errors=&quot;coerce&quot;
+    )
+
+    # 거래 시간 가져오기
+    hour_value = pd.to_numeric(
+        row.get(&quot;승인시간대&quot;),
+        errors=&quot;coerce&quot;
+    )
+
+    # 거래일시 형식 변경
+    if pd.notna(date_value) and pd.notna(hour_value):
+        date_text = date_value.strftime(&quot;%Y년 %m월 %d일&quot;)
+        hour_text = f&quot;{int(hour_value):02d}시&quot;
+        datetime_text = f&quot;{date_text} {hour_text}&quot;
+    else:
+        datetime_text = &quot;정보 없음&quot;
+
+    # (1) 큰 글씨 경보 카드 표시
+    display(HTML(f&quot;&quot;&quot;
+    &lt;div style=&quot;
+        width:1200px;
+        max-width:none;
+        box-sizing:border-box;
+        border:7px solid {color};
+        background:{bg};
+        border-radius:22px;
+        padding:45px;
+        font-family:Arial,sans-serif;
+        line-height:1.5;
+        color:#171717;
+    &quot;&gt;
+
+        &lt;!-- 경보 제목 --&gt;
+        &lt;div style=&quot;
+            font-size:56px;
+            font-weight:900;
+            color:{color};
+        &quot;&gt;
+            {title}
+        &lt;/div&gt;
+
+
+        &lt;!-- 이상거래 예측 확률 --&gt;
+        &lt;div style=&quot;
+            font-size:30px;
+            margin-top:25px;
+        &quot;&gt;
+            이상거래 확률
+        &lt;/div&gt;
+
+        &lt;div style=&quot;
+            font-size:64px;
+            font-weight:900;
+            color:{color};
+        &quot;&gt;
+            {risk:.1%}
+        &lt;/div&gt;
+
+        &lt;!-- 위험 확률 막대 --&gt;
+        &lt;div style=&quot;
+            background:#dddddd;
+            height:30px;
+            border-radius:12px;
+            overflow:hidden;
+            margin-top:10px;
+        &quot;&gt;
+            &lt;div style=&quot;
+                background:{color};
+                width:{risk*100:.1f}%;
+                height:30px;
+            &quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- 결제 금액: 글자 크게 --&gt;
+        &lt;div style=&quot;
+            font-size:50px;
+            font-weight:900;
+            margin-top:30px;
+        &quot;&gt;
+            결제 금액: {escape(amount_text)}
+        &lt;/div&gt;
+
+        &lt;!-- 거래일시 --&gt;
+        &lt;div style=&quot;
+            font-size:28px;
+            font-weight:600;
+            margin-top:10px;
+        &quot;&gt;
+            거래일시 : {escape(datetime_text)}
+        &lt;/div&gt;
+
+        &lt;!-- 음성 안내: 오른쪽 정렬 --&gt;
+        &lt;div style=&quot;
+            font-size:27px;
+            font-weight:bold;
+            margin-top:35px;
+            text-align:right;
+            line-height:1.6;
+        &quot;&gt;
+            ▶ 음성 안내를 들으시려면 아래 재생 버튼을 눌러주십시오.
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+    &quot;&quot;&quot;))
+
+    # (2) 한국어 안내 음성 생성
+    voice_file = BytesIO()
+
+    gTTS(
+        text=voice,
+        lang=&quot;ko&quot;
+    ).write_to_fp(voice_file)
+
+    voice_file.seek(0)
+
+    spoken = AudioSegment.from_file(
+        voice_file,
+        format=&quot;mp3&quot;
+    )
+
+    # (3) 단계별 경고음 생성
+    alarm = AudioSegment.silent(duration=150)
+
+    for _ in range(repeat):
+        alarm += Sine(hz).to_audio_segment(
+            duration=230
+        ).apply_gain(-12)
+
+        alarm += AudioSegment.silent(
+            duration=160
+        )
+
+    # 경고음과 한국어 음성 합치기
+    combined = alarm + spoken
+
+    # (4) 오디오 재생기 출력
+    output = BytesIO()
+
+    combined.export(
+        output,
+        format=&quot;wav&quot;
+    )
+
+    display(
+        Audio(
+            data=output.getvalue(),
+            autoplay=False
+        )
+    )
+
+    print(
+        f&quot;선택된 Test 위치: {i} / &quot;
+        f&quot;이상거래 예측 확률: {risk:.1%}&quot;
+    )
+
+
+print(&quot;경보 시연 준비 완료&quot;)
+print(&quot;정상거래:&quot;, len(green_rows), &quot;건&quot;)
+print(&quot;이상거래 의심:&quot;, len(yellow_rows), &quot;건&quot;)
+print(&quot;차단 대상 경보:&quot;, len(red_rows), &quot;건&quot;)</pre></div><div class="cell-code"><div class="cell-tag">In [50]</div><pre class="code-pre"># 정상거래
+show_alert(&quot;green&quot;)</pre><pre class="out-txt">&lt;IPython.core.display.HTML object&gt;</pre><pre class="out-txt">&lt;IPython.lib.display.Audio object&gt;</pre><pre class="out-txt">선택된 Test 위치: 8447 / 이상거래 예측 확률: 3.0%
+</pre></div><div class="cell-code"><div class="cell-tag">In [28]</div><pre class="code-pre"># 이상거래 의심
+show_alert(&quot;yellow&quot;)</pre><pre class="out-txt">&lt;IPython.core.display.HTML object&gt;</pre><pre class="out-txt">&lt;IPython.lib.display.Audio object&gt;</pre><pre class="out-txt">선택된 Test 위치: 23 / 이상거래 예측 확률: 64.0%
+</pre></div><div class="cell-code"><div class="cell-tag">In [29]</div><pre class="code-pre"># 위험거래 차단
+show_alert(&quot;red&quot;)</pre><pre class="out-txt">&lt;IPython.core.display.HTML object&gt;</pre><pre class="out-txt">&lt;IPython.lib.display.Audio object&gt;</pre><pre class="out-txt">선택된 Test 위치: 14 / 이상거래 예측 확률: 93.3%
+</pre></div><div class="cell-md"><div class="cell-tag">MD [80]</div><pre class="md-pre">### 발표 때 설명하기
+
+1. `test_prob`는 LightGBM이 예측한 이상거래 클래스(1)의 확률 추정값입니다. 실제 사기 확률로 단정하지 않습니다.
+2. `np.where()`로 확률에 따라 정상·의심·차단 대상 구간의 **Test 거래 위치**를 찾습니다.
+3. `test_df.iloc[i]`로 같은 위치의 거래 날짜·금액을 가져옵니다.
+4. HTML 출력으로 어르신이 읽기 쉬운 큰 글씨, 배경색, 예측 확률 막대를 표시합니다.
+5. `gTTS`로 한국어 음성을 만들고, `pydub`로 1~3회 경고음을 음성 앞에 붙입니다.
+6. Colab 오디오 플레이어의 ▶ 버튼을 클릭하여 재생합니다. 별도 UI/실시간 카드 차단 시스템은 아닙니다.
+
+주의: gTTS는 인터넷 연결이 필요합니다. 오디오 파일 생성이 느릴 수 있으므로 영상 촬영 전에 셀을 한 번 실행해 출력을 준비하는 것이 좋습니다.</pre></div><div class="cell-md"><div class="cell-tag">MD [81]</div><pre class="md-pre">## 21. FastAPI + Streamlit + Web Speech API + 응답시간 측정
+
+
+실행 전 : LightGBM 학습·평가 셀까지 실행하여 `lgb_model`, `X_test_scaled`, `test_prob`, `test_df`가 있어야 합니다.
+
+
+실행 순서 : **21-1 설치 → 21-2 데이터 저장 → 21-3 FastAPI 생성 → 21-4 API 서버 시작 → 21-5 API 시간 측정 → 21-6 Streamlit 생성 → 21-7 앱 실행**
+
+- **FastAPI**: 전처리된 거래 데이터를 받아 LightGBM으로 이상거래 확률을 예측합니다 (`/predict`, `/predict_batch`).
+- **Streamlit**: FastAPI에 요청하여 대형 경보 **팝업**을 표시합니다.
+- **Web Speech API**: 팝업 내부 버튼 클릭 시 한국어 음성을 읽습니다.
+- **100ms**: 측정 목표로만 취급합니다. 아래에서 실제 응답시간을 측정하고 **평균·P95**를 출력합니다. 목표 미달이면 그대로 보고합니다.
+
+예시는 **Colab에서 이미 전처리된 값**을 전달합니다. 실제 원본 카드 거래를 받아 자동 전처리하는 서비스나 카드 승인 차단 시스템은 아닙니다.</pre></div><div class="cell-code"><div class="cell-tag">In [30]</div><pre class="code-pre"># 21-1. 필요한 웹 서비스 라이브러리 설치 (Colab에서 최초 1회)
+%pip -q install fastapi uvicorn streamlit requests joblib</pre><pre class="out-txt">[2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m10.4/10.4 MB[0m [31m86.0 MB/s[0m eta [36m0:00:00[0m
+[2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m11.4/11.4 MB[0m [31m66.7 MB/s[0m eta [36m0:00:00[0m
+[?25h</pre></div><div class="cell-md"><div class="cell-tag">MD [83]</div><pre class="md-pre">### 21-2. 기존 LightGBM 모델과 실제 Test 시연용 거래 저장
+
+전처리된 입력 피처와 화면에 표시할 금액·날짜는 구분해서 저장합니다. 실제 Test 예측 확률이 30% 미만, 30~70% 미만, 70% 이상인 거래 중 각각 첫 번째 거래를 선택합니다. 없는 단계는 임의 확률로 만들지 않습니다.</pre></div><div class="cell-code"><div class="cell-tag">In [41]</div><pre class="code-pre">import json
+import joblib
+import numpy as np
+import pandas as pd
+
+# 1. 모델 학습 및 예측 결과 확인
+for name in [&quot;lgb_model&quot;, &quot;X_test_scaled&quot;, &quot;test_prob&quot;, &quot;test_df&quot;]:
+    if name not in globals():
+        raise RuntimeError(f&quot;{name} 변수가 없습니다. 먼저 LightGBM 학습 및 Test 예측 셀을 실행하세요.&quot;)
+
+# 2. 학습 완료 모델 저장
+joblib.dump(lgb_model, &quot;fds_lgb_model.joblib&quot;)
+
+feature_names = X_test_scaled.columns.tolist()
+
+with open(&quot;fds_feature_names.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    json.dump(feature_names, f, ensure_ascii=False)
+
+# 3. 실제 Test 예측 확률 가져오기
+probabilities = np.asarray(test_prob, dtype=float).reshape(-1)
+
+if len(probabilities) != len(X_test_scaled) or len(probabilities) != len(test_df):
+    raise ValueError(&quot;Test 행 개수가 일치하지 않습니다.&quot;)
+
+# 4. 이상거래 예측 확률에 따라 3단계 구분
+valid = np.isfinite(probabilities) &amp; (probabilities &gt;= 0) &amp; (probabilities &lt;= 1)
+
+groups = {
+    &quot;정상거래&quot;: np.where(valid &amp; (probabilities &lt; 0.30))[0],
+    &quot;이상거래 의심&quot;: np.where(valid &amp; (probabilities &gt;= 0.30) &amp; (probabilities &lt; 0.50))[0],
+    &quot;의심거래 차단 대상&quot;: np.where(valid &amp; (probabilities &gt;= 0.50))[0],
+}
+
+# 5. 각 단계별 시연 거래 선택
+examples = []
+
+for stage, indices in groups.items():
+
+    if len(indices) == 0:
+        print(f&quot;주의: {stage} 구간에는 실제 Test 거래가 없습니다.&quot;)
+        continue
+
+    # 정상거래: 0번을 제외하고 3%에 가까운 거래 선택
+    if stage == &quot;정상거래&quot;:
+
+        candidates = indices[
+            (indices != 0) &amp;
+            (probabilities[indices] &gt;= 0.001) &amp;
+            (probabilities[indices] &lt; 0.10)
+        ]
+
+        if len(candidates) &gt; 0:
+            i = int(candidates[
+                np.argmin(np.abs(probabilities[candidates] - 0.03))
+            ])
+        else:
+            # 0.1%~10% 거래가 없으면 다른 정상거래 선택
+            candidates = indices[indices != 0]
+
+            if len(candidates) == 0:
+                print(&quot;0번을 제외한 정상거래가 없습니다.&quot;)
+                continue
+
+            i = int(candidates[np.argmax(probabilities[candidates])])
+
+    # 이상거래 의심 및 차단 대상은 기존 방식 유지
+    else:
+        i = int(indices[0])
+
+    # 6. 선택한 거래 정보 가져오기
+    row = test_df.iloc[i]
+
+    values = X_test_scaled.iloc[i].astype(float).to_numpy()
+
+    if not np.isfinite(values).all():
+        print(f&quot;주의: {stage} 시연 데이터에 유효하지 않은 값이 있어 건너뜁니다.&quot;)
+        continue
+
+    # 가맹점 컬럼 확인
+    merchant_col = next(
+        (c for c in [&quot;가맹점명&quot;, &quot;가맹점상호&quot;, &quot;가맹점업종명&quot;]
+         if c in test_df.columns),
+        None
+    )
+
+    # 결제 금액
+    amount = pd.to_numeric(
+        row.get(&quot;통합승인금액&quot;),
+        errors=&quot;coerce&quot;
+    )
+
+    # 거래 날짜와 시간
+    date_value = pd.to_datetime(
+        str(row.get(&quot;승인일자&quot;)),
+        format=&quot;%Y%m%d&quot;,
+        errors=&quot;coerce&quot;
+    )
+
+    hour_value = pd.to_numeric(
+        row.get(&quot;승인시간대&quot;),
+        errors=&quot;coerce&quot;
+    )
+
+    if pd.notna(date_value) and pd.notna(hour_value):
+        datetime_text = (
+            f&quot;{date_value.strftime(&#x27;%Y년 %m월 %d일&#x27;)} &quot;
+            f&quot;{int(hour_value):02d}시&quot;
+        )
+    else:
+        datetime_text = &quot;정보 없음&quot;
+
+    # 7. 시연용 거래 목록에 추가
+    examples.append({
+        &quot;stage&quot;: stage,
+        &quot;row_index&quot;: i,
+        &quot;features&quot;: values.tolist(),
+        &quot;amount&quot;: f&quot;{amount:,.0f}원&quot; if pd.notna(amount) else &quot;정보 없음&quot;,
+        &quot;date&quot;: str(row.get(&quot;승인일자&quot;, &quot;정보 없음&quot;)),
+        &quot;datetime&quot;: datetime_text,
+        &quot;merchant&quot;: str(row[merchant_col]) if merchant_col else &quot;정보 없음&quot;,
+    })
+
+# 8. 시연용 거래 저장
+if not examples:
+    raise RuntimeError(&quot;시연에 사용할 유효한 Test 거래가 없습니다.&quot;)
+
+with open(&quot;fds_demo_examples.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    json.dump(examples, f, ensure_ascii=False, indent=2)
+
+# 9. 저장 결과 확인
+print(&quot;모델 및 예시 거래 저장 완료&quot;)
+
+for example in examples:
+    i = example[&quot;row_index&quot;]
+
+    print(
+        f&quot;{example[&#x27;stage&#x27;]}: &quot;
+        f&quot;Test 위치 {i}, &quot;
+        f&quot;예측 확률 {probabilities[i]:.2%}&quot;
+    )
+
+print(&quot;파일: fds_lgb_model.joblib / fds_feature_names.json / fds_demo_examples.json&quot;)</pre><pre class="out-txt">모델 및 예시 거래 저장 완료
+정상거래: Test 위치 8447, 예측 확률 3.00%
+이상거래 의심: Test 위치 23, 예측 확률 64.00%
+의심거래 차단 대상: Test 위치 14, 예측 확률 93.33%
+파일: fds_lgb_model.joblib / fds_feature_names.json / fds_demo_examples.json
+</pre></div><div class="cell-md"><div class="cell-tag">MD [85]</div><pre class="md-pre">### 21-3. FastAPI 코드 파일 작성
+
+`/predict`는 한 건, `/predict_batch`는 여러 건을 한번에 예측합니다. 서버는 모델을 시작할 때 **한 번만 로드**합니다.</pre></div><div class="cell-code"><div class="cell-tag">In [42]</div><pre class="code-pre">%%writefile fds_api.py
+&quot;&quot;&quot;Card-FDS-N: LightGBM 모델로 1건·배치 이상거래 예측을 제공하는 FastAPI.
+
+실행: uvicorn fds_api:app --host 127.0.0.1 --port 8000
+주의: 입력 features는 Colab에서 학습에 사용한 순서대로 전처리된 값입니다.
+&quot;&quot;&quot;
+import json
+from pathlib import Path
+from time import perf_counter
+
+import joblib
+import numpy as np
+import pandas as pd
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+HERE = Path(__file__).resolve().parent
+model = joblib.load(HERE / &quot;fds_lgb_model.joblib&quot;)
+feature_names = json.loads((HERE / &quot;fds_feature_names.json&quot;).read_text(encoding=&quot;utf-8&quot;))
+
+app = FastAPI(title=&quot;Card-FDS-N 이상거래 예측 API&quot;)
+
+
+class OneTransaction(BaseModel):
+    features: list[float]
+
+
+class MultipleTransactions(BaseModel):
+    rows: list[list[float]]
+
+
+def validate_rows(rows):
+    # 입력 피처 개수와 숫자 범위를 점검합니다.
+    if not rows or len(rows) &gt; 1000:
+        raise HTTPException(400, &quot;1~1000건만 요청할 수 있습니다.&quot;)
+    if any(len(row) != len(feature_names) for row in rows):
+        raise HTTPException(400, &quot;피처 개수가 학습 모델과 다릅니다.&quot;)
+    values = np.asarray(rows, dtype=float)
+    if not np.isfinite(values).all():
+        raise HTTPException(400, &quot;유효하지 않은 숫자가 포함되었습니다.&quot;)
+    return pd.DataFrame(values, columns=feature_names)
+
+
+def level_name(prob):
+    if prob &lt; 0.30:
+        return &quot;정상거래&quot;
+    if prob &lt; 0.70:
+        return &quot;이상거래 의심&quot;
+    return &quot;의심거래 차단 대상 (시연)&quot;
+
+
+@app.get(&quot;/health&quot;)
+def health():
+    return {&quot;status&quot;: &quot;ok&quot;, &quot;model&quot;: &quot;LightGBM&quot;}
+
+
+@app.post(&quot;/predict&quot;)
+def predict(item: OneTransaction):
+    X = validate_rows([item.features])
+    start = perf_counter()
+    p = float(model.predict_proba(X)[0, 1])
+    model_ms = (perf_counter() - start) * 1000
+    return {
+        &quot;fraud_probability&quot;: p,
+        &quot;alert_level&quot;: level_name(p),
+        &quot;model_inference_ms&quot;: round(model_ms, 3),
+        &quot;notice&quot;: &quot;경보 시연이며 실제 카드 결제를 차단하지 않습니다.&quot;,
+    }
+
+
+@app.post(&quot;/predict_batch&quot;)
+def predict_batch(item: MultipleTransactions):
+    X = validate_rows(item.rows)
+    start = perf_counter()
+    probabilities = model.predict_proba(X)[:, 1]
+    model_ms = (perf_counter() - start) * 1000
+    return {
+        &quot;count&quot;: len(probabilities),
+        &quot;fraud_probabilities&quot;: probabilities.astype(float).tolist(),
+        &quot;alert_levels&quot;: [level_name(float(p)) for p in probabilities],
+        &quot;model_inference_ms&quot;: round(model_ms, 3),
+    }
+</pre><pre class="out-txt">Overwriting fds_api.py
+</pre></div><div class="cell-md"><div class="cell-tag">MD [87]</div><pre class="md-pre">### 21-4. Colab에서 FastAPI 서버 시작 및 통신 확인
+
+`uvicorn`이라는 실행기로 API 서버를 켭니다. 이 셀은 서버를 백그라운드로 실행하므로 다음 셀도 실행할 수 있습니다. Colab 내부 주소 `127.0.0.1:8000`을 사용하며, 외부에 서비스를 배포하는 코드는 아닙니다.</pre></div><div class="cell-code"><div class="cell-tag">In [43]</div><pre class="code-pre">import os
+import sys
+import time
+import subprocess
+import requests
+
+# 셀 재실행 시 기존에 켰던 서버를 종료
+if &quot;fds_api_proc&quot; in globals() and fds_api_proc.poll() is None:
+    fds_api_proc.terminate()
+    fds_api_proc.wait(timeout=10)
+
+api_log = open(&quot;fds_api.log&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;)
+fds_api_proc = subprocess.Popen(
+    [sys.executable, &quot;-m&quot;, &quot;uvicorn&quot;, &quot;fds_api:app&quot;, &quot;--host&quot;, &quot;127.0.0.1&quot;, &quot;--port&quot;, &quot;8000&quot;],
+    stdout=api_log, stderr=subprocess.STDOUT, cwd=os.getcwd(),
+)
+
+# 서버가 실제로 켜질 때까지 기다림 (최대 약 20초)
+for _ in range(40):
+    if fds_api_proc.poll() is not None:
+        raise RuntimeError(&quot;FastAPI 시작 실패. fds_api.log 파일을 확인하세요.&quot;)
+    try:
+        response = requests.get(&quot;http://127.0.0.1:8000/health&quot;, timeout=1)
+        if response.ok:
+            print(&quot;FastAPI 실행 성공:&quot;, response.json())
+            break
+    except requests.RequestException:
+        pass
+    time.sleep(0.5)
+else:
+    raise RuntimeError(&quot;FastAPI가 시작되지 않았습니다. fds_api.log 파일을 확인하세요.&quot;)</pre><pre class="out-txt">FastAPI 실행 성공: {&#x27;status&#x27;: &#x27;ok&#x27;, &#x27;model&#x27;: &#x27;LightGBM&#x27;}
+</pre></div><div class="cell-md"><div class="cell-tag">MD [89]</div><pre class="md-pre">### 21-5. 1건 API / 배치 API 응답시간 측정 (100ms 목표)
+
+`perf_counter()`로 HTTP 요청 직전부터 응답을 받은 직후까지의 시간을 기록합니다. API 서버가 반환하는 `model_inference_ms`는 **모델 계산 시간만** 측정한 값으로 별개의 지표입니다.
+
+- 측정 환경: Colab 런타임 내부(localhost) 통신입니다. 외부 인터넷을 통한 사용자 응답시간을 뜻하지 않습니다.
+- `P95`: 측정값 중 약 95%가 그 이하인 시간입니다.</pre></div><div class="cell-code"><div class="cell-tag">In [44]</div><pre class="code-pre">from time import perf_counter
+import numpy as np
+import pandas as pd
+import requests
+
+API_URL = &quot;http://127.0.0.1:8000&quot;
+request_one = {&quot;features&quot;: examples[0][&quot;features&quot;]}
+request_batch = {&quot;rows&quot;: X_test_scaled.iloc[:64].astype(float).values.tolist()}
+
+# 예측이 노트북의 test_prob와 동일한지 확인
+check = requests.post(API_URL + &quot;/predict&quot;, json=request_one, timeout=20)
+check.raise_for_status()
+api_prob = float(check.json()[&quot;fraud_probability&quot;])
+expected_prob = float(probabilities[examples[0][&quot;row_index&quot;]])
+print(f&quot;노트북 예측: {expected_prob:.6f} / API 예측: {api_prob:.6f}&quot;)
+assert np.isclose(api_prob, expected_prob, atol=1e-6), &quot;API와 노트북 결과가 다릅니다.&quot;
+
+# 첫 실행 준비 시간을 줄이도록 예열
+for _ in range(3):
+    requests.post(API_URL + &quot;/predict&quot;, json=request_one, timeout=20).raise_for_status()
+
+# 실제 HTTP 요청 전체 시간 측정
+results = []
+for name, endpoint, body, repeats in [
+    (&quot;1건 API&quot;, &quot;/predict&quot;, request_one, 30),
+    (&quot;64건 배치 API&quot;, &quot;/predict_batch&quot;, request_batch, 10),
+]:
+    times = []
+    for _ in range(repeats):
+        start = perf_counter()
+        r = requests.post(API_URL + endpoint, json=body, timeout=20)
+        r.raise_for_status()
+        times.append((perf_counter() - start) * 1000)
+    avg = float(np.mean(times))
+    p95 = float(np.percentile(times, 95))
+    results.append({
+        &quot;구분&quot;: name,
+        &quot;반복&quot;: repeats,
+        &quot;평균 응답(ms)&quot;: round(avg, 2),
+        &quot;P95 응답(ms)&quot;: round(p95, 2),
+        &quot;100ms 목표(P95)&quot;: &quot;달성&quot; if p95 &lt; 100 else &quot;미달성&quot;,
+    })
+
+display(pd.DataFrame(results))
+print(&quot;※ 서버·클라이언트가 같은 Colab 런타임에 있는 HTTP 응답시간입니다.&quot;)</pre><pre class="out-txt">노트북 예측: 0.030044 / API 예측: 0.030044
+</pre><pre class="out-txt">           구분  반복  평균 응답(ms)  P95 응답(ms) 100ms 목표(P95)
+0      1건 API  30       3.32        3.50            달성
+1  64건 배치 API  10       5.26        7.31            달성</pre><pre class="out-txt">※ 서버·클라이언트가 같은 Colab 런타임에 있는 HTTP 응답시간입니다.
+</pre></div><div class="cell-md"><div class="cell-tag">MD [91]</div><pre class="md-pre">### 21-6. Streamlit 대형 팝업 + Web Speech API 코드 파일 작성
+
+Streamlit 화면에서 거래를 선택해 **FastAPI `/predict`**를 호출합니다. 응답을 받아 **녹색·주황색·적색의 큰 경보 팝업**을 띄우며, 음성 버튼을 누르면 브라우저 **Web Speech API**가 한국어를 읽습니다. `st.markdown()` 내부의 `&lt;script&gt;` 실행에 의존하지 않도록 `components.html()`을 사용합니다.</pre></div><div class="cell-code"><div class="cell-tag">In [45]</div><pre class="code-pre">%%writefile fds_streamlit.py
+&quot;&quot;&quot;Card-FDS-N: + 브라우저 TTS.&quot;&quot;&quot;
+import json
+import os
+from html import escape
+from pathlib import Path
+
+import requests
+import streamlit as st
+import streamlit.components.v1 as components
+
+HERE = Path(__file__).resolve().parent
+API_URL = os.environ.get(&quot;FDS_API_URL&quot;, &quot;http://127.0.0.1:8000&quot;)
+examples = json.loads((HERE / &quot;fds_demo_examples.json&quot;).read_text(encoding=&quot;utf-8&quot;))
+
+st.set_page_config(page_title=&quot;Card-FDS-N 금융거래 경보&quot;, layout=&quot;wide&quot;)
+st.title(&quot;Card-FDS-N · 금융거래 알림&quot;)
+st.caption(&quot;실제 Test 예측을 기반으로 한 시연이며 결제 승인·차단 기능은 없습니다.&quot;)
+
+
+st.markdown(&quot;&quot;&quot;
+&lt;style&gt;
+[data-testid=&quot;stDialog&quot;] div[role=&quot;dialog&quot;] {
+    width: min(1260px, 96vw) !important;
+    max-width: 96vw !important;
+}
+&lt;/style&gt;
+&quot;&quot;&quot;, unsafe_allow_html=True)
+
+if not examples:
+    st.error(&quot;시연 가능한 거래가 없습니다. Colab에서 예측 결과를 먼저 저장하세요.&quot;)
+    st.stop()
+
+chosen = st.selectbox(
+    &quot;확인할 거래&quot;,
+    range(len(examples)),
+    format_func=lambda i: f&quot;{examples[i][&#x27;stage&#x27;]} · Test 위치 {examples[i][&#x27;row_index&#x27;]}&quot;,
+)
+
+
+def alert_fraud_transaction(tx_info, risk_prob):
+
+    if risk_prob &lt; 0.30:
+        title, color, bg = &quot;정상거래&quot;, &quot;#116329&quot;, &quot;#EDF8EF&quot;
+        voice = &quot;안내합니다. 정상 거래로 예측되었습니다. 거래 내역을 확인해 주세요.&quot;
+    elif risk_prob &lt; 0.70:
+        title, color, bg = &quot;이상거래 의심&quot;, &quot;#995100&quot;, &quot;#FFF2DB&quot;
+        voice = &quot;주의하세요. 이상 거래가 의심됩니다. 본인이 결제한 거래인지 확인해 주세요.&quot;
+    else:
+        title, color, bg = &quot;위험거래 차단&quot;, &quot;#9F1D1D&quot;, &quot;#FFF0F0&quot;
+        voice = (
+            &quot;긴급 경고입니다. 높은 위험의 이상 거래가 예측되었습니다. &quot;
+            &quot;차단 경보 시연이며 실제 거래는 차단되지 않았습니다. 카드사에 문의해 주세요.&quot;
+        )
+
+    amount = escape(str(tx_info.get(&quot;amount&quot;, &quot;정보 없음&quot;)))
+    datetime_text = escape(str(tx_info.get(&quot;datetime&quot;, &quot;정보 없음&quot;)))
+
+    # (1) 큰 글씨 경보 카드 표시
+    # st.html()을 사용하면 HTML 코드가 글자로 출력되는 문제를 방지할 수 있습니다.
+
+    st.html(f&quot;&quot;&quot;
+&lt;div style=&quot;
+    width:100%;
+    box-sizing:border-box;
+    border:7px solid {color};
+    background:{bg};
+    border-radius:22px;
+    padding:45px;
+    font-family:Arial,sans-serif;
+    line-height:1.5;
+    color:#171717;&quot;&gt;
+
+    &lt;div style=&quot;font-size:56px;font-weight:900;color:{color};&quot;&gt;
+        {title}
+    &lt;/div&gt;
+
+    &lt;div style=&quot;font-size:30px;margin-top:25px;&quot;&gt;
+        이상거래 확률
+    &lt;/div&gt;
+
+    &lt;div style=&quot;font-size:64px;font-weight:900;color:{color};&quot;&gt;
+        {risk_prob:.2%}
+    &lt;/div&gt;
+
+    &lt;div style=&quot;background:#dddddd;height:30px;
+                border-radius:12px;overflow:hidden;margin-top:10px;&quot;&gt;
+        &lt;div style=&quot;background:{color};
+                    width:{risk_prob*100:.1f}%;height:30px;&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div style=&quot;font-size:50px;font-weight:900;margin-top:30px;&quot;&gt;
+        결제 금액: {amount}
+    &lt;/div&gt;
+
+    &lt;div style=&quot;font-size:28px;font-weight:600;margin-top:10px;&quot;&gt;
+        거래일시 : {datetime_text}
+    &lt;/div&gt;
+
+    &lt;div style=&quot;font-size:27px;font-weight:bold;
+                margin-top:35px;text-align:right;line-height:1.6;&quot;&gt;
+        ▶ 음성 안내를 들으시려면 아래 재생 버튼을 눌러주십시오.
+    &lt;/div&gt;
+
+&lt;/div&gt;
+&quot;&quot;&quot;)
+
+    # 20번은 gTTS+경고음, 21번은 브라우저 Web Speech API로 음성을 읽습니다.
+    voice_json = json.dumps(voice, ensure_ascii=False)
+    components.html(f&quot;&quot;&quot;
+    &lt;div style=&quot;display:flex;justify-content:flex-end;align-items:center;&quot;&gt;
+      &lt;button onclick=&quot;speakKorean()&quot; style=&quot;font-size:27px;padding:16px 20px;
+        background:{color};color:white;border:0;border-radius:12px;cursor:pointer;&quot;&gt;
+        🔊 한국어 음성 듣기
+      &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div id=&quot;speech-status&quot; style=&quot;font-size:17px;margin-top:6px;text-align:right;&quot;&gt;&lt;/div&gt;
+    &lt;script&gt;
+    function speakKorean() {{
+      if (!(&#x27;speechSynthesis&#x27; in window)) {{
+        document.getElementById(&#x27;speech-status&#x27;).textContent = &#x27;이 브라우저는 음성 안내를 지원하지 않습니다.&#x27;;
+        return;
+      }}
+      window.speechSynthesis.cancel();
+      const speech = new SpeechSynthesisUtterance({voice_json});
+      speech.lang = &#x27;ko-KR&#x27;;
+      speech.rate = 0.85;
+      speech.volume = 1;
+      window.speechSynthesis.speak(speech);
+    }}
+    &lt;/script&gt;
+    &quot;&quot;&quot;, height=105)
+
+
+@st.dialog(&quot;카드 거래 경보&quot;, width=&quot;large&quot;)
+def show_popup(result, selected):
+    alert_fraud_transaction(
+        tx_info=selected,
+        risk_prob=float(result[&quot;fraud_probability&quot;]),
+    )
+    st.caption(
+        f&quot;API 모델 추론시간: {result[&#x27;model_inference_ms&#x27;]:.3f}ms &quot;
+        &quot;(전체 API 응답시간과 다름)&quot;
+    )
+
+
+if st.button(&quot;선택한 거래 예측하고 경보 팝업 보기&quot;, type=&quot;primary&quot;, use_container_width=True):
+    selected = examples[chosen]
+    try:
+        # 실제 LightGBM을 불러온 FastAPI에 예측 요청
+        r = requests.post(
+            API_URL + &quot;/predict&quot;, json={&quot;features&quot;: selected[&quot;features&quot;]}, timeout=15
+        )
+        r.raise_for_status()
+        result = r.json()
+    except requests.RequestException as e:
+        st.error(f&quot;FastAPI 연결 실패: {e}&quot;)
+    else:
+        show_popup(result, selected)
+</pre><pre class="out-txt">Overwriting fds_streamlit.py
+</pre></div><div class="cell-md"><div class="cell-tag">MD [93]</div><pre class="md-pre">### 21-7. Streamlit 실행 후 팝업·음성 시연
+
+Streamlit 앱을 Colab 내부에서 시작하고 브라우저 링크를 표시합니다. **Colab에서는 새 탭에 열리는 앱을 눌러** 3단계 경보와 TTS 버튼을 시연하세요. 링크 생성 기능은 Colab 환경·정책에 따라 달라질 수 있습니다.
+
+- 실행 버튼: `선택한 거래 예측하고 경보 팝업 보기`
+- 팝업 안의 버튼: `🔊 한국어 음성 듣기`
+- 통합 확인: Streamlit이 **직접 예측하지 않고 FastAPI에 요청**합니다.
+- 참고: Streamlit 앱 코드 안에는 `st.dialog` 팝업을 사용하므로 최근 Streamlit 버전이 필요합니다.</pre></div><div class="cell-code"><div class="cell-tag">In [1]</div><pre class="code-pre">import os
+import sys
+import time
+import subprocess
+import requests
+
+if &quot;fds_streamlit_proc&quot; in globals() and fds_streamlit_proc.poll() is None:
+    fds_streamlit_proc.terminate()
+    fds_streamlit_proc.wait(timeout=10)
+
+ui_log = open(&quot;fds_streamlit.log&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;)
+fds_streamlit_proc = subprocess.Popen(
+    [sys.executable, &quot;-m&quot;, &quot;streamlit&quot;, &quot;run&quot;, &quot;fds_streamlit.py&quot;,
+     &quot;--server.address&quot;, &quot;0.0.0.0&quot;, &quot;--server.port&quot;, &quot;8501&quot;, &quot;--server.headless&quot;, &quot;true&quot;,
+     &quot;--browser.gatherUsageStats&quot;, &quot;false&quot;,
+
+     # Colab 프록시 연결 문제를 확인하기 위한 임시 설정
+    &quot;--server.enableCORS&quot;, &quot;false&quot;,
+    &quot;--server.enableXsrfProtection&quot;, &quot;false&quot;,
+     ],
+    stdout=ui_log, stderr=subprocess.STDOUT, cwd=os.getcwd(),
+)
+
+for _ in range(40):
+    if fds_streamlit_proc.poll() is not None:
+        raise RuntimeError(&quot;Streamlit 시작 실패. fds_streamlit.log 파일을 확인하세요.&quot;)
+    try:
+        r = requests.get(&quot;http://127.0.0.1:8501/_stcore/health&quot;, timeout=1)
+        if r.ok:
+            break
+    except requests.RequestException:
+        pass
+    time.sleep(0.5)
+else:
+    raise RuntimeError(&quot;Streamlit이 시작되지 않았습니다. fds_streamlit.log 파일을 확인하세요.&quot;)
+
+print(&quot;Streamlit 실행 성공!&quot;)
+try:
+    from google.colab import output
+    url = output.eval_js(&quot;google.colab.kernel.proxyPort(8501)&quot;)
+    print(&quot;아래 주소를 클릭해 Streamlit 앱을 여세요:&quot;)
+    print(url)
+except (ImportError, Exception) as e:
+    print(&quot;Colab 프록시 주소 생성에 실패했습니다:&quot;, str(e))
+    print(&quot;PC에서 직접 실행했다면: http://127.0.0.1:8501&quot;)</pre></div><div class="cell-md"><div class="cell-tag">MD [95]</div><pre class="md-pre">### 21-8. 발표 시 설명할 핵심
+
+1. **모델:** LightGBM이 `predict_proba()`로 이상거래 클래스(1) 확률 추정값을 계산합니다.
+2. **FastAPI:** JSON으로 받은 *전처리된* 거래를 모델에 전달하고 `fraud_probability`, `alert_level`을 응답합니다. `/predict_batch`는 여러 거래를 한 번에 예측합니다.
+3. **성능:** HTTP API 호출시간을 반복 측정해 평균/P95를 확인하고 **100ms 목표**와 비교합니다. 결과가 목표를 충족하지 않으면 그대로 제시합니다.
+4. **Streamlit:** 거래를 선택한 후 FastAPI 응답을 받아 **대형 팝업**으로 표시합니다.
+5. **Web Speech API:** 팝업의 `🔊` 버튼을 눌러 한국어 TTS를 재생합니다.
+6. **접근성:** 큰 글씨(42px·58px), 색상·문구를 함께 사용해 가독성을 고려했습니다.
+7. **한계:** 적색은 **차단 대상 경보 시연**이며 실제 승인 차단은 아닙니다. 30%/70%는 기능 시연용 임계값입니다. 원본 신규 거래를 직접 처리하려면 별도 전처리 연동이 필요합니다.</pre></div>
+  </div>
+</body>
+</html>

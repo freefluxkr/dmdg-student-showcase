@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>08_XAI_근거_기반_설명.txt</title>
+<style>
+  body { margin:0; padding:22px; background:#0b1936; color:#e2e8f0; font-family:'Pretendard', sans-serif; }
+  .box { max-width:860px; margin:0 auto; background:rgba(15,26,52,0.78); border:1px solid rgba(255,255,255,0.18); border-radius:16px; padding:22px 26px; }
+  h1 { margin:0 0 14px; font-size:16px; color:#38bdf8; border-bottom:1px solid rgba(56,189,248,0.25); padding-bottom:8px; }
+  pre { margin:0; white-space:pre-wrap; word-break:break-word; font-family:'Pretendard', Consolas, monospace; font-size:13.5px; line-height:1.65; color:#f1f5f9; }
+</style>
+</head>
+<body><div class="box"><h1>📝 08_XAI_근거_기반_설명.txt</h1><pre>﻿NotebookLM 발표 소스 / 한국어 / 총 11장 / 현재 완성된 실험 시스템 설명
+발표 방향: 설계 목적 → 구조 → 데이터 → 개별 분석 → 결합 모델 → 근거 설명 → 웹 구현 → 평가 → 결론의 흐름으로 구성한다. 개발 도중의 변경 이력은 다루지 않는다. 기능 구현 사실과 관측 성능을 구분한다. 실제 결합 모델은 웹 기본 예측에 사용 중이며 운영 안전성을 입증한 모델이라는 뜻은 아니다.
+시각화 원칙: 실제 자료가 없는 화면·기여도·패턴 위치·성능 수치는 만들지 않는다. 본문은 짧게, 발표자 설명과 작성 주의사항은 참고 정보로 사용한다.
+
+8장. 최종 예측과 개별 분석의 이유를 함께 확인
+
+핵심 메시지:
+결합 모델의 예측과 LightGBM 기여도·YARA 패턴 근거를 구분해 설명한다.
+
+슬라이드 내용:
+LightGBM:
+- pred_contrib로 파일별 실제 특징 기여도 계산
+- 양수: 악성 점수를 높인 방향 / 음수: 낮춘 방향
+- Core 16개 + Histogram·ByteEntropy 두 그룹 표시
+- 기준값 + 모든 기여도 합 = LightGBM 원시 점수 검증
+YARA-X:
+- 매칭 규칙·패밀리·패턴 위치 표시
+사용자 설명:
+- 엔트로피·바이트 분포·오버레이 등 용어를 쉬운 한국어로 설명
+- 결합 예측을 보면서 개별 분석의 근거를 함께 검토
+
+추천 시각 자료:
+실제 대시보드 기여도 그래프와 설명 카드 캡처를 배치한다. 실제로 확보하지 않은 기여도 숫자와 패턴 오프셋은 만들지 않는다.
+
+발표자 설명:
+기여도는 결합 모델 전체가 아니라 LightGBM 점수에 대한 설명입니다. 화면의 기여도 그래프를 최종 결합 점수의 SHAP 분석이라고 부르지 않습니다. 양수나 음수는 이번 예측에서의 방향이며 위험도 퍼센트가 아닙니다. 점수를 높인 특징과 낮춘 특징을 함께 보여줍니다. 또한 파일에서 코드 패턴을 찾았다는 것이 실제로 공격 행위를 실행했다는 뜻은 아닙니다.
+
+작성 주의사항:
+기여도를 악성 행위의 인과관계로 해석하지 않는다. Known Publisher처럼 실제 입력에 없는 피처를 추가하지 않는다. Hex·역어셈블 명령을 현재 화면의 실제 출력으로 꾸미지 않는다.
+
+참고 출처:
+EMBER2024: https://github.com/FutureComputing4AI/EMBER2024
+DikeDataset: https://github.com/iosifache/DikeDataset
+공개 규칙: https://github.com/reversinglabs/reversinglabs-yara-rules
+YARA-X: https://virustotal.github.io/yara-x/docs/api/python/
+LightGBM 기여도: https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.Booster.html
+WannaCry 후보 출처: https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry
+자체 최종 평가: malware_analysis_project/fusion_lr/holdout_evaluation_v1/summary.json
+</pre></div></body></html>

@@ -1,0 +1,9 @@
+cd "C:\Users\user\Documents\ChatGPT\최종 프로젝트2"
+
+
+
+
+& ".\malware_analysis_project\.venv-rebuild\Scripts\python.exe" -m streamlit run ".\malware_analysis_project\app.py" --server.address 127.0.0.1 --server.port 8503 --server.headless true --browser.gatherUsageStats false --server.fileWatcherType none
+
+
+Start-Process "http://127.0.0.1:8503"

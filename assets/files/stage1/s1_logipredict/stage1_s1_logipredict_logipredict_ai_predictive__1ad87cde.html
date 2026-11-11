@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 물류센터 AI 예지보전 관제 시스템 (LogiPredict AI)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#080c14',
+                        cardbg: '#0f172a',
+                        borderbg: '#1e293b',
+                        accent: '#06b6d4'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #080c14;
+            color: #f1f5f9;
+        }
+        .glow-emerald { box-shadow: 0 0 20px rgba(16, 185, 129, 0.25); }
+        .glow-amber { box-shadow: 0 0 20px rgba(245, 158, 11, 0.3); }
+        .glow-rose { box-shadow: 0 0 25px rgba(244, 63, 94, 0.4); }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: #0b0f19; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#080c14]">
+
+    <!-- GNB / Top Navigation Header -->
+    <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-50 px-4 py-2.5">
+        <div class="max-w-[1850px] mx-auto flex flex-wrap items-center justify-between gap-4">
+            
+            <!-- System Title & Badge -->
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-cyan-500/10 rounded-xl border border-cyan-500/30 text-cyan-400">
+                    <i class="fa-solid fa-microchip text-xl"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-lg font-bold text-white tracking-tight">스마트 물류센터 AI 예지보전 관제 시스템</h1>
+                        <span class="px-2 py-0.5 text-[11px] font-mono font-semibold rounded-md bg-cyan-950 text-cyan-400 border border-cyan-800">LogiPredict AI v2.4.1</span>
+                    </div>
+                    <p class="text-xs text-slate-400">1D-CNN Autoencoder 기반 실시간 설비 건전성(Health Index) 및 복원 오차(MSE) 예지보전 모듈</p>
+                </div>
+            </div>
+
+            <!-- Global Status Summary Badges -->
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 bg-slate-950/80 px-3 py-1.5 rounded-lg border border-slate-800 text-xs">
+                    <span class="text-slate-400">전체 설비:</span>
+                    <span class="font-bold text-white">4대</span>
+                </div>
+                <div class="flex items-center gap-1.5 bg-emerald-950/40 px-3 py-1.5 rounded-lg border border-emerald-800/60 text-xs text-emerald-400">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>정상 (0~59점):</span>
+                    <strong id="badge-count-normal" class="font-mono font-bold text-emerald-300">3</strong>
+                </div>
+                <div class="flex items-center gap-1.5 bg-amber-950/40 px-3 py-1.5 rounded-lg border border-amber-800/60 text-xs text-amber-400">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>주의 (60~89점):</span>
+                    <strong id="badge-count-warning" class="font-mono font-bold text-amber-300">1</strong>
+                </div>
+                <div class="flex items-center gap-1.5 bg-rose-950/40 px-3 py-1.5 rounded-lg border border-rose-800/60 text-xs text-rose-400">
+                    <i class="fa-solid fa-circle-radiation"></i>
+                    <span>경보 (90~100점):</span>
+                    <strong id="badge-count-critical" class="font-mono font-bold text-rose-300">0</strong>
+                </div>
+            </div>
+
+            <!-- Real-time Clock & System Status -->
+            <div class="flex items-center space-x-4 text-xs">
+                <div class="hidden lg:flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="text-slate-300">상태: <strong class="text-emerald-400">정상 가동 중</strong></span>
+                </div>
+                <div class="flex items-center space-x-2 text-slate-300 font-mono bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800">
+                    <i class="fa-regular fa-clock text-cyan-400"></i>
+                    <span id="current-clock">2026-10-20 09:30:00</span>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Global Control Controller Bar -->
+    <section class="bg-slate-900/60 border-b border-slate-800 px-4 py-2">
+        <div class="max-w-[1850px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-3">
+                <span class="text-slate-400 font-semibold flex items-center gap-1.5">
+                    <i class="fa-solid fa-sliders text-cyan-400"></i> 글로벌 시뮬레이션 제어:
+                </span>
+                <div class="inline-flex rounded-lg bg-slate-950 p-1 border border-slate-800 gap-1">
+                    <button onclick="setGlobalSimulation('all-normal')" class="px-2.5 py-1 rounded text-slate-300 hover:text-white hover:bg-slate-800 transition">전체 정상 가동</button>
+                    <button onclick="setGlobalSimulation('random-warning')" class="px-2.5 py-1 rounded text-amber-300 hover:bg-amber-950/50 transition">무작위 주의 발생</button>
+                    <button onclick="setGlobalSimulation('asrs-fault')" class="px-2.5 py-1 rounded text-rose-300 hover:bg-rose-950/50 transition">ASRS-03 고장 주입</button>
+                </div>
+            </div>
+
+            <!-- Sampling Interval Slider -->
+            <div class="flex items-center gap-3">
+                <span class="text-slate-400">데이터 수집 주기:</span>
+                <input id="interval-slider" type="range" min="1" max="5" value="1" step="1" onchange="updateInterval(this.value)" class="w-28 accent-cyan-500 bg-slate-800 rounded cursor-pointer">
+                <span id="interval-val-display" class="font-mono text-cyan-400 font-bold w-8">1초</span>
+                <button id="btn-toggle-sim" onclick="toggleSimulation()" class="px-3 py-1 bg-cyan-600 hover:bg-cyan-500 text-white font-medium rounded-lg transition flex items-center gap-1">
+                    <i id="sim-icon" class="fa-solid fa-pause"></i>
+                    <span id="sim-text">일시정지</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <main class="flex-1 max-w-[1850px] w-full mx-auto p-4 space-y-4">
+
+        <!-- Section 1: Equipment Status Grid (4 Equipments) -->
+        <section>
+            <div class="flex justify-between items-center mb-2.5">
+                <h2 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+                    <i class="fa-solid fa-boxes-stacked text-cyan-400"></i>
+                    주요 물류 설비 4종 실시간 건전성(HI) 현황
+                </h2>
+                <span class="text-xs text-slate-500">※ 설비 카드를 클릭하면 상세 센서 파형 및 AI 분석 차트가 전환됩니다.</span>
+            </div>
+
+            <div id="equipment-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Equipment Cards Populated Dynamic via JS -->
+            </div>
+        </section>
+
+        <!-- Section 2: Focused Equipment Detail Charts & Work Order Panel -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+            <!-- Left: Waveform & MSE Trend Chart (8 Cols) -->
+            <div class="lg:col-span-8 bg-slate-900/80 border border-slate-800 rounded-xl p-4 space-y-4">
+                
+                <!-- Chart Header -->
+                <div class="flex flex-wrap items-center justify-between border-b border-slate-800 pb-3 gap-2">
+                    <div>
+                        <h3 id="selected-title" class="text-base font-bold text-white flex items-center gap-2">
+                            ASRS-CRANE-03 (자동창고 승강 모터) 실시간 AI 정밀 분석
+                        </h3>
+                        <p id="selected-part" class="text-xs text-slate-400">주요 분석 부품: 승강 와이어 드럼 및 주행 인버터 모터</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-slate-400">센서 필터:</span>
+                        <div class="inline-flex rounded-lg bg-slate-950 p-1 border border-slate-800 text-xs">
+                            <button id="filter-all" onclick="setSensorFilter('all')" class="px-2.5 py-1 rounded bg-slate-800 text-white font-medium">전체 (All)</button>
+                            <button id="filter-vib" onclick="setSensorFilter('vib')" class="px-2.5 py-1 rounded text-slate-400 hover:text-white">진동</button>
+                            <button id="filter-temp" onclick="setSensorFilter('temp')" class="px-2.5 py-1 rounded text-slate-400 hover:text-white">온도</button>
+                            <button id="filter-curr" onclick="setSensorFilter('curr')" class="px-2.5 py-1 rounded text-slate-400 hover:text-white">전류</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart 1: Waveform -->
+                <div class="space-y-1">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-semibold text-slate-300 flex items-center gap-1.5">
+                            <i class="fa-solid fa-chart-line text-cyan-400"></i>
+                            실시간 3종 센서 실효 수치 파형 (Vibration: mm/s, Temp: ℃, Current: A)
+                        </span>
+                        <span class="font-mono text-cyan-400 text-[11px]">Sampling Window: 60s</span>
+                    </div>
+                    <div class="h-[200px] w-full bg-slate-950/70 rounded-lg p-2 border border-slate-800 relative">
+                        <canvas id="waveformChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 2: MSE Reconstruction Error Trend -->
+                <div class="space-y-1">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-semibold text-slate-300 flex items-center gap-1.5">
+                            <i class="fa-solid fa-wave-square text-amber-400"></i>
+                            1D-CNN Autoencoder 복원 오차 (MSE) 트렌드
+                        </span>
+                        <span class="font-mono text-rose-400 text-[11px]">Anomaly Threshold = 0.0450</span>
+                    </div>
+                    <div class="h-[180px] w-full bg-slate-950/70 rounded-lg p-2 border border-slate-800 relative">
+                        <canvas id="mseChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right: AI Work Order Panel & Live Gauge (4 Cols) -->
+            <div class="lg:col-span-4 space-y-4 flex flex-col justify-between">
+
+                <!-- HI Gauge Box -->
+                <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 flex flex-col items-center justify-center relative">
+                    <div class="w-full flex justify-between items-center mb-2">
+                        <span class="text-xs font-semibold text-slate-300">현재 설비 Health Index (HI)</span>
+                        <span id="selected-hi-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                            주의 (60~89점)
+                        </span>
+                    </div>
+
+                    <div class="relative w-36 h-36 flex items-center justify-center my-1">
+                        <canvas id="hiGaugeChart"></canvas>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span id="gauge-hi-val" class="text-3xl font-black text-white">68</span>
+                            <span class="text-[10px] text-slate-400">HI Score</span>
+                        </div>
+                    </div>
+
+                    <p class="text-[11px] text-slate-400 text-center mt-1">
+                        ※ HI 기준: 정상(0~59점), 주의(60~89점), 경보(90~100점)
+                    </p>
+                </div>
+
+                <!-- Dynamic Work Order Panel -->
+                <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4 flex-1 flex flex-col justify-between space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-signature text-cyan-400"></i>
+                            AI 스마트 작업 지시서 (Work Order)
+                        </h4>
+                        <span id="wo-status-badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800 font-bold">
+                            발행 필요
+                        </span>
+                    </div>
+
+                    <!-- Work Order Body -->
+                    <div id="work-order-body" class="space-y-2 text-xs">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- Work Order Action Buttons -->
+                    <div class="pt-2 border-t border-slate-800 grid grid-cols-3 gap-2">
+                        <button onclick="actionWorkOrder('dispatch')" id="btn-dispatch" class="py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-paper-plane"></i> 전송
+                        </button>
+                        <button onclick="actionWorkOrder('print')" class="py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-print"></i> 인쇄
+                        </button>
+                        <button onclick="actionWorkOrder('complete')" id="btn-complete" class="py-2 bg-emerald-700 hover:bg-emerald-600 text-white rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-check"></i> 조치 완료
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Section 3: Live Event Log Stream -->
+        <section class="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-cyan-400"></i>
+                    실시간 이벤트 알림 피드 및 진단 이력 스트림
+                </h3>
+                <button onclick="clearLogs()" class="text-xs text-slate-400 hover:text-white">로그 비우기</button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-slate-950 text-slate-400 font-mono border-b border-slate-800 uppercase">
+                        <tr>
+                            <th class="py-2 px-3">시각</th>
+                            <th class="py-2 px-3">설비 ID</th>
+                            <th class="py-2 px-3">상태 구분</th>
+                            <th class="py-2 px-3">HI 점수</th>
+                            <th class="py-2 px-3">복원 오차(MSE)</th>
+                            <th class="py-2 px-3">AI 고장 요인 추정</th>
+                            <th class="py-2 px-3 text-right">조치 진행</th>
+                        </tr>
+                    </thead>
+                    <tbody id="log-table-body" class="divide-y divide-slate-800/60">
+                        <!-- Dynamic Rows -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 bg-slate-950 py-3 mt-auto">
+        <div class="max-w-[1850px] mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
+            <div>© 2026 LogiPredict AI Center. Smart Predictive Maintenance Control Platform.</div>
+            <div class="flex items-center gap-4 text-[11px] font-mono">
+                <span>Model: 1D-CNN Autoencoder</span>
+                <span>•</span>
+                <span>Latency: 8.4ms</span>
+                <span>•</span>
+                <span class="text-cyan-400">Connected</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div id="toast-inner" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-900 border border-cyan-500 text-white shadow-2xl">
+            <i id="toast-icon" class="fa-solid fa-info-circle text-cyan-400 text-lg"></i>
+            <div>
+                <p id="toast-title" class="text-xs font-bold">알림</p>
+                <p id="toast-msg" class="text-[11px] text-slate-300">내용</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script Logic -->
+    <script>
+        // System Config
+        let CONFIG = {
+            THRESHOLD_MSE: 0.045,
+            WINDOW_SIZE: 60,
+            INTERVAL_MS: 1000
+        };
+
+        let isRunning = true;
+        let selectedId = 'ASRS-CRANE-03';
+        let currentFilter = 'all';
+        let timerId = null;
+
+        // Master Equipment Data (Health Index rules strictly applied)
+        // 0~59: NORMAL (정상)
+        // 60~89: WARNING (주의)
+        // 90~100: CRITICAL (경보)
+        const equipments = {
+            'CONVEYOR-01': {
+                id: 'CONVEYOR-01',
+                name: 'CONVEYOR-01',
+                type: '컨베이어 롤러 베어링',
+                part: '메인 롤러 베어링 및 구동 벨트',
+                hi: 24,
+                mse: 0.0125,
+                status: 'NORMAL',
+                sensors: { vib: 0.32, temp: 41.2, curr: 12.4 },
+                historyMSE: Array(60).fill(0.0125),
+                waveform: { vib: [], temp: [], curr: [] },
+                manualState: 'normal'
+            },
+            'SORTER-02': {
+                id: 'SORTER-02',
+                name: 'SORTER-02',
+                type: '크로스벨트 회전부',
+                part: '고속 회전 휠 및 서보 피스톤',
+                hi: 42,
+                mse: 0.0210,
+                status: 'NORMAL',
+                sensors: { vib: 0.58, temp: 46.5, curr: 16.8 },
+                historyMSE: Array(60).fill(0.0210),
+                waveform: { vib: [], temp: [], curr: [] },
+                manualState: 'normal'
+            },
+            'ASRS-CRANE-03': {
+                id: 'ASRS-CRANE-03',
+                name: 'ASRS-CRANE-03',
+                type: '자동창고 승강 모터',
+                part: '승강 와이어 드럼 및 주행 인버터',
+                hi: 68,
+                mse: 0.0512,
+                status: 'WARNING',
+                sensors: { vib: 1.45, temp: 62.8, curr: 26.5 },
+                historyMSE: Array(60).fill(0.0512),
+                waveform: { vib: [], temp: [], curr: [] },
+                manualState: 'warning'
+            },
+            'AGV-04': {
+                id: 'AGV-04',
+                name: 'AGV-04',
+                type: '고속 AGV 주행 휠 구동부',
+                part: 'BLDC 주행 바퀴 모터 & 휠 감속기',
+                hi: 18,
+                mse: 0.0085,
+                status: 'NORMAL',
+                sensors: { vib: 0.18, temp: 37.4, curr: 8.2 },
+                historyMSE: Array(60).fill(0.0085),
+                waveform: { vib: [], temp: [], curr: [] },
+                manualState: 'normal'
+            }
+        };
+
+        // Initialize Waveform Buffer
+        Object.keys(equipments).forEach(id => {
+            const eq = equipments[id];
+            for (let i = 0; i < CONFIG.WINDOW_SIZE; i++) {
+                eq.waveform.vib.push(eq.sensors.vib + (Math.random() - 0.5) * 0.08);
+                eq.waveform.temp.push(eq.sensors.temp + (Math.random() - 0.5) * 0.3);
+                eq.waveform.curr.push(eq.sensors.curr + (Math.random() - 0.5) * 0.2);
+            }
+        });
+
+        // Event Logs Array
+        const eventLogs = [
+            {
+                time: '09:28:10',
+                id: 'ASRS-CRANE-03',
+                status: 'WARNING',
+                hi: 68,
+                mse: 0.0512,
+                cause: '승강 축 고주파 진동 패턴 감지 (MSE > 0.045 초과)',
+                action: '작업지시서 자동 발행'
+            },
+            {
+                time: '09:15:22',
+                id: 'SORTER-02',
+                status: 'NORMAL',
+                hi: 42,
+                mse: 0.0210,
+                cause: '서보 액추에이터 주행 시퀀스 복귀',
+                action: '자동 모니터링'
+            }
+        ];
+
+        // Chart Global Instances
+        let waveformChart, mseChart, hiGaugeChart;
+
+        // On Load
+        window.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            renderEquipmentGrid();
+            updateSelectedView();
+            renderLogs();
+            startClock();
+            startLoop();
+        });
+
+        // Loop Control
+        function startLoop() {
+            if (timerId) clearInterval(timerId);
+            timerId = setInterval(() => {
+                if (isRunning) stepSimulation();
+            }, CONFIG.INTERVAL_MS);
+        }
+
+        function updateInterval(val) {
+            CONFIG.INTERVAL_MS = parseInt(val) * 1000;
+            document.getElementById('interval-val-display').innerText = `${val}초`;
+            startLoop();
+            showToast(`수집 주기가 ${val}초로 변경되었습니다.`, 'info');
+        }
+
+        // Simulation Step Engine
+        function stepSimulation() {
+            Object.keys(equipments).forEach(id => {
+                const eq = equipments[id];
+                let noise = (Math.random() - 0.5);
+
+                if (eq.manualState === 'warning') {
+                    // Force Warning Level HI (60~89)
+                    eq.sensors.vib = Math.max(1.1, eq.sensors.vib + noise * 0.1);
+                    eq.sensors.temp = Math.min(78, eq.sensors.temp + Math.random() * 0.3);
+                    eq.sensors.curr = Math.max(22, eq.sensors.curr + noise * 0.4);
+                    eq.mse = parseFloat((0.048 + Math.random() * 0.012).toFixed(4));
+                } else if (eq.manualState === 'critical') {
+                    // Force Critical Level HI (90~100)
+                    eq.sensors.vib = Math.max(2.8, eq.sensors.vib + noise * 0.25);
+                    eq.sensors.temp = Math.min(95, eq.sensors.temp + Math.random() * 0.6);
+                    eq.sensors.curr = Math.max(38, eq.sensors.curr + noise * 0.6);
+                    eq.mse = parseFloat((0.082 + Math.random() * 0.025).toFixed(4));
+                } else {
+                    // Normal Level HI (0~59)
+                    eq.sensors.vib = Math.max(0.1, Math.min(0.7, eq.sensors.vib + noise * 0.02));
+                    eq.sensors.temp = Math.max(30, Math.min(50, eq.sensors.temp + noise * 0.1));
+                    eq.sensors.curr = Math.max(5, Math.min(18, eq.sensors.curr + noise * 0.1));
+                    eq.mse = parseFloat((0.008 + (eq.sensors.vib * 0.012) + Math.random() * 0.004).toFixed(4));
+                }
+
+                // Push Circular Waveform Data
+                eq.waveform.vib.push(eq.sensors.vib);
+                eq.waveform.temp.push(eq.sensors.temp);
+                eq.waveform.curr.push(eq.sensors.curr);
+
+                if (eq.waveform.vib.length > CONFIG.WINDOW_SIZE) {
+                    eq.waveform.vib.shift();
+                    eq.waveform.temp.shift();
+                    eq.waveform.curr.shift();
+                }
+
+                // Calculate HI Score based on MSE
+                // Health Index Scale: 0~59 NORMAL, 60~89 WARNING, 90~100 CRITICAL
+                let hiScore = 0;
+                if (eq.mse <= 0.040) {
+                    hiScore = Math.round((eq.mse / 0.040) * 59); // 0 ~ 59
+                } else if (eq.mse <= 0.075) {
+                    hiScore = 60 + Math.round(((eq.mse - 0.040) / 0.035) * 29); // 60 ~ 89
+                } else {
+                    hiScore = 90 + Math.round(Math.min(10, ((eq.mse - 0.075) / 0.03) * 10)); // 90 ~ 100
+                }
+                eq.hi = Math.max(0, Math.min(100, hiScore));
+
+                // Update Status according to strict criteria
+                const prevStatus = eq.status;
+                if (eq.hi >= 90) {
+                    eq.status = 'CRITICAL';
+                } else if (eq.hi >= 60) {
+                    eq.status = 'WARNING';
+                } else {
+                    eq.status = 'NORMAL';
+                }
+
+                // Push MSE
+                eq.historyMSE.push(eq.mse);
+                if (eq.historyMSE.length > CONFIG.WINDOW_SIZE) eq.historyMSE.shift();
+
+                // Trigger Log Event on status change
+                if (prevStatus !== eq.status && (eq.status === 'WARNING' || eq.status === 'CRITICAL')) {
+                    addLog(eq);
+                    showToast(`[${eq.id}] 상태 변동 감지: ${eq.status} (HI: ${eq.hi}점)`, eq.status === 'CRITICAL' ? 'error' : 'warning');
+                }
+            });
+
+            // UI Refresh
+            renderEquipmentGrid();
+            updateSelectedView();
+            updateGlobalBadges();
+        }
+
+        // Render Equipment Card Grid
+        function renderEquipmentGrid() {
+            const container = document.getElementById('equipment-grid');
+            container.innerHTML = '';
+
+            Object.keys(equipments).forEach(id => {
+                const eq = equipments[id];
+                const isSelected = id === selectedId;
+
+                let badgeHtml = '';
+                let borderStyle = isSelected ? 'border-cyan-500 bg-slate-900' : 'border-slate-800 bg-slate-900/60 hover:border-slate-700';
+                let glowClass = '';
+
+                if (eq.status === 'CRITICAL') {
+                    badgeHtml = `<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/40 animate-pulse"><i class="fa-solid fa-triangle-exclamation mr-1"></i>경보 (90~100점)</span>`;
+                    if (isSelected) glowClass = 'glow-rose';
+                } else if (eq.status === 'WARNING') {
+                    badgeHtml = `<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40"><i class="fa-solid fa-circle-exclamation mr-1"></i>주의 (60~89점)</span>`;
+                    if (isSelected) glowClass = 'glow-amber';
+                } else {
+                    badgeHtml = `<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"><i class="fa-solid fa-circle-check mr-1"></i>정상 (0~59점)</span>`;
+                    if (isSelected) glowClass = 'glow-emerald';
+                }
+
+                const card = `
+                    <div onclick="selectEquipment('${eq.id}')" class="cursor-pointer border rounded-xl p-3.5 flex flex-col justify-between transition-all duration-200 ${borderStyle} ${glowClass}">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-950 text-cyan-400 border border-slate-800">${eq.id}</span>
+                                    <h3 class="text-sm font-bold text-white mt-1">${eq.type}</h3>
+                                </div>
+                                ${badgeHtml}
+                            </div>
+
+                            <!-- HI Score Bar -->
+                            <div class="my-3">
+                                <div class="flex justify-between items-baseline mb-1">
+                                    <span class="text-xs text-slate-400">Health Index (HI)</span>
+                                    <span class="text-lg font-black font-mono ${eq.hi >= 90 ? 'text-rose-400' : (eq.hi >= 60 ? 'text-amber-400' : 'text-emerald-400')}">${eq.hi} <span class="text-xs text-slate-500 font-normal">/100점</span></span>
+                                </div>
+                                <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
+                                    <div class="h-full transition-all duration-300 ${eq.hi >= 90 ? 'bg-rose-500' : (eq.hi >= 60 ? 'bg-amber-500' : 'bg-emerald-500')}" style="width: ${Math.max(5, eq.hi)}%"></div>
+                                </div>
+                            </div>
+
+                            <!-- 3 Sensors -->
+                            <div class="grid grid-cols-3 gap-1 py-2 px-2 bg-slate-950/80 rounded-lg text-[11px] font-mono border border-slate-800/80">
+                                <div><span class="text-slate-500 block text-[9px]">진동(mm/s)</span><strong class="text-cyan-300">${eq.sensors.vib.toFixed(2)}</strong></div>
+                                <div><span class="text-slate-500 block text-[9px]">온도(℃)</span><strong class="text-amber-300">${eq.sensors.temp.toFixed(1)}</strong></div>
+                                <div><span class="text-slate-500 block text-[9px]">전류(A)</span><strong class="text-purple-300">${eq.sensors.curr.toFixed(1)}</strong></div>
+                            </div>
+                        </div>
+
+                        <!-- Card Manual Controls -->
+                        <div class="mt-3 pt-2 border-t border-slate-800/80 flex gap-1.5" onclick="event.stopPropagation()">
+                            <button onclick="triggerCardSimulation('${eq.id}', 'warning')" class="flex-1 py-1 px-2 text-[11px] bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 rounded font-medium transition">
+                                <i class="fa-solid fa-bolt mr-1"></i>이상 발생
+                            </button>
+                            <button onclick="triggerCardSimulation('${eq.id}', 'normal')" class="flex-1 py-1 px-2 text-[11px] bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 rounded font-medium transition">
+                                <i class="fa-solid fa-rotate-left mr-1"></i>정상 복구
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', card);
+            });
+        }
+
+        // Select Focus Equipment
+        function selectEquipment(id) {
+            selectedId = id;
+            renderEquipmentGrid();
+            updateSelectedView();
+        }
+
+        // Trigger Individual Simulation
+        function triggerCardSimulation(id, mode) {
+            const eq = equipments[id];
+            eq.manualState = mode;
+            if (mode === 'normal') {
+                eq.sensors = { vib: 0.2, temp: 40.0, curr: 12.0 };
+                eq.status = 'NORMAL';
+                showToast(`[${id}] 정상 작동 상태로 원복 되었습니다.`, 'info');
+            } else {
+                showToast(`[${id}] 이상 주입 시뮬레이션이 활성화되었습니다.`, 'warning');
+            }
+            stepSimulation();
+        }
+
+        // Update Charts & Work Order Panel
+        function updateSelectedView() {
+            const eq = equipments[selectedId];
+
+            // Header Texts
+            document.getElementById('selected-title').innerHTML = `${eq.id} (${eq.type}) 실시간 AI 정밀 분석`;
+            document.getElementById('selected-part').innerText = `주요 점검 대상 부품: ${eq.part}`;
+
+            // Gauge HI Value
+            document.getElementById('gauge-hi-val').innerText = eq.hi;
+
+            // HI Gauge Badge
+            const badge = document.getElementById('selected-hi-badge');
+            if (eq.status === 'CRITICAL') {
+                badge.innerText = '경보 (90~100점)';
+                badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/20 text-rose-400 border border-rose-500/40 animate-pulse';
+            } else if (eq.status === 'WARNING') {
+                badge.innerText = '주의 (60~89점)';
+                badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40';
+            } else {
+                badge.innerText = '정상 (0~59점)';
+                badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40';
+            }
+
+            // Render Work Order Panel
+            renderWorkOrderPanel(eq);
+
+            // Update Charts
+            updateChartsData(eq);
+        }
+
+        // Render Work Order Panel
+        function renderWorkOrderPanel(eq) {
+            const body = document.getElementById('work-order-body');
+            const statusBadge = document.getElementById('wo-status-badge');
+            const btnDispatch = document.getElementById('btn-dispatch');
+
+            const woNumber = `WO-${eq.id.replace('-', '')}-202610`;
+
+            if (eq.status === 'NORMAL') {
+                statusBadge.innerText = '발행 불필요 (정상)';
+                statusBadge.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800';
+                btnDispatch.disabled = true;
+                btnDispatch.classList.add('opacity-50', 'cursor-not-allowed');
+
+                body.innerHTML = `
+                    <div class="p-3 bg-slate-950/80 rounded-lg border border-slate-800 space-y-2">
+                        <div class="flex justify-between text-slate-400">
+                            <span>지시서 번호: <strong class="text-slate-200 font-mono">${woNumber}</strong></span>
+                            <span>우선순위: <strong class="text-emerald-400">낮음 (LOW)</strong></span>
+                        </div>
+                        <p class="text-slate-300 font-medium">설비가 정상 오차 범위(MSE &lt; 0.045) 내에서 안정적으로 운용 중입니다.</p>
+                        <p class="text-slate-500 text-[11px]">권장 조치사항: 정기 점검 일정(D-14)에 맞춘 일반 윤활유 주입 및 먼지 제거.</p>
+                    </div>
+                `;
+            } else {
+                const isCritical = eq.status === 'CRITICAL';
+                statusBadge.innerText = isCritical ? '긴급 발행 완료 (CRITICAL)' : '권고 발행 (WARNING)';
+                statusBadge.className = isCritical ?
+                    'text-[10px] font-mono px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-800 font-bold animate-pulse' :
+                    'text-[10px] font-mono px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800 font-bold';
+
+                btnDispatch.disabled = false;
+                btnDispatch.classList.remove('opacity-50', 'cursor-not-allowed');
+
+                body.innerHTML = `
+                    <div class="p-3 bg-slate-950 rounded-lg border ${isCritical ? 'border-rose-900/80' : 'border-amber-900/80'} space-y-2">
+                        <div class="flex justify-between text-slate-400">
+                            <span>지시서 번호: <strong class="text-slate-200 font-mono">${woNumber}</strong></span>
+                            <span>우선순위: <strong class="${isCritical ? 'text-rose-400 font-bold' : 'text-amber-400'}">${isCritical ? '최고 (URGENT)' : '보통 (MEDIUM)'}</strong></span>
+                        </div>
+                        <div>
+                            <span class="text-slate-500 block text-[10px]">진단 결과 및 대상 부품</span>
+                            <p class="text-slate-200 font-medium">${eq.part} 고주파 비정상 진동 및 열화 감지 (MSE: ${eq.mse.toFixed(4)})</p>
+                        </div>
+                        <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                            <span class="text-[10px] text-cyan-400 font-semibold block">권장 정비 액션 가이드</span>
+                            <ul class="list-disc list-inside text-slate-300 text-[11px] space-y-0.5 mt-0.5">
+                                <li>${eq.part} 얼라인먼트 점검 및 교체 예비품 확보</li>
+                                <li>베어링 그리스 마모 상태 및 정밀 발열 체크</li>
+                                <li>인버터 출력 토크 이상 유무 전압 측정</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize Charts
+        function initCharts() {
+            const timeLabels = Array.from({length: CONFIG.WINDOW_SIZE}, (_, i) => `-${CONFIG.WINDOW_SIZE - i}초`);
+
+            // 1. Waveform Chart
+            const ctxWave = document.getElementById('waveformChart').getContext('2d');
+            waveformChart = new Chart(ctxWave, {
+                type: 'line',
+                data: {
+                    labels: timeLabels,
+                    datasets: [
+                        { label: '진동 (mm/s)', data: [], borderColor: '#06b6d4', borderWidth: 1.5, pointRadius: 0, tension: 0.3 },
+                        { label: '온도 (℃)', data: [], borderColor: '#f59e0b', borderWidth: 1.5, pointRadius: 0, tension: 0.3 },
+                        { label: '전류 (A)', data: [], borderColor: '#c084fc', borderWidth: 1.5, pointRadius: 0, tension: 0.3 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: false,
+                    plugins: {
+                        legend: { display: true, labels: { color: '#94a3b8', font: { size: 10 } } }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8', font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // 2. MSE Trend Chart
+            const ctxMSE = document.getElementById('mseChart').getContext('2d');
+            mseChart = new Chart(ctxMSE, {
+                type: 'line',
+                data: {
+                    labels: timeLabels,
+                    datasets: [
+                        {
+                            label: '복원 오차 (MSE)',
+                            data: [],
+                            borderColor: '#38bdf8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            fill: true,
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            tension: 0.2
+                        },
+                        {
+                            label: '이상 임계값 (Threshold 0.0450)',
+                            data: Array(CONFIG.WINDOW_SIZE).fill(CONFIG.THRESHOLD_MSE),
+                            borderColor: '#f43f5e',
+                            borderWidth: 1.5,
+                            borderDash: [4, 4],
+                            pointRadius: 0,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: false,
+                    plugins: {
+                        legend: { display: true, labels: { color: '#94a3b8', font: { size: 10 } } }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: { min: 0, max: 0.12, grid: { color: '#1e293b' }, ticks: { color: '#94a3b8', font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // 3. Gauge Doughnut Chart
+            const ctxGauge = document.getElementById('hiGaugeChart').getContext('2d');
+            hiGaugeChart = new Chart(ctxGauge, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [68, 32],
+                        backgroundColor: ['#f59e0b', '#1e293b'],
+                        borderWidth: 0,
+                        cutout: '80%'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: { duration: 400 },
+                    plugins: { tooltip: { enabled: false } }
+                }
+            });
+        }
+
+        // Update Charts Data
+        function updateChartsData(eq) {
+            // Sensor Filter
+            waveformChart.data.datasets[0].data = eq.waveform.vib;
+            waveformChart.data.datasets[1].data = eq.waveform.temp;
+            waveformChart.data.datasets[2].data = eq.waveform.curr;
+
+            waveformChart.data.datasets[0].hidden = (currentFilter === 'temp' || currentFilter === 'curr');
+            waveformChart.data.datasets[1].hidden = (currentFilter === 'vib' || currentFilter === 'curr');
+            waveformChart.data.datasets[2].hidden = (currentFilter === 'vib' || currentFilter === 'temp');
+            waveformChart.update('none');
+
+            // MSE Chart
+            mseChart.data.datasets[0].data = eq.historyMSE;
+            if (eq.mse > CONFIG.THRESHOLD_MSE) {
+                mseChart.data.datasets[0].borderColor = '#f43f5e';
+                mseChart.data.datasets[0].backgroundColor = 'rgba(244, 63, 94, 0.25)';
+            } else {
+                mseChart.data.datasets[0].borderColor = '#38bdf8';
+                mseChart.data.datasets[0].backgroundColor = 'rgba(56, 189, 248, 0.1)';
+            }
+            mseChart.update('none');
+
+            // Gauge Color update
+            let gaugeColor = '#10b981'; // Green
+            if (eq.hi >= 90) gaugeColor = '#f43f5e'; // Red
+            else if (eq.hi >= 60) gaugeColor = '#f59e0b'; // Yellow
+
+            hiGaugeChart.data.datasets[0].data = [eq.hi, 100 - eq.hi];
+            hiGaugeChart.data.datasets[0].backgroundColor = [gaugeColor, '#1e293b'];
+            hiGaugeChart.update();
+        }
+
+        // Sensor Filter Handler
+        function setSensorFilter(mode) {
+            currentFilter = mode;
+            ['all', 'vib', 'temp', 'curr'].forEach(m => {
+                const btn = document.getElementById(`filter-${m}`);
+                if (m === mode) {
+                    btn.className = 'px-2.5 py-1 rounded bg-slate-800 text-white font-medium';
+                } else {
+                    btn.className = 'px-2.5 py-1 rounded text-slate-400 hover:text-white';
+                }
+            });
+            updateSelectedView();
+        }
+
+        // Global Simulation Mode Handler
+        function setGlobalSimulation(mode) {
+            if (mode === 'all-normal') {
+                Object.keys(equipments).forEach(k => {
+                    equipments[k].manualState = 'normal';
+                    equipments[k].sensors = { vib: 0.2, temp: 40.0, curr: 12.0 };
+                    equipments[k].status = 'NORMAL';
+                });
+                showToast('모든 설비가 정상 가동 상태로 설정되었습니다.', 'info');
+            } else if (mode === 'random-warning') {
+                const keys = Object.keys(equipments);
+                const randomKey = keys[Math.floor(Math.random() * keys.length)];
+                equipments[randomKey].manualState = 'warning';
+                showToast(`[${randomKey}] 무작위 주의 상태가 주입되었습니다.`, 'warning');
+            } else if (mode === 'asrs-fault') {
+                equipments['ASRS-CRANE-03'].manualState = 'critical';
+                showToast('[ASRS-CRANE-03] 긴급 고장 시뮬레이션 주입 완료', 'error');
+            }
+            stepSimulation();
+        }
+
+        // Work Order Action Handlers
+        function actionWorkOrder(action) {
+            const eq = equipments[selectedId];
+            if (action === 'dispatch') {
+                showToast(`[${eq.id}] 작업 지시서가 현장 정비팀 모바일로 발송되었습니다.`, 'info');
+            } else if (action === 'print') {
+                showToast(`[${eq.id}] 작업 지시서 출력을 시작합니다.`, 'info');
+            } else if (action === 'complete') {
+                eq.manualState = 'normal';
+                eq.sensors = { vib: 0.2, temp: 40.0, curr: 12.0 };
+                eq.status = 'NORMAL';
+                showToast(`[${eq.id}] 정비 조치 완료 처리되어 정상 상태로 복구되었습니다.`, 'info');
+                stepSimulation();
+            }
+        }
+
+        // Event Logs Renderer
+        function addLog(eq) {
+            const timeStr = new Date().toTimeString().split(' ')[0];
+            eventLogs.unshift({
+                time: timeStr,
+                id: eq.id,
+                status: eq.status,
+                hi: eq.hi,
+                mse: eq.mse,
+                cause: eq.status === 'CRITICAL' ? '1D-CNN 오차 누적 및 부품 베어링 파손 감지' : '승강 축 축심 불일치 및 진동 증대',
+                action: '작업지시서 자동 발행'
+            });
+
+            if (eventLogs.length > 15) eventLogs.pop();
+            renderLogs();
+        }
+
+        function renderLogs() {
+            const tbody = document.getElementById('log-table-body');
+            tbody.innerHTML = '';
+
+            eventLogs.forEach(log => {
+                let badgeClass = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
+                if (log.status === 'WARNING') badgeClass = 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+                if (log.status === 'CRITICAL') badgeClass = 'bg-rose-500/10 text-rose-400 border-rose-500/30 font-bold';
+
+                const tr = `
+                    <tr class="hover:bg-slate-800/40 transition">
+                        <td class="py-2 px-3 font-mono text-slate-400">${log.time}</td>
+                        <td class="py-2 px-3 font-mono font-bold text-cyan-400">${log.id}</td>
+                        <td class="py-2 px-3">
+                            <span class="px-2 py-0.5 text-[10px] rounded-full border ${badgeClass}">
+                                ${log.status}
+                            </span>
+                        </td>
+                        <td class="py-2 px-3 font-bold ${log.hi >= 60 ? 'text-amber-400' : 'text-emerald-400'}">${log.hi}점</td>
+                        <td class="py-2 px-3 font-mono ${log.mse > CONFIG.THRESHOLD_MSE ? 'text-rose-400 font-bold' : 'text-slate-300'}">${log.mse.toFixed(4)}</td>
+                        <td class="py-2 px-3 text-slate-300">${log.cause}</td>
+                        <td class="py-2 px-3 text-right">
+                            <button onclick="selectEquipment('${log.id}')" class="text-cyan-400 hover:underline font-medium">${log.action} →</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.insertAdjacentHTML('beforeend', tr);
+            });
+        }
+
+        function clearLogs() {
+            eventLogs.length = 0;
+            renderLogs();
+            showToast('알림 로그가 초기화 되었습니다.', 'info');
+        }
+
+        // Update Top Global Count Badges
+        function updateGlobalBadges() {
+            const keys = Object.keys(equipments);
+            const normalCount = keys.filter(k => equipments[k].status === 'NORMAL').length;
+            const warningCount = keys.filter(k => equipments[k].status === 'WARNING').length;
+            const criticalCount = keys.filter(k => equipments[k].status === 'CRITICAL').length;
+
+            document.getElementById('badge-count-normal').innerText = normalCount;
+            document.getElementById('badge-count-warning').innerText = warningCount;
+            document.getElementById('badge-count-critical').innerText = criticalCount;
+        }
+
+        // Toggle Simulation Clock
+        function toggleSimulation() {
+            isRunning = !isRunning;
+            const icon = document.getElementById('sim-icon');
+            const text = document.getElementById('sim-text');
+
+            if (isRunning) {
+                icon.className = 'fa-solid fa-pause';
+                text.innerText = '일시정지';
+                showToast('실시간 모니터링이 재개되었습니다.', 'info');
+            } else {
+                icon.className = 'fa-solid fa-play';
+                text.innerText = '시작';
+                showToast('실시간 모니터링이 일시정지되었습니다.', 'warning');
+            }
+        }
+
+        // Real-time Clock
+        function startClock() {
+            setInterval(() => {
+                const now = new Date();
+                const str = now.getFullYear() + '-' +
+                    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(now.getDate()).padStart(2, '0') + ' ' +
+                    String(now.getHours()).padStart(2, '0') + ':' +
+                    String(now.getMinutes()).padStart(2, '0') + ':' +
+                    String(now.getSeconds()).padStart(2, '0');
+                document.getElementById('current-clock').innerText = str;
+            }, 1000);
+        }
+
+        // Toast Helper
+        function showToast(msg, type = 'info') {
+            const toast = document.getElementById('toast');
+            const inner = document.getElementById('toast-inner');
+            const icon = document.getElementById('toast-icon');
+            const title = document.getElementById('toast-title');
+            const msgEl = document.getElementById('toast-msg');
+
+            msgEl.innerText = msg;
+
+            if (type === 'error') {
+                inner.className = 'flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-900 border border-rose-500 text-white shadow-2xl';
+                icon.className = 'fa-solid fa-triangle-exclamation text-rose-500 text-lg';
+                title.innerText = '긴급 경고 (CRITICAL)';
+            } else if (type === 'warning') {
+                inner.className = 'flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-900 border border-amber-500 text-white shadow-2xl';
+                icon.className = 'fa-solid fa-circle-exclamation text-amber-400 text-lg';
+                title.innerText = '점검 권고 (WARNING)';
+            } else {
+                inner.className = 'flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-900 border border-cyan-500 text-white shadow-2xl';
+                icon.className = 'fa-solid fa-info-circle text-cyan-400 text-lg';
+                title.innerText = '시스템 알림';
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

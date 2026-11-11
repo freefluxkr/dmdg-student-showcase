@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미니프로젝트ppt.pptx - 웹 슬라이드 뷰어</title>
+<style>
+  body { margin:0; padding:18px; background:#0b1936; color:#f8fafc; font-family:'Pretendard', -apple-system, sans-serif; line-height:1.55; }
+  .top-bar { max-width:980px; margin:0 auto 16px; padding:12px 18px; border-radius:14px; background:rgba(15,26,52,0.75); border:1px solid rgba(56,189,248,0.35); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+  .top-bar h1 { margin:0; font-size:15px; font-weight:800; color:#38bdf8; }
+  .top-bar span { font-size:12px; color:#94a3b8; }
+  .slides-wrap { max-width:980px; margin:0 auto; display:flex; flex-direction:column; gap:18px; }
+  .slide-card { background:rgba(15,26,52,0.72); border:1px solid rgba(255,255,255,0.18); border-radius:16px; padding:16px; box-shadow:0 12px 28px rgba(0,0,0,0.35); }
+  .slide-badge { display:inline-block; font-size:11px; font-weight:800; color:#34d399; background:rgba(52,211,153,0.15); border:1px solid rgba(52,211,153,0.4); padding:2px 10px; border-radius:999px; margin-bottom:10px; }
+  .slide-img-wrap img { width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.12); display:block; margin-bottom:10px; }
+  .slide-img-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px; margin-bottom:10px; }
+  .slide-img-grid img { width:100%; border-radius:8px; border:1px solid rgba(255,255,255,0.12); }
+  .slide-text-box p { margin:4px 0; font-size:13.5px; color:#e2e8f0; }
+  .slide-text-box p:first-child { font-size:15.5px; font-weight:800; color:#ffffff; margin-bottom:6px; }
+  .slide-note { margin-top:10px; padding:10px 12px; border-radius:10px; background:rgba(56,189,248,0.1); border-left:3px solid #38bdf8; font-size:12.5px; color:#cbd5e1; }
+</style>
+</head>
+<body>
+  <div class="top-bar">
+    <h1>📊 미니프로젝트ppt.pptx</h1>
+    <span>총 10 슬라이드 · 웹 슬라이드 뷰어</span>
+  </div>
+  <div class="slides-wrap">
+    
+            <article class="slide-card">
+              <div class="slide-badge">SLIDE 01 / 10</div>
+              
+              <div class="slide-text-box"><p>01</p><p>Windows PE 악성코드 탐지</p><p>서로 다른 정적 분석 신호를 결합해 PE 파일의 악성 의심도를 판별</p></div>
+              
+            </article>
+            <article class="slide-card">
+              <div class="slide-badge">SLIDE 02 / 10</div>
+              
+              <div class="slide-text-box"><p>02</p><p>연구 배경과 문제 정의</p><p>패킹·난독화·변종 생성 환경에서는 한 가지 탐지 방식만으로 부족</p><p>Windows PE 악성코드 탐지 연구개발보고서 기반</p><p>2</p><p>시그니처 기반</p><p>알려진 악성코드에는 강하지만신종·변종 우회에 취약</p><p>머신러닝 기반</p><p>신규 위협 탐지 가능성이 있으나오탐·미탐 위험 존재</p><p>규칙 기반</p><p>분석가 지식을 반영하지만규칙 품질·범위에 의존</p><p>따라서: 서로 다른 오류 특성을 가진 세 탐지 엔진을 함께 사용</p><p>ClamAV알려진 위협</p><p>LightGBM통계적 패턴</p><p>YARA분석가 규칙</p><p>결합 목적: 한 엔진의 미탐을 다른 엔진의 탐지 신호로 보완하고 판단 근거를 다양화</p></div>
+              
+            </article>
+            <article class="slide-card">
+              <div class="slide-badge">SLIDE 03 / 10</div>
+              
+              <div class="slide-text-box"><p>03</p><p>연구 목표와 범위</p><p>PE 파일을 실행하지 않는 정적 분석 기반 통합 탐지 흐름 구현</p><p>Windows PE 악성코드 탐지 연구개발보고서 기반</p><p>3</p><p>구현 목표</p><p>① EMBER 호환 정적 특징 2,381개 활용② BODMAS 기반 LightGBM 이진 분류 학습③ ClamAV 시그니처와 YARA 규칙 검사 통합④ 엔진 결과를 5개 특징으로 변환해 후기 융합</p><p>포함 범위</p><p>PE 헤더·섹션·Import API·문자열·바이트 분포·엔트로피 등 정적 정보 분석. 파일의 구조적 이상과 통계적 패턴을 실행 없이 확인</p><p>제외 범위</p><p>실제 Windows 악성 PE를 실행하여 행위·네트워크·레지스트리 변화를 관찰하는 동적 분석은 본 연구 범위에 포함하지 않음</p></div>
+              
+            </article>
+            <article class="slide-card">
+              <div class="slide-badge">SLIDE 04 / 10</div>
+              
+              <div class="slide-text-box"><p>04</p><p>전체 탐지 시스템 구조</p><p>PE 파일 → 3개 분석 엔진 → 5개 특징 → 후기 융합 → 최종 판정</p><p>Windows PE 악성코드 탐지 연구개발보고서 기반</p><p>4</p><p>입력 PE파일</p><p>ClamAV</p><p>YARA</p><p>EMBER 특징+ LightGBM</p><p>5개 신호</p><p>LogisticRegression</p><p>판정</p><p>후기 융합 입력 벡터</p><p>ClamAV 0/1</p><p>Trojan 0/1</p><p>Backdoor 0/1</p><p>Ransomware 0/1</p><p>LightGBM 0~1</p><p>각 엔진은 독립적으로 호출되며 ThreadPoolExecutor 기반 병렬 처리로 분석 시간을 줄인다. 수집 결과는 동일한 0/1 또는 확률 형식으로 구조화한 뒤 최종 악성 의심 점수를 계산한다.</p></div>
+              
+            </article>
+            <article class="slide-card">
+              <div class="slide-badge">SLIDE 05 / 10</div>
+              
+              <div class="slide-text-box"><p>05</p><p>데이터셋 및 전처리</p><p>BODMAS의 134,435개 표본과 EMBER 형식의 2,381개 정적 특징 활용</p><p>Windows PE 악성코드 탐지 연구개발보고서 기반</p><p>5</p><p>전체 표본</p><p>134,435개</p><p>정상 파일</p><p>77,142개  |  57.4%</p><p>악성 파일</p><p>57,293개  |  42.6%</p><p>시간 순서 기반 분할</p><p>과거 데이터학습</p><p>이후 데이터검증</p><p>최신 데이터테스트</p><p>전처리·품질 확인</p><p>• SHA-256 기반 중복 검사• 특징과 라벨 연결 상태 확인• NaN·무한대 값 검사• 시간 정보 누락 여부 확인• 무작위 분할보다 운영 환경과 유사</p><p>해석 시 주의</p><p>동일 파일·동일 악성 패밀리가 학습과 테스트에 함께 포함되면 성능이 과대평가될 수 있음. 내부 시간 분할은 외부 데이터셋의 일반화 검증을 대체하지 않음</p></div>
+              
+            </article>
+            <article class="slide-card">
+              <div class="slide-badge">SLIDE 06 / 10</div>
+              
+              <div class="slide-text-box"><p>06</p><p>LightGBM 정적 분석 모델</p><p>PE의 구조적·통계적 특징을 이용한 이진 분류 모델</p><p>Windows PE 악성코드 탐지 연구개발보고서 기반</p><p>6</p><p>입력 특징</p><p>• PE 헤더와 선택적 헤더• 섹션 개수·크기·권한·엔트로피• Import/Export API 정보• 문자열 길이와 출현 통계• 바이트 히스토그램·분포• 파일 크기와 일반 정보총 2,381개 특징을 BODMAS 시간 분할 기준으로 학습·평가</p><p>정확도</p><p>99.69%</p><p>정밀도</p><p>99.96%</p><p>재현율</p><p>99.42%</p><p>오탐률</p><p>0.04%</p><p>해석: 재현율은 악성 중 탐지한 비율, 오탐률은 정상 중 악성으로 잘못 판정한 비율이다. 높은 내부 평가 성능이 실제 운영 성능을 자동으로 보장하지는 않는다.</p></div>
+              
+            </article>
+            <article class="slide-card">
+              <div class="slide-badge">SLIDE 07 / 10</div>
+              
+              <div class="slide-text-box"><p>07</p><p>ClamAV·YARA 기반 탐지</p><p>시그니처와 규칙을 보조 신호로 사용하여 모델 판단을 보완</p><p>Windows PE 악성코드 탐지 연구개발보고서 기반</p><p>7</p><p>ClamAV | 시그니처 검사</p><p>알려진 악성코드 시그니처 데이터베이스를 기반으로 파일을 검사출력 정리: CLEAN · DETECTED · ERRORDETECTED는 1, CLEAN은 0으로 융합 입력에 반영ERROR는 정상과 구분하여 별도 처리 필요강점: 알려진 위협에 대한 명확한 신호한계: DB 버전·갱신 시점과 변종 우회 영향</p><p>YARA | 규칙 검사</p><p>문자열·바이트 패턴·API 흔적을 조건으로 검사YARA Forge Core 기반 규칙 중Trojan/RAT · Backdoor · Ransomware3개 그룹, 총 10개 규칙 적용유형별 하나라도 일치하면 해당 그룹 값을 1로 변환하고 일치 규칙명도 기록</p><p>주의: YARA 규칙 일치는 악성 확정이 아니라, 최종 판단에 반영되는 위험 신호이다.</p></div>
+              
+            </article>
+            <article class="slide-card">
+              <div class="slide-badge">SLIDE 08 / 10</div>
+              
+              <div class="slide-text-box"><p>08</p><p>후기 융합 모델</p><p>원시 PE 특징을 다시 학습하지 않고, 엔진별 탐지 결과를 해석 가능하게 결합</p><p>Windows PE 악성코드 탐지 연구개발보고서 기반</p><p>8</p><p>입력: 5개 탐지 신호</p><p>ClamAV</p><p>Trojan</p><p>Backdoor</p><p>Ransomware</p><p>LightGBM 점수</p><p>LogisticRegression</p><p>최종 악성의심 점수</p><p>장점</p><p>각 입력 신호의 가중치를 데이터로 학습하며, 회귀 계수로 엔진별 영향 방향과 크기를 확인할 수 있어 해석 가능성이 높음</p><p>가상 데이터 기능 시험</p><p>정확도 95.0% · F1 94.74%</p><p>실제 탐지 성능이 아님</p></div>
+              
+            </article>
+            <article class="slide-card">
+              <div class="slide-badge">SLIDE 09 / 10</div>
+              
+              <div class="slide-text-box"><p>09</p><p>결과 해석 및 연구 한계</p><p>구현 완료와 실제 파일 기반 성능 검증 완료를 구분해야 함</p><p>Windows PE 악성코드 탐지 연구개발보고서 기반</p><p>9</p><p>현재 확인된 성과</p><p>• 정적 분석 통합 흐름 구현• LightGBM 내부 시간 분할 성능 확인• ClamAV·YARA 출력 구조화• 5개 융합 특징 생성• 후기 융합 학습·저장·예측 흐름 기능 확인</p><p>검증의 공백</p><p>• 실제 융합 학습 데이터는 정상 PE 50건만 검사• 악성 클래스 부재로 실제 융합 모델 학습·평가 불가• YARA 유형별 정밀도·재현율 미확인• 독립 외부 테스트셋 검증 미수행</p><p>따라서 말할 수 있는 범위</p><p>현재 단계는 ‘융합 성능 우위 입증’이 아니라 ‘실제 평가가 가능한 융합 기반 구현’ 단계95% 수치는 기능 시험 결과이므로 실제 성능으로 인용 불가ClamAV 결과는 DB 갱신 시점의 영향을 받음</p></div>
+              
+            </article>
+            <article class="slide-card">
+              <div class="slide-badge">SLIDE 10 / 10</div>
+              
+              <div class="slide-text-box"><p>10</p><p>결론 및 향후 계획</p><p>실데이터 기반의 공정한 비교 평가로 확장해야 함</p><p>Windows PE 악성코드 탐지 연구개발보고서 기반</p><p>10</p><p>결론: LightGBM·ClamAV·YARA를 통합하고, 5개 출력 특징을 이용한 후기 융합 구조를 구현했다.</p><p>1</p><p>정상·악성 PE균형 확보</p><p>2</p><p>실제 파일 기반융합 모델 학습</p><p>3</p><p>독립 테스트셋공정 비교</p><p>비교 대상</p><p>① LightGBM 단독  ② ClamAV·YARA 규칙 신호  ③ Logistic Regression 후기 융합같은 표본·같은 분할·같은 임계값 선택 원칙으로 비교</p><p>공통 평가 지표</p><p>Accuracy · Precision · Recall · F1 · ROC-AUC · PR-AUC · FPR · FNR</p><p>핵심 원칙: 동일한 독립 테스트셋에서 비교해야 융합의 실제 개선 여부를 판단할 수 있다.</p></div>
+              
+            </article>
+  </div>
+</body>
+</html>

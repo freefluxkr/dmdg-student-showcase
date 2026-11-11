@@ -1,0 +1,37 @@
+﻿NotebookLM 발표 소스 / 한국어 / 총 11장 / 현재 완성된 실험 시스템 설명
+발표 방향: 설계 목적 → 구조 → 데이터 → 개별 분석 → 결합 모델 → 근거 설명 → 웹 구현 → 평가 → 결론의 흐름으로 구성한다. 개발 도중의 변경 이력은 다루지 않는다. 기능 구현 사실과 관측 성능을 구분한다. 실제 결합 모델은 웹 기본 예측에 사용 중이며 운영 안전성을 입증한 모델이라는 뜻은 아니다.
+시각화 원칙: 실제 자료가 없는 화면·기여도·패턴 위치·성능 수치는 만들지 않는다. 본문은 짧게, 발표자 설명과 작성 주의사항은 참고 정보로 사용한다.
+
+5장. 실행파일을 528개 정적 특징으로 표현하고 점수 산출
+
+핵심 메시지:
+학습과 동일한 피처 변환을 적용한 뒤 저장된 LightGBM으로 점수를 계산한다.
+
+슬라이드 내용:
+그룹 | 개수 | 정보
+Core | 16 | 내장 인증서 유무, PE 경고, 엔트로피, Import API 수, 섹션·오버레이·문자열 통계
+Histogram | 256 | 전체 바이트 값의 빈도 분포
+ByteEntropy | 256 | 구간별 바이트·엔트로피 분포
+합계 | 528 | float32 입력
+- Core → Histogram → ByteEntropy 순서 유지
+- 두 분포 그룹은 각각 합으로 정규화, Core는 별도 스케일링 없음
+- 학습 데이터 대상 주차: 2023-09-24~2023-10-21 (파일의 수집·분류 주차이며 실제 모델 학습일이 아님)
+- 출력: 0~1 범위 악성 예측 점수
+
+추천 시각 자료:
+16 + 256 + 256 = 528 블록과 LightGBM 출력 흐름을 그린다.
+
+발표자 설명:
+LightGBM은 정상·악성 라벨을 이용해 결정트리의 분기와 출력값을 학습합니다. 업로드 파일이 각 트리에서 통과한 경로에 따른 출력을 합산하고 이를 0에서 1 사이로 변환합니다. 사람이 인증서에 몇 점, 엔트로피에 몇 점을 임의로 부여한 것이 아닙니다. 공식 EMBER2024 원시 추출 결과에서 사용자 정의 528개를 구성합니다.
+
+작성 주의사항:
+전체 52주 EMBER 학습이라고 말하지 않는다. 내장 인증서 유무를 유효한 서명 검사로 표현하지 않는다. 피처 형식 v3 사용과 당시 데이터 추출 환경의 완전 일치는 구분한다.
+
+참고 출처:
+EMBER2024: https://github.com/FutureComputing4AI/EMBER2024
+DikeDataset: https://github.com/iosifache/DikeDataset
+공개 규칙: https://github.com/reversinglabs/reversinglabs-yara-rules
+YARA-X: https://virustotal.github.io/yara-x/docs/api/python/
+LightGBM 기여도: https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.Booster.html
+WannaCry 후보 출처: https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry
+자체 최종 평가: malware_analysis_project/fusion_lr/holdout_evaluation_v1/summary.json

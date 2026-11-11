@@ -1,0 +1,39 @@
+﻿NotebookLM 발표 소스 / 한국어 / 총 11장 / 현재 완성된 실험 시스템 설명
+발표 방향: 설계 목적 → 구조 → 데이터 → 개별 분석 → 결합 모델 → 근거 설명 → 웹 구현 → 평가 → 결론의 흐름으로 구성한다. 개발 도중의 변경 이력은 다루지 않는다. 기능 구현 사실과 관측 성능을 구분한다. 실제 결합 모델은 웹 기본 예측에 사용 중이며 운영 안전성을 입증한 모델이라는 뜻은 아니다.
+시각화 원칙: 실제 자료가 없는 화면·기여도·패턴 위치·성능 수치는 만들지 않는다. 본문은 짧게, 발표자 설명과 작성 주의사항은 참고 정보로 사용한다.
+
+4장. 기본 모델 학습과 결합 모델 학습·평가를 분리
+
+핵심 메시지:
+각 단계의 자료와 역할을 구분하고 평가 데이터의 중복을 통제한다.
+
+슬라이드 내용:
+단계 | 자료 | 구성·역할
+기본 모델 학습 | EMBER2024 Win32 첫 4주 | SHA256 중복 제거 120,000건
+결합 모델 학습 | DikeDataset 300개 + theZoo WannaCry 1개 | 정상 150·악성 라벨 151, 총 301개
+결합 검증 | DikeDataset | 정상 50·악성 50, 총 100개
+최종 평가 | DikeDataset | 정상 50·악성 50, 총 100개
+DikeDataset 선별 기준:
+- 정상 목록 malice=0, 악성 목록 malice>=0.8
+- 지원 PE 유형만 선별
+- SHA256 중복 제거·학습/평가 분리, 평가 세트와 imphash 중복 검사
+- 고정한 결합 모델과 임계값으로 검증·최종 평가 진행
+- theZoo WannaCry의 악성 라벨은 저장소의 패밀리 분류를 근거로 사용하며 malice 기준을 적용한 표본이 아님
+
+추천 시각 자료:
+기본 모델 학습용 EMBER를 상단 별도 영역에 배치하고, 결합 학습 301 / 검증 100 / 최종 100을 세 블록으로 표시한다.
+
+발표자 설명:
+DikeDataset의 malice는 제공된 라벨 점수이며 우리 모델의 예측 점수가 아닙니다. 정상 파일에는 0이 부여됐고 악성 후보의 malice는 백신 판정에 가중치를 준 값입니다. 0.8은 악성 확률 80%를 뜻하지 않습니다. 결합 학습에는 실제 규칙에 매칭된 공개 WannaCry 한 개가 포함됩니다. 라벨은 자료 제공 출처에 따른 것으로 독립적인 수동 역분석 정답은 아닙니다.
+
+작성 주의사항:
+개발용 100개는 결합 학습 301개에 포함됐다. 개발 표본 결과를 독립 검증처럼 제시하지 않는다. DikeDataset의 범주 라벨과 특정 악성 패밀리 ID를 동일하게 보지 않는다. SHA256·imphash 분리는 모든 유사 파일·패밀리의 분리나 통계적 독립성을 보장하지 않는다.
+
+참고 출처:
+EMBER2024: https://github.com/FutureComputing4AI/EMBER2024
+DikeDataset: https://github.com/iosifache/DikeDataset
+공개 규칙: https://github.com/reversinglabs/reversinglabs-yara-rules
+YARA-X: https://virustotal.github.io/yara-x/docs/api/python/
+LightGBM 기여도: https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.Booster.html
+WannaCry 후보 출처: https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry
+자체 최종 평가: malware_analysis_project/fusion_lr/holdout_evaluation_v1/summary.json

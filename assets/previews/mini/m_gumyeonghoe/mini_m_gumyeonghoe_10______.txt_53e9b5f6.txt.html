@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>10_검증과_최종_평가.txt</title>
+<style>
+  body { margin:0; padding:22px; background:#0b1936; color:#e2e8f0; font-family:'Pretendard', sans-serif; }
+  .box { max-width:860px; margin:0 auto; background:rgba(15,26,52,0.78); border:1px solid rgba(255,255,255,0.18); border-radius:16px; padding:22px 26px; }
+  h1 { margin:0 0 14px; font-size:16px; color:#38bdf8; border-bottom:1px solid rgba(56,189,248,0.25); padding-bottom:8px; }
+  pre { margin:0; white-space:pre-wrap; word-break:break-word; font-family:'Pretendard', Consolas, monospace; font-size:13.5px; line-height:1.65; color:#f1f5f9; }
+</style>
+</head>
+<body><div class="box"><h1>📝 10_검증과_최종_평가.txt</h1><pre>﻿NotebookLM 발표 소스 / 한국어 / 총 11장 / 현재 완성된 실험 시스템 설명
+발표 방향: 설계 목적 → 구조 → 데이터 → 개별 분석 → 결합 모델 → 근거 설명 → 웹 구현 → 평가 → 결론의 흐름으로 구성한다. 개발 도중의 변경 이력은 다루지 않는다. 기능 구현 사실과 관측 성능을 구분한다. 실제 결합 모델은 웹 기본 예측에 사용 중이며 운영 안전성을 입증한 모델이라는 뜻은 아니다.
+시각화 원칙: 실제 자료가 없는 화면·기여도·패턴 위치·성능 수치는 만들지 않는다. 본문은 짧게, 발표자 설명과 작성 주의사항은 참고 정보로 사용한다.
+
+10장. 결합 예측의 성능을 고정 모델로 비교
+
+핵심 메시지:
+같은 평가 파일에서 단독 모델과 결합 모델을 비교하고 성능 개선 여부를 확인한다.
+
+슬라이드 내용:
+평가 조건:
+- 검증 100개, 최종 100개: 각 정상 50·악성 50
+- 모델·규칙·임계값 0.5 고정, 검증 결과 이후 재학습·튜닝 없음
+세트 | 방식 | 악성 누락 | 정상 오탐 | 정확도 | Recall
+검증 | LightGBM | 4 | 4 | 92% | 92%
+검증 | 결합 모델 | 6 | 3 | 91% | 88%
+최종 | LightGBM | 4 | 2 | 94% | 92%
+최종 | 결합 모델 | 5 | 2 | 93% | 90%
+- 평가 200개에서 YARA-X 매칭 0건, 도구 실패 0건
+- 각 클래스 50개에서 오류 1건은 Recall·FPR 2%p, 전체 100개에서 오류 1건은 정확도 1%p
+- 검증에서는 정상 오탐 1건 감소, 악성 누락 2건 증가
+- 최종에서는 정상 오탐 변화 없음, 악성 누락 1건 증가
+- 결합 성능 향상은 확인되지 않음
+
+추천 시각 자료:
+4행 성능 표를 중심으로 배치하고 최종 평가 94% 대 93% 및 누락 4 대 5를 함께 표시한다. 정확도만 단독 강조하지 않는다.
+
+발표자 설명:
+결합 모델은 실제로 학습하고 별도 두 세트에서 평가했습니다. 검증 결과를 본 뒤 모델을 바꾸지 않고 최종 평가까지 진행했습니다. 현재 표본에서 결합 모델은 악성 Recall이 낮았고 정확도도 1%p 낮았습니다. 평가에는 YARA 양성 매칭이 없어 실제 매칭 사례의 결합 효과는 측정하지 못했습니다. 각 클래스 50개라 1건이 2%p이며 작은 차이를 통계적으로 확정된 우열로 주장하지 않습니다.
+
+작성 주의사항:
+개발 평가의 LightGBM 94%, 파일럿 95%, 학습 재대입 94.68%와 이 표를 혼합하지 않는다. 결합 모델을 성능이 우수해 채택한 것처럼 설명하지 않는다. YARA 미매칭을 정상 안전성 증명으로 쓰지 않는다.
+
+참고 출처:
+EMBER2024: https://github.com/FutureComputing4AI/EMBER2024
+DikeDataset: https://github.com/iosifache/DikeDataset
+공개 규칙: https://github.com/reversinglabs/reversinglabs-yara-rules
+YARA-X: https://virustotal.github.io/yara-x/docs/api/python/
+LightGBM 기여도: https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.Booster.html
+WannaCry 후보 출처: https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry
+자체 최종 평가: malware_analysis_project/fusion_lr/holdout_evaluation_v1/summary.json
+</pre></div></body></html>

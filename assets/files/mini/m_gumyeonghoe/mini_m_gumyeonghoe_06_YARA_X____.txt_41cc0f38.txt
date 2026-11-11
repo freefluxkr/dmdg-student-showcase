@@ -1,0 +1,38 @@
+﻿NotebookLM 발표 소스 / 한국어 / 총 11장 / 현재 완성된 실험 시스템 설명
+발표 방향: 설계 목적 → 구조 → 데이터 → 개별 분석 → 결합 모델 → 근거 설명 → 웹 구현 → 평가 → 결론의 흐름으로 구성한다. 개발 도중의 변경 이력은 다루지 않는다. 기능 구현 사실과 관측 성능을 구분한다. 실제 결합 모델은 웹 기본 예측에 사용 중이며 운영 안전성을 입증한 모델이라는 뜻은 아니다.
+시각화 원칙: 실제 자료가 없는 화면·기여도·패턴 위치·성능 수치는 만들지 않는다. 본문은 짧게, 발표자 설명과 작성 주의사항은 참고 정보로 사용한다.
+
+6장. 공개 패밀리 규칙 14개로 알려진 악성 패턴 검사
+
+핵심 메시지:
+출처·용도가 명확한 규칙을 사용해 모델 점수와 다른 종류의 근거를 얻는다.
+
+슬라이드 내용:
+- 엔진: YARA-X 1.22.1
+- 규칙 출처: ReversingLabs 공식 공개 탐지 규칙, MIT 라이선스
+- 원문·출처·커밋·SHA256 보존, 개별·통합 컴파일 오류·경고 0건
+분류 | 규칙 수 | 대상
+트로이목마 | 3 | Emotet, TrickBot, Dridex
+정보탈취 | 3 | StealC, MultigrainPOS, ProjectHookPOS
+백도어 | 1 | Konni
+랜섬웨어 | 7 | WannaCry, LockBit, Conti, Ryuk, GandCrab, CryptoWall, Crysis
+검사: 업로드 바이트를 메모리에서 scan(data)에 전달
+근거: 매칭 규칙·패밀리·패턴 식별자·파일 오프셋
+
+추천 시각 자료:
+3·3·1·7 규칙 분류 카드를 배치한다. 실제 WannaCry 사례를 제시한다면 학습에 사용한 1개 사례임을 명시한다.
+
+발표자 설명:
+규칙은 직접 새로 작성한 것이 아니라 출처와 라이선스가 명확하고 Win32 패밀리 코드를 대상으로 하는 공개 규칙 중 선정했습니다. 특정 바이트·문자열·조건 조합을 검사하며, EMBER 피처 분석에서 도출한 규칙은 아닙니다. 인메모리 검사는 파일 바이트를 읽어 검사하는 방식이며 실행 중인 프로세스의 RAM을 검사하는 기능은 아닙니다.
+
+작성 주의사항:
+현재 14개가 모든 악성코드·변종을 다루는 것은 아니다. 학습의 WannaCry 매칭을 독립 평가 성능으로 제시하지 않는다. 미매칭을 정상 증거로 쓰지 않는다.
+
+참고 출처:
+EMBER2024: https://github.com/FutureComputing4AI/EMBER2024
+DikeDataset: https://github.com/iosifache/DikeDataset
+공개 규칙: https://github.com/reversinglabs/reversinglabs-yara-rules
+YARA-X: https://virustotal.github.io/yara-x/docs/api/python/
+LightGBM 기여도: https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.Booster.html
+WannaCry 후보 출처: https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry
+자체 최종 평가: malware_analysis_project/fusion_lr/holdout_evaluation_v1/summary.json

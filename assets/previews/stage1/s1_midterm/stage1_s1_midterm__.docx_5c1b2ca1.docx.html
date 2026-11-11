@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>슬라이드 구성 관련.docx - 문서 뷰어</title>
+<style>
+  body { margin:0; padding:24px; background:#0b1936; color:#e2e8f0; font-family:'Pretendard', -apple-system, sans-serif; line-height:1.65; }
+  .doc-container { max-width:860px; margin:0 auto; background:rgba(15,26,52,0.78); border:1px solid rgba(255,255,255,0.18); border-radius:18px; padding:28px 32px; box-shadow:0 16px 36px rgba(0,0,0,0.4); }
+  h1 { margin:0 0 18px; font-size:20px; color:#38bdf8; border-bottom:1px solid rgba(56,189,248,0.3); padding-bottom:10px; }
+  h2 { margin:22px 0 10px; font-size:17px; color:#34d399; }
+  h3 { margin:16px 0 8px; font-size:15px; color:#a78bfa; }
+  p { margin:7px 0; font-size:14px; color:#e2e8f0; }
+  .tbl-wrap { overflow-x:auto; margin:14px 0; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th, td { border:1px solid rgba(148,163,184,0.25); padding:8px 10px; text-align:left; }
+  th { background:rgba(56,189,248,0.16); color:#bae6fd; }
+</style>
+</head>
+<body>
+  <div class="doc-container">
+    <h1>📄 슬라이드 구성 관련.docx</h1>
+    <p>[디자인]</p><p>16:9 와이드 가로 조판 (@page {size: 297mm 167mm; }):</p><p>고해상도 모니터 및 프로젝터에 여백 없이 꽉 차는 프레젠테이션 비율</p><p>테크 &amp; 비즈니스 프리미엄 테마: 다크 네이비(#Of172a) 표지와 슬라이드별 인디고/블루 포인트 컬러 적용</p><p>시각적 카드 그리드: 복잡한 내용을 직관적으로 비교할 수 있는 3단/4단 카드 배치 및 핵심 수치 박스</p><p>[Slide 구성안]</p><p>[Slide 1] 표지 (Title Slide)</p><p>- 대주제: 금융 이상거래 탐지 및 알림 서비스</p><p>- 발표 부제, 팀명 및 발표자 메타데이터</p><p>[Slide 2] 문제 제기 (Why Now? Pain Points)</p><p>- 사회가 디지털화 되는 동시에 초고령화 사회 진입 예정이나, 시니어 친화적인 서비스가 많지 않음</p><p>- 이상 거래 탐지 사각지대가 있음</p><p>(개인 소비 패턴 분석 기반 운영되고 있으나 전체 패턴 분석을 통해 사각지대 커버 가능)</p><p>[Slide 3] 솔루션 정의 (What is Card-FDS-N?)</p><p>- AI Hub 카드거래 합성데이터를 이용하여 고객의 소비 패턴, 지역, 거래날짜 등 다차원 데이터를 분석하고, 머신러닝 기반으로 개별 거래의 이상 가능성을 판별</p><p>- 권장 기술 스택에 대해 설명</p><p>[Slide 4] 엔드투엔드 시스템 아키텍처 (System Architecture)</p><p>- AI Hub 카드거래 CSV 파일 로드(분기별 CSV 파일 통합  스키마, 라벨, 결측 점검  학습, 검증 데이터 따로 분석)→ 품질 점검 및 전처리(결측값 처리, 자료형 정리, 파생병수 생성  모델 입력 피처) → SMOTENC 및 클래스 가중치(학습 데이터에만 SMOTENC와 클래스 가중치를 적용하고 세 모델 학습  LightGBM, Random Forest, XGBoost 모델 성능 비교) → 3개 분류 모델 및 2개 앙상블 위험 확률 산출(Validation 원본 분포에서 단일 모델과 확률 평균 앙상블 평가  성능표, 위험 확률, 최종 모델)</p><p>[Slide 5] LightGBM*Random Forest, LightGBM*XGBoost 앙상블 (Modeling)</p><p>- 1차: LightGBM 단일 모델 성능 평가</p><p>- 2차: LightGBM*Random Forest와 LightGBM*XGBoost 비교 및 대조</p><p>- 3차: Minority F1-score와 PR-AUC가 우수한 모델 최종 선정</p><p>- SMOTENC 적용 전/후 및 단일 모델 vs 앙상블의 Minority F1-Score 비교 테이블 산출</p><p>[Slide 6/7] 실시간 알림 및 대시 보드 UI (Service &amp; Demo)</p><p>- 화면 보여주기</p><p>- SHAP Summary Plot을 추출하여 상위 5대 이상거래 요인 시각화 장표 마련</p><p>- 1건당 추론 소요 시간 측정(Latency &lt; 100ms) 테스트 결과 슬라이드에 명시</p><p>[Slide 8] 비즈니스 성과 및 정량적 기대효과 (Business Impact)</p><p>[정성적]</p><p>- 시니어 시장 경쟁력 선점 및 고객 신뢰 확보(시니어 보호자 포함)</p><p>- 법적/평판 리스크 절감</p><p>[정량적]</p><p>사기 피해액 절감</p><p>골든타임 내 거래 차단 성공률</p><p>오탐지율 최소화  개인별 패턴 분석을 넘어 전체적 패턴 분석을 통해</p><p>[Slide 9] 결론 및 향후 로드맵 (Roadmap &amp; Q&amp;A)</p><p>- 결론</p><p>- 향후 로드맵</p><p>금융취약계층 사용자 UX 고도화</p><p>금융취약계층 소비패턴 분석 및 AI 기반 이상거래 예측 모델 도입</p><p>금융취약계층 사용자 안심 패키지 (가족 안심 연계()</p><p>- 질의응답 안내</p>
+  </div>
+</body>
+</html>

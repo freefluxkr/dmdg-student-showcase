@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>심화 : 심층 데이터 분석을 통한 개인 맞춤형 예측 자동화 서비스 솔루션 개발과정의 단계별 프로젝트들 발표자료 서비스</title>
+  <meta name="description" content="심화 : 심층 데이터 분석을 통한 개인 맞춤형 예측 자동화 서비스 솔루션 개발과정의 단계별 프로젝트들 발표자료, 시연영상, 기술심사 피드백(PDF) 및 전체 자료 다운로드 서비스" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" href="./css/aurora_showcase.css" />
+</head>
+<body class="aurora-portal-body">
+  <div class="portal-main-wrapper">
+    <!-- Top Header -->
+    <header class="portal-top-header">
+      <div class="header-brand-wrap">
+        <div class="brand-orb">AI</div>
+        <div>
+          <div class="brand-title-dmdg">DMDG ACADEMY SHOWCASE</div>
+          <div class="brand-title-platform">AURORA PROJECT ARCHIVE PORTAL</div>
+        </div>
+      </div>
+
+      <label class="portal-search-box" aria-label="프로젝트 검색">
+        <span>🔍</span>
+        <input id="searchInput" type="search" placeholder="프로젝트명, 수강생 이름, 기술 키워드 검색..." />
+      </label>
+
+      <div class="header-actions">
+        <button id="btnAllFilesIndex" class="nav-pill-btn pill-cyan" type="button">📦 전체 자료 인덱스</button>
+        <a id="repoLink" class="nav-pill-btn pill-emerald" href="#" target="_blank" rel="noopener noreferrer">🐙 GitHub 저장소</a>
+      </div>
+    </header>
+
+    <!-- Hero Title & KPIs -->
+    <section class="hero-studio-card">
+      <div class="studio-badge-label">✨ K-Digital Training · 단계별 프로젝트 통합 발표·피드백 아카이브</div>
+      <h1 id="siteTitle" class="studio-main-title">
+        심화 : 심층 데이터 분석을 통한 개인 맞춤형 예측 자동화 서비스 솔루션 개발과정의 단계별 프로젝트들 발표자료 서비스
+      </h1>
+      <p class="studio-sub-guide">
+        각 단계별 <strong>내용 발표 자료</strong>, <strong>시연 영상</strong>(미보유 시 <code>미제공</code> 표시), <strong>4페이지 기술 감사 피드백 리포트(PDF)</strong>를 웹에서 즉시 열람하고 모든 원본 자료를 다운로드할 수 있습니다.
+      </p>
+
+      <div class="kpi-strip">
+        <div class="kpi-box">
+          <div id="kpiProjects" class="kpi-num accent-sky">-</div>
+          <div class="kpi-lbl">등록 프로젝트 / 모듈</div>
+        </div>
+        <div class="kpi-box">
+          <div id="kpiFiles" class="kpi-num accent-emerald">-</div>
+          <div class="kpi-lbl">다운로드 제공 파일</div>
+        </div>
+        <div class="kpi-box">
+          <div id="kpiVideos" class="kpi-num accent-amber">-</div>
+          <div class="kpi-lbl">시연 영상 (제공 / 미제공)</div>
+        </div>
+        <div class="kpi-box">
+          <div id="kpiFeedbacks" class="kpi-num accent-violet">-</div>
+          <div class="kpi-lbl">기술 감사 피드백(PDF)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3-Tab Navigation & Filters -->
+    <nav class="tabs-control-bar" aria-label="단계별 프로젝트 탭">
+      <div id="mainTabs" class="main-tabs-group"></div>
+      <div id="filterChips" class="filter-pills-group">
+        <button class="filter-chip active" data-filter="all" type="button">전체 보기</button>
+        <button class="filter-chip" data-filter="video-yes" type="button">🎬 시연영상 제공</button>
+        <button class="filter-chip" data-filter="video-no" type="button">🚫 미제공</button>
+      </div>
+    </nav>
+
+    <!-- Common Banner (Tab 1 Rubric etc.) -->
+    <div id="commonBannerWrap"></div>
+
+    <!-- Projects Grid -->
+    <main id="projectsGrid" class="projects-grid" aria-live="polite"></main>
+
+    <footer class="site-footer">
+      DMDG (당목담글) 교육사업본부 · GitHub Pages &amp; Releases 기반 수강생 포트폴리오 공개 서비스 · Generated <span id="generatedAt"></span>
+    </footer>
+  </div>
+
+  <!-- Project Detail Modal -->
+  <div id="detailModal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-shell">
+      <div class="modal-header">
+        <div>
+          <h2 id="modalTitle" class="modal-title"></h2>
+          <div id="modalSub" class="modal-sub"></div>
+        </div>
+        <button id="modalCloseBtn" class="modal-close-btn" type="button" aria-label="닫기">✕</button>
+      </div>
+
+      <div id="modalSubtabs" class="modal-subtabs">
+        <button class="subtab-btn active" data-subtab="presentations" type="button">📄 내용 발표 자료</button>
+        <button class="subtab-btn" data-subtab="video" type="button">🎬 시연 영상</button>
+        <button class="subtab-btn" data-subtab="feedback" type="button">🏛️ 피드백 (PDF)</button>
+        <button class="subtab-btn" data-subtab="downloads" type="button">⬇ 모든 자료 다운로드</button>
+      </div>
+
+      <div id="modalBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>
