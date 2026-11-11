@@ -255,6 +255,9 @@
         <a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(file.downloadUrl)}" download="${esc(file.name)}">⬇ CSV 원본 다운로드</a>
       </div>`;
     }
+    if (file.ext === "pdf") {
+      return `<iframe class="viewer-frame" src="${url}" title="${esc(file.name)}"></iframe>`;
+    }
     return `<iframe class="viewer-frame" src="${url}" title="${esc(file.name)}" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>`;
   }
 
@@ -503,3 +506,4 @@
     $("projectsGrid").innerHTML = `<div class="project-card">데이터 로드 오류: ${esc(err.message)}</div>`;
   });
 })();
+
