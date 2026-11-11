@@ -258,7 +258,7 @@
 
   function renderViewerToolbar(file) {
     const extBtn = file.externalUrl
-      ? `<a class="nav-pill-btn pill-cyan" href="${esc(file.externalUrl)}" target="_blank" rel="noopener noreferrer">🌐 외부 사이트 열기</a>`
+      ? `<a class="nav-pill-btn pill-cyan" href="${esc(file.externalUrl)}" target="_blank" rel="noopener noreferrer">Git으로 접속</a>`
       : "";
     const newTabUrl = encodeUrlPath(file.previewUrl || file.downloadUrl);
 
