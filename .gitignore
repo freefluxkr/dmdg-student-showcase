@@ -1,4 +1,7 @@
 release_assets/
+transcoded_videos/
+extracted_sources/
+generated_feedbacks/_html_tmp/
 site/
 __pycache__/
 *.pyc

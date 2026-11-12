@@ -1,0 +1,2982 @@
+{
+  "siteTitle": "심화 : 심층 데이터 분석을 통한 개인 맞춤형 예측 자동화 서비스 솔루션 개발과정의 단계별 프로젝트들 발표자료 서비스",
+  "generatedAt": "2026-11-11 14:37",
+  "repoUrl": "https://github.com/freefluxkr/dmdg-student-showcase",
+  "pagesUrl": "https://freefluxkr.github.io/dmdg-student-showcase/",
+  "releaseTag": "v1.0-assets",
+  "stats": {
+    "totalProjects": 18,
+    "totalFiles": 116,
+    "videosAvailable": 10,
+    "videosMissing": 8,
+    "totalFeedbackPdfs": 19
+  },
+  "tabs": [
+    {
+      "id": "stage1",
+      "label": "데이터 분석 1차 프로젝트",
+      "sourceFolder": "데이터 분석 1차 프로젝트 최종 자료(발표 자료  및  시연영상_피드백 포함)",
+      "projects": [
+        {
+          "id": "s1_gu",
+          "title": "AI 기반 항만 선박 식별 및 자동 Entity Matching",
+          "authors": [
+            "구명회"
+          ],
+          "grade": "A+",
+          "score": 94,
+          "summary": "후보 검색 → 랭킹 판별 → 신뢰도(Gap≥0.2) 기반 자동/수동 분기(84.81% 자동연결, 99.80% 정확도)를 구현한 1차 최우수 프로젝트",
+          "presentations": [
+            {
+              "name": "데이터 분석 1차프로젝트 최종자료 구명회 git 링크 .txt",
+              "relPath": "데이터 분석 1차프로젝트 최종자료 구명회 git 링크 .txt",
+              "ext": "txt",
+              "sizeBytes": 127,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_gu/stage1_s1_gu__1_git_.txt_ae90ddba.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu__1_git_.txt_ae90ddba.txt",
+              "externalUrl": "https://github.com/myounghoe97-maker/port-vessel-entity-matching"
+            },
+            {
+              "name": "데이터_분석_1차_프로젝트_구명회.pptx",
+              "relPath": "데이터_분석_1차_프로젝트_구명회.pptx",
+              "ext": "pptx",
+              "sizeBytes": 163278,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_gu/stage1_s1_gu_____1_____.pptx_1d563179.pptx.html",
+              "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu_____1_____.pptx_1d563179.pptx",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": true,
+            "statusText": "제공",
+            "files": [
+              {
+                "name": "데이터 분석 1차 프로젝트 최종자료 시연영상 구명회.mp4",
+                "relPath": "데이터 분석 1차 프로젝트 최종자료 시연영상 구명회.mp4",
+                "ext": "mp4",
+                "sizeBytes": 8812078,
+                "role": "video",
+                "hostedOn": "pages",
+                "previewUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu__1_.mp4_caeecca5.mp4",
+                "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu__1_.mp4_caeecca5.mp4",
+                "externalUrl": null
+              }
+            ]
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "데이터_분석_1차_프로젝트_최종자료_구명회_피드백.pdf",
+              "relPath": "데이터_분석_1차_프로젝트_최종자료_구명회_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 672950,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu_____1_________.pdf_5ec1d68d.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu_____1_________.pdf_5ec1d68d.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "데이터_분석_1차_프로젝트_구명회_피드백.pdf",
+              "relPath": "데이터_분석_1차_프로젝트_구명회_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 672950,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu_____1_______.pdf_9e458295.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu_____1_______.pdf_9e458295.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "데이터 분석 1차 프로젝트 최종자료 시연영상 구명회.mp4",
+              "relPath": "데이터 분석 1차 프로젝트 최종자료 시연영상 구명회.mp4",
+              "ext": "mp4",
+              "sizeBytes": 8812078,
+              "role": "video",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu__1_.mp4_caeecca5.mp4",
+              "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu__1_.mp4_caeecca5.mp4",
+              "externalUrl": null
+            },
+            {
+              "name": "데이터 분석 1차프로젝트 최종자료 구명회 git 링크 .txt",
+              "relPath": "데이터 분석 1차프로젝트 최종자료 구명회 git 링크 .txt",
+              "ext": "txt",
+              "sizeBytes": 127,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_gu/stage1_s1_gu__1_git_.txt_ae90ddba.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu__1_git_.txt_ae90ddba.txt",
+              "externalUrl": "https://github.com/myounghoe97-maker/port-vessel-entity-matching"
+            },
+            {
+              "name": "데이터_분석_1차_프로젝트_구명회.pptx",
+              "relPath": "데이터_분석_1차_프로젝트_구명회.pptx",
+              "ext": "pptx",
+              "sizeBytes": 163278,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_gu/stage1_s1_gu_____1_____.pptx_1d563179.pptx.html",
+              "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu_____1_____.pptx_1d563179.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "데이터_분석_1차_프로젝트_최종자료_구명회_피드백.txt",
+              "relPath": "데이터_분석_1차_프로젝트_최종자료_구명회_피드백.txt",
+              "ext": "txt",
+              "sizeBytes": 6301,
+              "role": "raw_extra",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_gu/stage1_s1_gu_____1_________.txt_60e7a67c.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu_____1_________.txt_60e7a67c.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "데이터_분석_1차_프로젝트_구명회_피드백.txt",
+              "relPath": "데이터_분석_1차_프로젝트_구명회_피드백.txt",
+              "ext": "txt",
+              "sizeBytes": 6454,
+              "role": "raw_extra",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_gu/stage1_s1_gu_____1_______.txt_6fc3c7e5.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu_____1_______.txt_6fc3c7e5.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "데이터_분석_1차_프로젝트_최종자료_구명회_피드백.pdf",
+              "relPath": "데이터_분석_1차_프로젝트_최종자료_구명회_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 672950,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu_____1_________.pdf_5ec1d68d.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu_____1_________.pdf_5ec1d68d.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "데이터_분석_1차_프로젝트_구명회_피드백.pdf",
+              "relPath": "데이터_분석_1차_프로젝트_구명회_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 672950,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu_____1_______.pdf_9e458295.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu_____1_______.pdf_9e458295.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_stage1_s1_gu.zip",
+          "bundleZipBytes": 9168727
+        },
+        {
+          "id": "s1_card_fds",
+          "title": "CARD-FDS-N (카드 이상거래 탐지 및 알림 서비스)",
+          "authors": [
+            "오주원",
+            "김지선",
+            "신상아",
+            "이인애"
+          ],
+          "grade": "A-",
+          "score": 89,
+          "summary": "시니어 특화 금융 안전망. Data Leakage 차단, SMOTENC, Soft Voting 앙상블(PR-AUC 0.80) 및 FastAPI·Streamlit·TTS 실시간 경고 구현",
+          "presentations": [
+            {
+              "name": "1차 프로젝트_URL 주소_오주원, 김지선, 신상아, 이인애.txt",
+              "relPath": "1차 프로젝트_URL 주소_오주원, 김지선, 신상아, 이인애.txt",
+              "ext": "txt",
+              "sizeBytes": 42,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_card_fds/stage1_s1_card_fds_1__URL___.txt_3d2ad0f6.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_1__URL___.txt_3d2ad0f6.txt",
+              "externalUrl": "https://github.com/inae8040-svg/SUMSUNG_AX"
+            },
+            {
+              "name": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애.pdf",
+              "relPath": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애.pdf",
+              "ext": "pdf",
+              "sizeBytes": 861414,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N___.pdf_18b2955d.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N___.pdf_18b2955d.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_Updated.pdf",
+              "relPath": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_Updated.pdf",
+              "ext": "pdf",
+              "sizeBytes": 861344,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N____Updated.pdf_e06434f0.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N____Updated.pdf_e06434f0.pdf",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": true,
+            "statusText": "제공",
+            "files": [
+              {
+                "name": "CARD_FDS_N 프로젝트_오주원, 김지선, 신상아, 이인애.mp4",
+                "relPath": "CARD_FDS_N 프로젝트_오주원, 김지선, 신상아, 이인애.mp4",
+                "ext": "mp4",
+                "sizeBytes": 47520685,
+                "role": "video",
+                "hostedOn": "releases",
+                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_card_fds_CARD_FDS_N___.mp4_631b81a7.mp4",
+                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_card_fds_CARD_FDS_N___.mp4_631b81a7.mp4",
+                "externalUrl": null
+              }
+            ]
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_피드백.pdf",
+              "relPath": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 669948,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N_____.pdf_35907f31.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N_____.pdf_35907f31.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "1차 프로젝트_URL 주소_오주원, 김지선, 신상아, 이인애.txt",
+              "relPath": "1차 프로젝트_URL 주소_오주원, 김지선, 신상아, 이인애.txt",
+              "ext": "txt",
+              "sizeBytes": 42,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_card_fds/stage1_s1_card_fds_1__URL___.txt_3d2ad0f6.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_1__URL___.txt_3d2ad0f6.txt",
+              "externalUrl": "https://github.com/inae8040-svg/SUMSUNG_AX"
+            },
+            {
+              "name": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애.pdf",
+              "relPath": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애.pdf",
+              "ext": "pdf",
+              "sizeBytes": 861414,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N___.pdf_18b2955d.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N___.pdf_18b2955d.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_Updated.pdf",
+              "relPath": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_Updated.pdf",
+              "ext": "pdf",
+              "sizeBytes": 861344,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N____Updated.pdf_e06434f0.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N____Updated.pdf_e06434f0.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "CARD_FDS_N 프로젝트_오주원, 김지선, 신상아, 이인애.mp4",
+              "relPath": "CARD_FDS_N 프로젝트_오주원, 김지선, 신상아, 이인애.mp4",
+              "ext": "mp4",
+              "sizeBytes": 47520685,
+              "role": "video",
+              "hostedOn": "releases",
+              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_card_fds_CARD_FDS_N___.mp4_631b81a7.mp4",
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_card_fds_CARD_FDS_N___.mp4_631b81a7.mp4",
+              "externalUrl": null
+            },
+            {
+              "name": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_피드백.txt",
+              "relPath": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_피드백.txt",
+              "ext": "txt",
+              "sizeBytes": 6394,
+              "role": "raw_extra",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N_____.txt_ce9f2dd7.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N_____.txt_ce9f2dd7.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_피드백.pdf",
+              "relPath": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 669948,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N_____.pdf_35907f31.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N_____.pdf_35907f31.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_stage1_s1_card_fds.zip",
+          "bundleZipBytes": 48471831
+        },
+        {
+          "id": "s1_minwon",
+          "title": "스마트 민원케어 (민원 조기경보 및 인력 지원 대시보드)",
+          "authors": [
+            "백선병",
+            "남유진",
+            "김윤준",
+            "김제형"
+          ],
+          "grade": "B+",
+          "score": 84,
+          "summary": "기상 데이터와 민원 데이터를 연계해 1~14일 단기 민원 폭증을 조기 경보하고 부서별 현황을 시각화한 대시보드",
+          "presentations": [
+            {
+              "name": "1차_프로젝트_PPT_백선병_남유진_김윤준_남유진.pptx",
+              "relPath": "1차_프로젝트_PPT_백선병_남유진_김윤준_남유진.pptx",
+              "ext": "pptx",
+              "sizeBytes": 2914919,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_minwon/stage1_s1_minwon_1____PPT________.pptx_ef842f60.pptx.html",
+              "downloadUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon_1____PPT________.pptx_ef842f60.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "스마트 민원케어 · 민원 운영 대시보드.html",
+              "relPath": "스마트 민원케어 · 민원 운영 대시보드.html",
+              "ext": "html",
+              "sizeBytes": 1827,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon__.html_25db1cb8.html",
+              "downloadUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon__.html_25db1cb8.html",
+              "externalUrl": null
+            },
+            {
+              "name": "스마트민원케어_GitHub.html",
+              "relPath": "스마트민원케어_GitHub.html",
+              "ext": "html",
+              "sizeBytes": 433,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon___GitHub.html_4df96ffb.html",
+              "downloadUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon___GitHub.html_4df96ffb.html",
+              "externalUrl": "https://github.com/YoonJoony/minwon-dashboard"
+            }
+          ],
+          "demoVideo": {
+            "available": true,
+            "statusText": "제공",
+            "files": [
+              {
+                "name": "시연연상.mp4",
+                "relPath": "시연연상.mp4",
+                "ext": "mp4",
+                "sizeBytes": 20505374,
+                "role": "video",
+                "hostedOn": "pages",
+                "previewUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon__.mp4_0e37be15.mp4",
+                "downloadUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon__.mp4_0e37be15.mp4",
+                "externalUrl": null
+              }
+            ]
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "1차 프로젝트_백선병, 남유진, 김윤준, 김제형_피드백.pdf",
+              "relPath": "1차 프로젝트_백선병, 남유진, 김윤준, 김제형_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 666981,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon_1_____.pdf_da36c766.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon_1_____.pdf_da36c766.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "1차_프로젝트_PPT_백선병_남유진_김윤준_남유진.pptx",
+              "relPath": "1차_프로젝트_PPT_백선병_남유진_김윤준_남유진.pptx",
+              "ext": "pptx",
+              "sizeBytes": 2914919,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_minwon/stage1_s1_minwon_1____PPT________.pptx_ef842f60.pptx.html",
+              "downloadUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon_1____PPT________.pptx_ef842f60.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "스마트 민원케어 · 민원 운영 대시보드.html",
+              "relPath": "스마트 민원케어 · 민원 운영 대시보드.html",
+              "ext": "html",
+              "sizeBytes": 1827,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon__.html_25db1cb8.html",
+              "downloadUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon__.html_25db1cb8.html",
+              "externalUrl": null
+            },
+            {
+              "name": "스마트민원케어_GitHub.html",
+              "relPath": "스마트민원케어_GitHub.html",
+              "ext": "html",
+              "sizeBytes": 433,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon___GitHub.html_4df96ffb.html",
+              "downloadUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon___GitHub.html_4df96ffb.html",
+              "externalUrl": "https://github.com/YoonJoony/minwon-dashboard"
+            },
+            {
+              "name": "시연연상.mp4",
+              "relPath": "시연연상.mp4",
+              "ext": "mp4",
+              "sizeBytes": 20505374,
+              "role": "video",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon__.mp4_0e37be15.mp4",
+              "downloadUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon__.mp4_0e37be15.mp4",
+              "externalUrl": null
+            },
+            {
+              "name": "1차 프로젝트_백선병, 남유진, 김윤준, 김제형_피드백.txt",
+              "relPath": "1차 프로젝트_백선병, 남유진, 김윤준, 김제형_피드백.txt",
+              "ext": "txt",
+              "sizeBytes": 6183,
+              "role": "raw_extra",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_minwon/stage1_s1_minwon_1_____.txt_14feaff8.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon_1_____.txt_14feaff8.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "1차 프로젝트_백선병, 남유진, 김윤준, 김제형_피드백.pdf",
+              "relPath": "1차 프로젝트_백선병, 남유진, 김윤준, 김제형_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 666981,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon_1_____.pdf_da36c766.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon_1_____.pdf_da36c766.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_stage1_s1_minwon.zip",
+          "bundleZipBytes": 23495330
+        },
+        {
+          "id": "s1_logipredict",
+          "title": "스마트 물류센터 AI 예지보전 관제 시스템 (LogiPredict AI)",
+          "authors": [
+            "방호원"
+          ],
+          "grade": "B",
+          "score": 78,
+          "summary": "1D-CNN Autoencoder와 CBM 상태기반정비 시나리오를 인터랙티브 웹 관제 대시보드(HTML)로 구현한 물류 설비 예지보전 시스템",
+          "presentations": [
+            {
+              "name": "logipredict_ai_predictive_maintenance_dashboard.html",
+              "relPath": "logipredict_ai_predictive_maintenance_dashboard.html",
+              "ext": "html",
+              "sizeBytes": 52979,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict_logipredict_ai_predictive__1ad87cde.html",
+              "downloadUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict_logipredict_ai_predictive__1ad87cde.html",
+              "externalUrl": null
+            },
+            {
+              "name": "물류 설비_방호원.pdf",
+              "relPath": "물류 설비_방호원.pdf",
+              "ext": "pdf",
+              "sizeBytes": 1574456,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict____.pdf_b41af13e.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict____.pdf_b41af13e.pdf",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": true,
+            "statusText": "제공",
+            "files": [
+              {
+                "name": "물류센터 설비.ipynb - Colab - Chrome 2026-10-21 14-46-05.mp4",
+                "relPath": "물류센터 설비.ipynb - Colab - Chrome 2026-10-21 14-46-05.mp4",
+                "ext": "mp4",
+                "sizeBytes": 16757849,
+                "role": "video",
+                "hostedOn": "pages",
+                "previewUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict__.ipynb_-_Colab_-_Chrome_2_577e56e9.mp4",
+                "downloadUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict__.ipynb_-_Colab_-_Chrome_2_577e56e9.mp4",
+                "externalUrl": null
+              }
+            ]
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "물류 설비_방호원_피드백.pdf",
+              "relPath": "물류 설비_방호원_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 668194,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict______.pdf_eae1b1ef.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict______.pdf_eae1b1ef.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "logipredict_ai_predictive_maintenance_dashboard.html",
+              "relPath": "logipredict_ai_predictive_maintenance_dashboard.html",
+              "ext": "html",
+              "sizeBytes": 52979,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict_logipredict_ai_predictive__1ad87cde.html",
+              "downloadUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict_logipredict_ai_predictive__1ad87cde.html",
+              "externalUrl": null
+            },
+            {
+              "name": "물류 설비_방호원.pdf",
+              "relPath": "물류 설비_방호원.pdf",
+              "ext": "pdf",
+              "sizeBytes": 1574456,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict____.pdf_b41af13e.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict____.pdf_b41af13e.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "물류센터 설비.ipynb - Colab - Chrome 2026-10-21 14-46-05.mp4",
+              "relPath": "물류센터 설비.ipynb - Colab - Chrome 2026-10-21 14-46-05.mp4",
+              "ext": "mp4",
+              "sizeBytes": 16757849,
+              "role": "video",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict__.ipynb_-_Colab_-_Chrome_2_577e56e9.mp4",
+              "downloadUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict__.ipynb_-_Colab_-_Chrome_2_577e56e9.mp4",
+              "externalUrl": null
+            },
+            {
+              "name": "물류 설비_방호원_피드백.txt",
+              "relPath": "물류 설비_방호원_피드백.txt",
+              "ext": "txt",
+              "sizeBytes": 6315,
+              "role": "raw_extra",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_logipredict/stage1_s1_logipredict______.txt_1f0d3a3d.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict______.txt_1f0d3a3d.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "물류 설비_방호원_피드백.pdf",
+              "relPath": "물류 설비_방호원_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 668194,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict______.pdf_eae1b1ef.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict______.pdf_eae1b1ef.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_stage1_s1_logipredict.zip",
+          "bundleZipBytes": 15876122
+        },
+        {
+          "id": "s1_unmanned",
+          "title": "무인점포 입지 선정 및 AI 보안 전략 보고서",
+          "authors": [
+            "정호연"
+          ],
+          "grade": "C+",
+          "score": 68,
+          "summary": "전국 소상공인 상가(상권)정보 19개 지역 데이터와 치안 통계를 결합해 무인점포 최적 입지를 분석한 보고서 및 노트북",
+          "presentations": [
+            {
+              "name": "-------------.txt",
+              "relPath": "-------------.txt",
+              "ext": "txt",
+              "sizeBytes": 2062,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_unmanned/stage1_s1_unmanned_-------------.txt_4a3d2ce0.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned_-------------.txt_4a3d2ce0.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "무인점포 입지 선정 및 AI 보안 전략 보고서 (1).pdf",
+              "relPath": "무인점포 입지 선정 및 AI 보안 전략 보고서 (1).pdf",
+              "ext": "pdf",
+              "sizeBytes": 937858,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__AI_1_.pdf_d7cd32bf.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__AI_1_.pdf_d7cd32bf.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "무인점포 입지조건 분석모델(랜덤포레스트,의사결정트리).ipynb",
+              "relPath": "무인점포 입지조건 분석모델(랜덤포레스트,의사결정트리).ipynb",
+              "ext": "ipynb",
+              "sizeBytes": 83845,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_unmanned/stage1_s1_unmanned__.ipynb_a418637a.ipynb.html",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__.ipynb_a418637a.ipynb",
+              "externalUrl": null
+            },
+            {
+              "name": "이 기획을 조금 보완하여 만들면 어느정도 서비스는 가능 하겠지만.txt",
+              "relPath": "이 기획을 조금 보완하여 만들면 어느정도 서비스는 가능 하겠지만.txt",
+              "ext": "txt",
+              "sizeBytes": 287,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_unmanned/stage1_s1_unmanned__.txt_32a41128.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__.txt_32a41128.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "[필독]파일열람방법.txt",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/잡/[필독]파일열람방법.txt",
+              "ext": "txt",
+              "sizeBytes": 1011,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_unmanned/stage1_s1_unmanned__.txt_8f4b95b1.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__.txt_8f4b95b1.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "스크린샷 2026-10-20 174254.png",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/잡/스크린샷 2026-10-20 174254.png",
+              "ext": "png",
+              "sizeBytes": 14154,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__2026-10-20_174254.png_c272eab5.png",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__2026-10-20_174254.png_c272eab5.png",
+              "externalUrl": null
+            },
+            {
+              "name": "스크린샷 2026-10-20 174600.png",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/잡/스크린샷 2026-10-20 174600.png",
+              "ext": "png",
+              "sizeBytes": 27144,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__2026-10-20_174600.png_42549d6f.png",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__2026-10-20_174600.png_42549d6f.png",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": false,
+            "statusText": "미제공",
+            "files": []
+          },
+          "audios": [],
+          "datasets": [
+            {
+              "name": "경찰청_범죄 발생 장소별 통계_20251231.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/경찰청_범죄 발생 장소별 통계_20251231.csv",
+              "ext": "csv",
+              "sizeBytes": 7929,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_____20251231.csv_fe0af429.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "경찰청_범죄 발생 지역별 통계_20251231.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/경찰청_범죄 발생 지역별 통계_20251231.csv",
+              "ext": "csv",
+              "sizeBytes": 29018,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_____20251231.csv_a57f5725.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_강원_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_강원_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 62582792,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_a84a7504.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_경기_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_경기_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 368502053,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_ce1650d7.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_경남_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_경남_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 94792849,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_c33ab684.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_경북_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_경북_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 78004984,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_b55e12f5.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_대구_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_대구_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 63309879,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_a428c7f7.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_대전_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_대전_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 43012055,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_4c61b22d.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_부산_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_부산_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 86867744,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_6de56054.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_서울_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_서울_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 301889640,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_709d6c9c.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_세종_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_세종_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 9912521,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_8412cc8a.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_울산_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_울산_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 28962806,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_1cebe84a.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_인천_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_인천_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 75353122,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_060b76f8.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_전남광주_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_전남광주_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 103015803,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_885dcb18.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_전북_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_전북_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 57408247,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_b5294ff8.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_제주_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_제주_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 33597481,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_070c1bcd.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_충남_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_충남_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 68319780,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_bf16517f.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_충북_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_충북_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 52075833,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_31862e8b.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "202309_202609_주민등록인구및세대현황_월간.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/잡/202309_202609_주민등록인구및세대현황_월간.csv",
+              "ext": "csv",
+              "sizeBytes": 46937,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_202309_202609____.csv_0f5439b4.csv",
+              "externalUrl": null
+            }
+          ],
+          "feedbacks": [
+            {
+              "name": "무인점포 입지 선정 및 AI 보안 전략 보고서 정호연_피드백.pdf",
+              "relPath": "무인점포 입지 선정 및 AI 보안 전략 보고서 정호연_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 668515,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__AI___.pdf_b6dd3ab4.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__AI___.pdf_b6dd3ab4.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "-------------.txt",
+              "relPath": "-------------.txt",
+              "ext": "txt",
+              "sizeBytes": 2062,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_unmanned/stage1_s1_unmanned_-------------.txt_4a3d2ce0.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned_-------------.txt_4a3d2ce0.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "무인점포 입지 선정 및 AI 보안 전략 보고서 (1).pdf",
+              "relPath": "무인점포 입지 선정 및 AI 보안 전략 보고서 (1).pdf",
+              "ext": "pdf",
+              "sizeBytes": 937858,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__AI_1_.pdf_d7cd32bf.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__AI_1_.pdf_d7cd32bf.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "무인점포 입지조건 분석모델(랜덤포레스트,의사결정트리).ipynb",
+              "relPath": "무인점포 입지조건 분석모델(랜덤포레스트,의사결정트리).ipynb",
+              "ext": "ipynb",
+              "sizeBytes": 83845,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_unmanned/stage1_s1_unmanned__.ipynb_a418637a.ipynb.html",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__.ipynb_a418637a.ipynb",
+              "externalUrl": null
+            },
+            {
+              "name": "이 기획을 조금 보완하여 만들면 어느정도 서비스는 가능 하겠지만.txt",
+              "relPath": "이 기획을 조금 보완하여 만들면 어느정도 서비스는 가능 하겠지만.txt",
+              "ext": "txt",
+              "sizeBytes": 287,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_unmanned/stage1_s1_unmanned__.txt_32a41128.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__.txt_32a41128.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "경찰청_범죄 발생 장소별 통계_20251231.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/경찰청_범죄 발생 장소별 통계_20251231.csv",
+              "ext": "csv",
+              "sizeBytes": 7929,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_____20251231.csv_fe0af429.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "경찰청_범죄 발생 지역별 통계_20251231.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/경찰청_범죄 발생 지역별 통계_20251231.csv",
+              "ext": "csv",
+              "sizeBytes": 29018,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_____20251231.csv_a57f5725.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_강원_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_강원_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 62582792,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_a84a7504.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_경기_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_경기_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 368502053,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_ce1650d7.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_경남_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_경남_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 94792849,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_c33ab684.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_경북_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_경북_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 78004984,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_b55e12f5.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_대구_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_대구_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 63309879,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_a428c7f7.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_대전_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_대전_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 43012055,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_4c61b22d.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_부산_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_부산_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 86867744,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_6de56054.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_서울_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_서울_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 301889640,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_709d6c9c.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_세종_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_세종_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 9912521,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_8412cc8a.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_울산_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_울산_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 28962806,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_1cebe84a.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_인천_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_인천_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 75353122,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_060b76f8.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_전남광주_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_전남광주_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 103015803,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_885dcb18.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_전북_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_전북_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 57408247,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_b5294ff8.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_제주_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_제주_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 33597481,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_070c1bcd.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_충남_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_충남_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 68319780,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_bf16517f.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "소상공인시장진흥공단_상가(상권)정보_충북_202606.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/소상공인시장진흥공단_상가(상권)정보_충북_202606.csv",
+              "ext": "csv",
+              "sizeBytes": 52075833,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_______202606.csv_31862e8b.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "202309_202609_주민등록인구및세대현황_월간.csv",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/잡/202309_202609_주민등록인구및세대현황_월간.csv",
+              "ext": "csv",
+              "sizeBytes": 46937,
+              "role": "dataset",
+              "hostedOn": "releases",
+              "previewUrl": null,
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_unmanned_202309_202609____.csv_0f5439b4.csv",
+              "externalUrl": null
+            },
+            {
+              "name": "[필독]파일열람방법.txt",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/잡/[필독]파일열람방법.txt",
+              "ext": "txt",
+              "sizeBytes": 1011,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_unmanned/stage1_s1_unmanned__.txt_8f4b95b1.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__.txt_8f4b95b1.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "스크린샷 2026-10-20 174254.png",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/잡/스크린샷 2026-10-20 174254.png",
+              "ext": "png",
+              "sizeBytes": 14154,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__2026-10-20_174254.png_c272eab5.png",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__2026-10-20_174254.png_c272eab5.png",
+              "externalUrl": null
+            },
+            {
+              "name": "스크린샷 2026-10-20 174600.png",
+              "relPath": "소상공인시장진흥공단_상가(상권)정보_20260630/잡/스크린샷 2026-10-20 174600.png",
+              "ext": "png",
+              "sizeBytes": 27144,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__2026-10-20_174600.png_42549d6f.png",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__2026-10-20_174600.png_42549d6f.png",
+              "externalUrl": null
+            },
+            {
+              "name": "무인점포 입지 선정 및 AI 보안 전략 보고서 정호연_피드백.txt",
+              "relPath": "무인점포 입지 선정 및 AI 보안 전략 보고서 정호연_피드백.txt",
+              "ext": "txt",
+              "sizeBytes": 6475,
+              "role": "raw_extra",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_unmanned/stage1_s1_unmanned__AI___.txt_be40a83f.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__AI___.txt_be40a83f.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "무인점포 입지 선정 및 AI 보안 전략 보고서 정호연_피드백.pdf",
+              "relPath": "무인점포 입지 선정 및 AI 보안 전략 보고서 정호연_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 668515,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__AI___.pdf_b6dd3ab4.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_unmanned/stage1_s1_unmanned__AI___.pdf_b6dd3ab4.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_stage1_s1_unmanned.zip",
+          "bundleZipBytes": 945011
+        },
+        {
+          "id": "s1_midterm",
+          "title": "Card-FDS-N 중간점검 코드·파이프라인 & 오디오 브리핑",
+          "authors": [
+            "오주원",
+            "김지선",
+            "신상아",
+            "이인애"
+          ],
+          "grade": "A",
+          "score": 92,
+          "summary": "중간점검 제출 노트북 3종, 슬라이드 기획안, 파이프라인 장표, 분석 차트, AI 오디오 브리핑(.m4a) 및 기준 기술 감사 피드백 패키지",
+          "presentations": [
+            {
+              "name": "card.ipynb",
+              "relPath": "중간점검제출파일_Updated/card.ipynb",
+              "ext": "ipynb",
+              "sizeBytes": 377581,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_midterm/stage1_s1_midterm_card.ipynb_aa907817.ipynb.html",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm_card.ipynb_aa907817.ipynb",
+              "externalUrl": null
+            },
+            {
+              "name": "notification_261021.ipynb",
+              "relPath": "중간점검제출파일_Updated/notification_261021.ipynb",
+              "ext": "ipynb",
+              "sizeBytes": 3713157,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_midterm/stage1_s1_midterm_notification_261021.ipynb_c495d071.ipynb.html",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm_notification_261021.ipynb_c495d071.ipynb",
+              "externalUrl": null
+            },
+            {
+              "name": "고도화버전 (1).ipynb",
+              "relPath": "중간점검제출파일_Updated/고도화버전 (1).ipynb",
+              "ext": "ipynb",
+              "sizeBytes": 330316,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_midterm/stage1_s1_midterm__1_.ipynb_e098e31e.ipynb.html",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__1_.ipynb_e098e31e.ipynb",
+              "externalUrl": null
+            },
+            {
+              "name": "슬라이드 구성 관련.docx",
+              "relPath": "중간점검제출파일_Updated/슬라이드 구성 관련.docx",
+              "ext": "docx",
+              "sizeBytes": 19334,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_midterm/stage1_s1_midterm__.docx_5c1b2ca1.docx.html",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__.docx_5c1b2ca1.docx",
+              "externalUrl": null
+            },
+            {
+              "name": "신용카드_이상거래_탐지_모델_분석_HOR.png",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/신용카드_이상거래_탐지_모델_분석_HOR.png",
+              "ext": "png",
+              "sizeBytes": 4385616,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm___________HOR.png_f7908716.png",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm___________HOR.png_f7908716.png",
+              "externalUrl": null
+            },
+            {
+              "name": "신용카드_이상거래_탐지_모델_분석_VER.png",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/신용카드_이상거래_탐지_모델_분석_VER.png",
+              "ext": "png",
+              "sizeBytes": 4385617,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm___________VER.png_d2c9fa1e.png",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm___________VER.png_d2c9fa1e.png",
+              "externalUrl": null
+            },
+            {
+              "name": "신용카드_이상거래_탐지_파이프라인.pdf",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/신용카드_이상거래_탐지_파이프라인.pdf",
+              "ext": "pdf",
+              "sizeBytes": 10770612,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm________.pdf_c5729a5b.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm________.pdf_c5729a5b.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "신용카드_이상거래_탐지_파이프라인.pptx",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/신용카드_이상거래_탐지_파이프라인.pptx",
+              "ext": "pptx",
+              "sizeBytes": 11649356,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_midterm/stage1_s1_midterm________.pptx_1cf6f67c.pptx.html",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm________.pptx_1cf6f67c.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "신용카드_이상거래_탐지_파이프라인_1.pdf",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/신용카드_이상거래_탐지_파이프라인_1.pdf",
+              "ext": "pdf",
+              "sizeBytes": 11401377,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm_________1.pdf_7737c811.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm_________1.pdf_7737c811.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "신용카드_이상거래_탐지_파이프라인_1.pptx",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/신용카드_이상거래_탐지_파이프라인_1.pptx",
+              "ext": "pptx",
+              "sizeBytes": 12272602,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_midterm/stage1_s1_midterm_________1.pptx_d7bcd3b2.pptx.html",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm_________1.pptx_d7bcd3b2.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "카드 거래 이상탐지(FDS) 데이터 전처리 및 머신러닝 모델 구축 브리핑 문서.pdf",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/카드 거래 이상탐지(FDS) 데이터 전처리 및 머신러닝 모델 구축 브리핑 문서.pdf",
+              "ext": "pdf",
+              "sizeBytes": 401293,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__FDS_.pdf_123819cd.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__FDS_.pdf_123819cd.pdf",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": false,
+            "statusText": "미제공",
+            "files": []
+          },
+          "audios": [
+            {
+              "name": "1초_만에_카드_사기_잡아내는_AI.m4a",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/1초_만에_카드_사기_잡아내는_AI.m4a",
+              "ext": "m4a",
+              "sizeBytes": 38905002,
+              "role": "audio",
+              "hostedOn": "releases",
+              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_midterm_1__________AI.m4a_8d12a53d.m4a",
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_midterm_1__________AI.m4a_8d12a53d.m4a",
+              "externalUrl": null
+            }
+          ],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "피드백.pdf",
+              "relPath": "피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 1085220,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__.pdf_16c61356.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__.pdf_16c61356.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "card.ipynb",
+              "relPath": "중간점검제출파일_Updated/card.ipynb",
+              "ext": "ipynb",
+              "sizeBytes": 377581,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_midterm/stage1_s1_midterm_card.ipynb_aa907817.ipynb.html",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm_card.ipynb_aa907817.ipynb",
+              "externalUrl": null
+            },
+            {
+              "name": "notification_261021.ipynb",
+              "relPath": "중간점검제출파일_Updated/notification_261021.ipynb",
+              "ext": "ipynb",
+              "sizeBytes": 3713157,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_midterm/stage1_s1_midterm_notification_261021.ipynb_c495d071.ipynb.html",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm_notification_261021.ipynb_c495d071.ipynb",
+              "externalUrl": null
+            },
+            {
+              "name": "고도화버전 (1).ipynb",
+              "relPath": "중간점검제출파일_Updated/고도화버전 (1).ipynb",
+              "ext": "ipynb",
+              "sizeBytes": 330316,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_midterm/stage1_s1_midterm__1_.ipynb_e098e31e.ipynb.html",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__1_.ipynb_e098e31e.ipynb",
+              "externalUrl": null
+            },
+            {
+              "name": "슬라이드 구성 관련.docx",
+              "relPath": "중간점검제출파일_Updated/슬라이드 구성 관련.docx",
+              "ext": "docx",
+              "sizeBytes": 19334,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_midterm/stage1_s1_midterm__.docx_5c1b2ca1.docx.html",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__.docx_5c1b2ca1.docx",
+              "externalUrl": null
+            },
+            {
+              "name": "1초_만에_카드_사기_잡아내는_AI.m4a",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/1초_만에_카드_사기_잡아내는_AI.m4a",
+              "ext": "m4a",
+              "sizeBytes": 38905002,
+              "role": "audio",
+              "hostedOn": "releases",
+              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_midterm_1__________AI.m4a_8d12a53d.m4a",
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_midterm_1__________AI.m4a_8d12a53d.m4a",
+              "externalUrl": null
+            },
+            {
+              "name": "신용카드_이상거래_탐지_모델_분석_HOR.png",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/신용카드_이상거래_탐지_모델_분석_HOR.png",
+              "ext": "png",
+              "sizeBytes": 4385616,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm___________HOR.png_f7908716.png",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm___________HOR.png_f7908716.png",
+              "externalUrl": null
+            },
+            {
+              "name": "신용카드_이상거래_탐지_모델_분석_VER.png",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/신용카드_이상거래_탐지_모델_분석_VER.png",
+              "ext": "png",
+              "sizeBytes": 4385617,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm___________VER.png_d2c9fa1e.png",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm___________VER.png_d2c9fa1e.png",
+              "externalUrl": null
+            },
+            {
+              "name": "신용카드_이상거래_탐지_파이프라인.pdf",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/신용카드_이상거래_탐지_파이프라인.pdf",
+              "ext": "pdf",
+              "sizeBytes": 10770612,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm________.pdf_c5729a5b.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm________.pdf_c5729a5b.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "신용카드_이상거래_탐지_파이프라인.pptx",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/신용카드_이상거래_탐지_파이프라인.pptx",
+              "ext": "pptx",
+              "sizeBytes": 11649356,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_midterm/stage1_s1_midterm________.pptx_1cf6f67c.pptx.html",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm________.pptx_1cf6f67c.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "신용카드_이상거래_탐지_파이프라인_1.pdf",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/신용카드_이상거래_탐지_파이프라인_1.pdf",
+              "ext": "pdf",
+              "sizeBytes": 11401377,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm_________1.pdf_7737c811.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm_________1.pdf_7737c811.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "신용카드_이상거래_탐지_파이프라인_1.pptx",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/신용카드_이상거래_탐지_파이프라인_1.pptx",
+              "ext": "pptx",
+              "sizeBytes": 12272602,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_midterm/stage1_s1_midterm_________1.pptx_d7bcd3b2.pptx.html",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm_________1.pptx_d7bcd3b2.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "카드 거래 이상탐지(FDS) 데이터 전처리 및 머신러닝 모델 구축 브리핑 문서.pdf",
+              "relPath": "중간점검제출파일_Updated_오주원김지선신상아이인애 피드백/카드 거래 이상탐지(FDS) 데이터 전처리 및 머신러닝 모델 구축 브리핑 문서.pdf",
+              "ext": "pdf",
+              "sizeBytes": 401293,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__FDS_.pdf_123819cd.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__FDS_.pdf_123819cd.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "10월 23일 오후 14시 발표 배점.txt",
+              "relPath": "10월 23일 오후 14시 발표 배점.txt",
+              "ext": "txt",
+              "sizeBytes": 279,
+              "role": "raw_extra",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/stage1/s1_midterm/stage1_s1_midterm_10_23_14_.txt_a2071fef.txt.html",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm_10_23_14_.txt_a2071fef.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "피드백.pdf",
+              "relPath": "피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 1085220,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__.pdf_16c61356.pdf",
+              "downloadUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__.pdf_16c61356.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_stage1_s1_midterm.zip",
+          "bundleZipBytes": 87391515
+        }
+      ],
+      "commonResources": [
+        {
+          "name": "10월 23일 오후 14시 발표 배점.txt",
+          "relPath": "10월 23일 오후 14시 발표 배점.txt",
+          "ext": "txt",
+          "sizeBytes": 279,
+          "role": "rubric",
+          "hostedOn": "pages",
+          "previewUrl": "./assets/previews/stage1/common/stage1_common_10_23_14_.txt_1cacd6ec.txt.html",
+          "downloadUrl": "./assets/files/stage1/common/stage1_common_10_23_14_.txt_1cacd6ec.txt",
+          "externalUrl": null,
+          "content": "발표 배점 : 총 200점\n\n분석모델 : 50점\n데이터 수집및 출처 : 10점\n인사이트 도출 : 30점\n현시점에서 서비스 가능 여부 : 10점\n\n창의성 : 40점\n발표 내용(태도) : 10점\n사업화(구현) 가능성 : 30점\nAI 의존도 : 20점\n\n"
+        }
+      ]
+    },
+    {
+      "id": "mini",
+      "label": "미니 프로젝트 발표자료",
+      "sourceFolder": "미니 프로젝트 발표자료 제출 폴더 (11.5까지)",
+      "projects": [
+        {
+          "id": "m_namyujin",
+          "title": "axiMini · 2일 경량 AI-EDR (엔드포인트 탐지 및 대응)",
+          "authors": [
+            "남유진"
+          ],
+          "grade": "A+",
+          "score": 95,
+          "summary": "EMBER2024 72만 PE 시간순 분할·8.5σ 드리프트 검출, 36ms 고속 추출(비트 동일성), 하드닝 Docker 샌드박스 & TreeSHAP SOC 구현",
+          "presentations": [
+            {
+              "name": "발표자료_남유진.pdf",
+              "relPath": "발표자료_남유진.pdf",
+              "ext": "pdf",
+              "sizeBytes": 277323,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_namyujin/mini_m_namyujin____.pdf_b35785ef.pdf",
+              "downloadUrl": "./assets/files/mini/m_namyujin/mini_m_namyujin____.pdf_b35785ef.pdf",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": false,
+            "statusText": "미제공",
+            "files": []
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "발표자료_남유진_피드백.pdf",
+              "relPath": "발표자료_남유진_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 682239,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_namyujin/mini_m_namyujin______.pdf_eac1c6fb.pdf",
+              "downloadUrl": "./assets/files/mini/m_namyujin/mini_m_namyujin______.pdf_eac1c6fb.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "발표자료_남유진.pdf",
+              "relPath": "발표자료_남유진.pdf",
+              "ext": "pdf",
+              "sizeBytes": 277323,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_namyujin/mini_m_namyujin____.pdf_b35785ef.pdf",
+              "downloadUrl": "./assets/files/mini/m_namyujin/mini_m_namyujin____.pdf_b35785ef.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "발표자료_남유진_피드백.pdf",
+              "relPath": "발표자료_남유진_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 682239,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_namyujin/mini_m_namyujin______.pdf_eac1c6fb.pdf",
+              "downloadUrl": "./assets/files/mini/m_namyujin/mini_m_namyujin______.pdf_eac1c6fb.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_mini_m_namyujin.zip",
+          "bundleZipBytes": 439528
+        },
+        {
+          "id": "m_kimjisun",
+          "title": "진동·센서 스트림 기반 예지보전(PdM) 관제 시스템",
+          "authors": [
+            "김지선"
+          ],
+          "grade": "A",
+          "score": 91,
+          "summary": "CWRU·NASA IMS·C-MAPSS(RMSE 27% 감축) 검증 및 Kafka→TimescaleDB→FastAPI→Streamlit 실시간 파이프라인 구축",
+          "presentations": [
+            {
+              "name": "미니프로젝트_김지선.pptx",
+              "relPath": "미니프로젝트_김지선.pptx",
+              "ext": "pptx",
+              "sizeBytes": 331121,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimjisun/mini_m_kimjisun____.pptx_9ea5f58a.pptx.html",
+              "downloadUrl": "./assets/files/mini/m_kimjisun/mini_m_kimjisun____.pptx_9ea5f58a.pptx",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": true,
+            "statusText": "제공",
+            "files": [
+              {
+                "name": "미니 프로젝트.mp4",
+                "relPath": "미니 프로젝트.mp4",
+                "ext": "mp4",
+                "sizeBytes": 67637393,
+                "role": "video",
+                "hostedOn": "releases",
+                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_kimjisun__.mp4_c8589421.mp4",
+                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_kimjisun__.mp4_c8589421.mp4",
+                "externalUrl": null
+              }
+            ]
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "미니프로젝트_김지선_피드백.pdf",
+              "relPath": "미니프로젝트_김지선_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 673209,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_kimjisun/mini_m_kimjisun______.pdf_2484f3ae.pdf",
+              "downloadUrl": "./assets/files/mini/m_kimjisun/mini_m_kimjisun______.pdf_2484f3ae.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "미니 프로젝트.mp4",
+              "relPath": "미니 프로젝트.mp4",
+              "ext": "mp4",
+              "sizeBytes": 67637393,
+              "role": "video",
+              "hostedOn": "releases",
+              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_kimjisun__.mp4_c8589421.mp4",
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_kimjisun__.mp4_c8589421.mp4",
+              "externalUrl": null
+            },
+            {
+              "name": "미니프로젝트_김지선.pptx",
+              "relPath": "미니프로젝트_김지선.pptx",
+              "ext": "pptx",
+              "sizeBytes": 331121,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimjisun/mini_m_kimjisun____.pptx_9ea5f58a.pptx.html",
+              "downloadUrl": "./assets/files/mini/m_kimjisun/mini_m_kimjisun____.pptx_9ea5f58a.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "미니프로젝트_김지선_피드백.pdf",
+              "relPath": "미니프로젝트_김지선_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 673209,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_kimjisun/mini_m_kimjisun______.pdf_2484f3ae.pdf",
+              "downloadUrl": "./assets/files/mini/m_kimjisun/mini_m_kimjisun______.pdf_2484f3ae.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_mini_m_kimjisun.zip",
+          "bundleZipBytes": 60562044
+        },
+        {
+          "id": "m_kimyunjun1",
+          "title": "업로드 파일 악성코드 사전 선별 시스템 (1차 제출본)",
+          "authors": [
+            "김윤준"
+          ],
+          "grade": "A",
+          "score": 90,
+          "summary": "정상 전송률(2%/5%) 비용 기준 정립 및 로그 우도비 결합층으로 미탐 38% 감축(29→18건), AWS Docker 4컨테이너 격리 서빙",
+          "presentations": [
+            {
+              "name": "관리자 계정.txt",
+              "relPath": "관리자 계정.txt",
+              "ext": "txt",
+              "sizeBytes": 34,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimyunjun1/mini_m_kimyunjun1__.txt_c570e033.txt.html",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__.txt_c570e033.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "문서.txt",
+              "relPath": "문서.txt",
+              "ext": "txt",
+              "sizeBytes": 131,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimyunjun1/mini_m_kimyunjun1__.txt_e29a5eca.txt.html",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__.txt_e29a5eca.txt",
+              "externalUrl": "https://claude.ai/artifact/PJ7z4p6QTzBa2w7A8xyEqQ"
+            },
+            {
+              "name": "악성코드 사전 선별 시스템.pptx",
+              "relPath": "악성코드 사전 선별 시스템.pptx",
+              "ext": "pptx",
+              "sizeBytes": 4530994,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimyunjun1/mini_m_kimyunjun1__.pptx_751af5d8.pptx.html",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__.pptx_751af5d8.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "악성코드_사전_선별_시스템.url",
+              "relPath": "악성코드_사전_선별_시스템.url",
+              "ext": "url",
+              "sizeBytes": 58,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimyunjun1/mini_m_kimyunjun1________.url_d586dfe7.url.html",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1________.url_d586dfe7.url",
+              "externalUrl": "https://54-252-202-182.sslip.io/"
+            }
+          ],
+          "demoVideo": {
+            "available": true,
+            "statusText": "제공",
+            "files": [
+              {
+                "name": "악성코드_사전_선별_시스템_시연.mp4",
+                "relPath": "악성코드_사전_선별_시스템_시연.mp4",
+                "ext": "mp4",
+                "sizeBytes": 4398855,
+                "role": "video",
+                "hostedOn": "pages",
+                "previewUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__________.mp4_5497b916.mp4",
+                "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__________.mp4_5497b916.mp4",
+                "externalUrl": null
+              }
+            ]
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "악성코드 사전 선별 시스템_피드백.pdf",
+              "relPath": "악성코드 사전 선별 시스템_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 683065,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1____.pdf_6b617334.pdf",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1____.pdf_6b617334.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "관리자 계정.txt",
+              "relPath": "관리자 계정.txt",
+              "ext": "txt",
+              "sizeBytes": 34,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimyunjun1/mini_m_kimyunjun1__.txt_c570e033.txt.html",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__.txt_c570e033.txt",
+              "externalUrl": null
+            },
+            {
+              "name": "문서.txt",
+              "relPath": "문서.txt",
+              "ext": "txt",
+              "sizeBytes": 131,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimyunjun1/mini_m_kimyunjun1__.txt_e29a5eca.txt.html",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__.txt_e29a5eca.txt",
+              "externalUrl": "https://claude.ai/artifact/PJ7z4p6QTzBa2w7A8xyEqQ"
+            },
+            {
+              "name": "악성코드 사전 선별 시스템.pptx",
+              "relPath": "악성코드 사전 선별 시스템.pptx",
+              "ext": "pptx",
+              "sizeBytes": 4530994,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimyunjun1/mini_m_kimyunjun1__.pptx_751af5d8.pptx.html",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__.pptx_751af5d8.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "악성코드_사전_선별_시스템.url",
+              "relPath": "악성코드_사전_선별_시스템.url",
+              "ext": "url",
+              "sizeBytes": 58,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimyunjun1/mini_m_kimyunjun1________.url_d586dfe7.url.html",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1________.url_d586dfe7.url",
+              "externalUrl": "https://54-252-202-182.sslip.io/"
+            },
+            {
+              "name": "악성코드_사전_선별_시스템_시연.mp4",
+              "relPath": "악성코드_사전_선별_시스템_시연.mp4",
+              "ext": "mp4",
+              "sizeBytes": 4398855,
+              "role": "video",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__________.mp4_5497b916.mp4",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__________.mp4_5497b916.mp4",
+              "externalUrl": null
+            },
+            {
+              "name": "악성코드 사전 선별 시스템_피드백.pdf",
+              "relPath": "악성코드 사전 선별 시스템_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 683065,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1____.pdf_6b617334.pdf",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1____.pdf_6b617334.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_mini_m_kimyunjun1.zip",
+          "bundleZipBytes": 7834366
+        },
+        {
+          "id": "m_kimyunjun2",
+          "title": "업로드 파일 악성코드 사전 선별 시스템 (malware-mini 정리본 v2)",
+          "authors": [
+            "김윤준"
+          ],
+          "grade": "A",
+          "score": 90,
+          "summary": "불필요한 평문 계정 파일 정리 및 EC2 배포 링크·데모 영상을 영문 체계로 패키징한 최종 정리 제출본",
+          "presentations": [
+            {
+              "name": "malware-mini EC2 사이트.url",
+              "relPath": "malware-mini EC2 사이트.url",
+              "ext": "url",
+              "sizeBytes": 58,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimyunjun2/mini_m_kimyunjun2_malware-mini_EC2_.url_1c9d1448.url.html",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2_malware-mini_EC2_.url_1c9d1448.url",
+              "externalUrl": "https://54-252-202-182.sslip.io/"
+            },
+            {
+              "name": "악성코드 사전 선별 시스템.pptx",
+              "relPath": "악성코드 사전 선별 시스템.pptx",
+              "ext": "pptx",
+              "sizeBytes": 4530994,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimyunjun2/mini_m_kimyunjun2__.pptx_4b679191.pptx.html",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2__.pptx_4b679191.pptx",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": true,
+            "statusText": "제공",
+            "files": [
+              {
+                "name": "malware-mini-demo.mp4",
+                "relPath": "malware-mini-demo.mp4",
+                "ext": "mp4",
+                "sizeBytes": 4398855,
+                "role": "video",
+                "hostedOn": "pages",
+                "previewUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2_malware-mini-demo.mp4_84aa951c.mp4",
+                "downloadUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2_malware-mini-demo.mp4_84aa951c.mp4",
+                "externalUrl": null
+              }
+            ]
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "악성코드 사전 선별 시스템_피드백.pdf",
+              "relPath": "악성코드 사전 선별 시스템_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 671009,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2____.pdf_cebe69d5.pdf",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2____.pdf_cebe69d5.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "malware-mini EC2 사이트.url",
+              "relPath": "malware-mini EC2 사이트.url",
+              "ext": "url",
+              "sizeBytes": 58,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimyunjun2/mini_m_kimyunjun2_malware-mini_EC2_.url_1c9d1448.url.html",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2_malware-mini_EC2_.url_1c9d1448.url",
+              "externalUrl": "https://54-252-202-182.sslip.io/"
+            },
+            {
+              "name": "malware-mini-demo.mp4",
+              "relPath": "malware-mini-demo.mp4",
+              "ext": "mp4",
+              "sizeBytes": 4398855,
+              "role": "video",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2_malware-mini-demo.mp4_84aa951c.mp4",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2_malware-mini-demo.mp4_84aa951c.mp4",
+              "externalUrl": null
+            },
+            {
+              "name": "악성코드 사전 선별 시스템.pptx",
+              "relPath": "악성코드 사전 선별 시스템.pptx",
+              "ext": "pptx",
+              "sizeBytes": 4530994,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_kimyunjun2/mini_m_kimyunjun2__.pptx_4b679191.pptx.html",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2__.pptx_4b679191.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "악성코드 사전 선별 시스템_피드백.pdf",
+              "relPath": "악성코드 사전 선별 시스템_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 671009,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2____.pdf_cebe69d5.pdf",
+              "downloadUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2____.pdf_cebe69d5.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_mini_m_kimyunjun2.zip",
+          "bundleZipBytes": 7822858
+        },
+        {
+          "id": "m_gumyeonghoe",
+          "title": "LightGBM · YARA-X · 로지스틱 회귀 기반 PE 정적 분석 대시보드",
+          "authors": [
+            "구명회"
+          ],
+          "grade": "A-",
+          "score": 88,
+          "summary": "EMBER2024 528피처 LightGBM + ReversingLabs YARA-X 14규칙 + L2 로지스틱 결합 모델 및 Streamlit 5탭 XAI 대시보드",
+          "presentations": [
+            {
+              "name": "v1 feature 기준.md",
+              "relPath": "v1 feature 기준.md",
+              "ext": "md",
+              "sizeBytes": 2415,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_v1_feature_.md_ecd1d2bf.md.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_v1_feature_.md_ecd1d2bf.md",
+              "externalUrl": null
+            },
+            {
+              "name": "미니 프로젝트 yara규칙.png",
+              "relPath": "미니 프로젝트 yara규칙.png",
+              "ext": "png",
+              "sizeBytes": 54717,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__yara_.png_f1884181.png",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__yara_.png_f1884181.png",
+              "externalUrl": null
+            },
+            {
+              "name": "미니 프로젝트 웹사이트 열기.txt",
+              "relPath": "미니 프로젝트 웹사이트 열기.txt",
+              "ext": "txt",
+              "sizeBytes": 358,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.txt_9db7f4fd.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.txt_9db7f4fd.txt",
+              "externalUrl": "http://127.0.0.1:8503"
+            },
+            {
+              "name": "미니프로젝트.pptx",
+              "relPath": "미니프로젝트.pptx",
+              "ext": "pptx",
+              "sizeBytes": 11325712,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.pptx_5da25a68.pptx.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.pptx_5da25a68.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "점수계산.png",
+              "relPath": "점수계산.png",
+              "ext": "png",
+              "sizeBytes": 20140,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.png_34096493.png",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.png_34096493.png",
+              "externalUrl": null
+            },
+            {
+              "name": "01_프로젝트_소개.txt",
+              "relPath": "미니프로젝트발표/01_프로젝트_소개.txt",
+              "ext": "txt",
+              "sizeBytes": 2538,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_01____.txt_162c4997.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_01____.txt_162c4997.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "02_개발_배경과_설계_목표.txt",
+              "relPath": "미니프로젝트발표/02_개발_배경과_설계_목표.txt",
+              "ext": "txt",
+              "sizeBytes": 2657,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_02________.txt_0874ffd9.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_02________.txt_0874ffd9.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "03_전체_시스템_구조.txt",
+              "relPath": "미니프로젝트발표/03_전체_시스템_구조.txt",
+              "ext": "txt",
+              "sizeBytes": 2676,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_03______.txt_0a1fece6.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_03______.txt_0a1fece6.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "04_학습_데이터와_평가_설계.txt",
+              "relPath": "미니프로젝트발표/04_학습_데이터와_평가_설계.txt",
+              "ext": "txt",
+              "sizeBytes": 3276,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_04________.txt_5b4d0717.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_04________.txt_5b4d0717.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "05_EMBER_피처와_LightGBM.txt",
+              "relPath": "미니프로젝트발표/05_EMBER_피처와_LightGBM.txt",
+              "ext": "txt",
+              "sizeBytes": 2899,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_05_EMBER___LightGBM.txt_50845aea.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_05_EMBER___LightGBM.txt_50845aea.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "06_YARA_X_패턴_검사.txt",
+              "relPath": "미니프로젝트발표/06_YARA_X_패턴_검사.txt",
+              "ext": "txt",
+              "sizeBytes": 2932,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_06_YARA_X____.txt_41cc0f38.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_06_YARA_X____.txt_41cc0f38.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "07_로지스틱_회귀_결합_모델.txt",
+              "relPath": "미니프로젝트발표/07_로지스틱_회귀_결합_모델.txt",
+              "ext": "txt",
+              "sizeBytes": 2966,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_07________.txt_c74d48a3.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_07________.txt_c74d48a3.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "08_XAI_근거_기반_설명.txt",
+              "relPath": "미니프로젝트발표/08_XAI_근거_기반_설명.txt",
+              "ext": "txt",
+              "sizeBytes": 2939,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_08_XAI______.txt_afc13a17.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_08_XAI______.txt_afc13a17.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "09_웹_대시보드와_보고서.txt",
+              "relPath": "미니프로젝트발표/09_웹_대시보드와_보고서.txt",
+              "ext": "txt",
+              "sizeBytes": 3130,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_09______.txt_020865a1.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_09______.txt_020865a1.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "10_검증과_최종_평가.txt",
+              "relPath": "미니프로젝트발표/10_검증과_최종_평가.txt",
+              "ext": "txt",
+              "sizeBytes": 3253,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_10______.txt_53e9b5f6.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_10______.txt_53e9b5f6.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "11_구현_성과와_개선_과제.txt",
+              "relPath": "미니프로젝트발표/11_구현_성과와_개선_과제.txt",
+              "ext": "txt",
+              "sizeBytes": 3082,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_11________.txt_ef819ecb.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_11________.txt_ef819ecb.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            }
+          ],
+          "demoVideo": {
+            "available": true,
+            "statusText": "제공",
+            "files": [
+              {
+                "name": "미니 프로젝트 시연영상.mp4",
+                "relPath": "미니 프로젝트 시연영상.mp4",
+                "ext": "mp4",
+                "sizeBytes": 25598556,
+                "role": "video",
+                "hostedOn": "pages",
+                "previewUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.mp4_19d6aaba.mp4",
+                "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.mp4_19d6aaba.mp4",
+                "externalUrl": null
+              }
+            ]
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "미니프로젝트_피드백.pdf",
+              "relPath": "미니프로젝트_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 687906,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe____.pdf_52e1a7d6.pdf",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe____.pdf_52e1a7d6.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "v1 feature 기준.md",
+              "relPath": "v1 feature 기준.md",
+              "ext": "md",
+              "sizeBytes": 2415,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_v1_feature_.md_ecd1d2bf.md.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_v1_feature_.md_ecd1d2bf.md",
+              "externalUrl": null
+            },
+            {
+              "name": "미니 프로젝트 yara규칙.png",
+              "relPath": "미니 프로젝트 yara규칙.png",
+              "ext": "png",
+              "sizeBytes": 54717,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__yara_.png_f1884181.png",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__yara_.png_f1884181.png",
+              "externalUrl": null
+            },
+            {
+              "name": "미니 프로젝트 시연영상.mp4",
+              "relPath": "미니 프로젝트 시연영상.mp4",
+              "ext": "mp4",
+              "sizeBytes": 25598556,
+              "role": "video",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.mp4_19d6aaba.mp4",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.mp4_19d6aaba.mp4",
+              "externalUrl": null
+            },
+            {
+              "name": "미니 프로젝트 웹사이트 열기.txt",
+              "relPath": "미니 프로젝트 웹사이트 열기.txt",
+              "ext": "txt",
+              "sizeBytes": 358,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.txt_9db7f4fd.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.txt_9db7f4fd.txt",
+              "externalUrl": "http://127.0.0.1:8503"
+            },
+            {
+              "name": "미니프로젝트.pptx",
+              "relPath": "미니프로젝트.pptx",
+              "ext": "pptx",
+              "sizeBytes": 11325712,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.pptx_5da25a68.pptx.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.pptx_5da25a68.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "점수계산.png",
+              "relPath": "점수계산.png",
+              "ext": "png",
+              "sizeBytes": 20140,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.png_34096493.png",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.png_34096493.png",
+              "externalUrl": null
+            },
+            {
+              "name": "01_프로젝트_소개.txt",
+              "relPath": "미니프로젝트발표/01_프로젝트_소개.txt",
+              "ext": "txt",
+              "sizeBytes": 2538,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_01____.txt_162c4997.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_01____.txt_162c4997.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "02_개발_배경과_설계_목표.txt",
+              "relPath": "미니프로젝트발표/02_개발_배경과_설계_목표.txt",
+              "ext": "txt",
+              "sizeBytes": 2657,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_02________.txt_0874ffd9.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_02________.txt_0874ffd9.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "03_전체_시스템_구조.txt",
+              "relPath": "미니프로젝트발표/03_전체_시스템_구조.txt",
+              "ext": "txt",
+              "sizeBytes": 2676,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_03______.txt_0a1fece6.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_03______.txt_0a1fece6.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "04_학습_데이터와_평가_설계.txt",
+              "relPath": "미니프로젝트발표/04_학습_데이터와_평가_설계.txt",
+              "ext": "txt",
+              "sizeBytes": 3276,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_04________.txt_5b4d0717.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_04________.txt_5b4d0717.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "05_EMBER_피처와_LightGBM.txt",
+              "relPath": "미니프로젝트발표/05_EMBER_피처와_LightGBM.txt",
+              "ext": "txt",
+              "sizeBytes": 2899,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_05_EMBER___LightGBM.txt_50845aea.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_05_EMBER___LightGBM.txt_50845aea.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "06_YARA_X_패턴_검사.txt",
+              "relPath": "미니프로젝트발표/06_YARA_X_패턴_검사.txt",
+              "ext": "txt",
+              "sizeBytes": 2932,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_06_YARA_X____.txt_41cc0f38.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_06_YARA_X____.txt_41cc0f38.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "07_로지스틱_회귀_결합_모델.txt",
+              "relPath": "미니프로젝트발표/07_로지스틱_회귀_결합_모델.txt",
+              "ext": "txt",
+              "sizeBytes": 2966,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_07________.txt_c74d48a3.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_07________.txt_c74d48a3.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "08_XAI_근거_기반_설명.txt",
+              "relPath": "미니프로젝트발표/08_XAI_근거_기반_설명.txt",
+              "ext": "txt",
+              "sizeBytes": 2939,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_08_XAI______.txt_afc13a17.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_08_XAI______.txt_afc13a17.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "09_웹_대시보드와_보고서.txt",
+              "relPath": "미니프로젝트발표/09_웹_대시보드와_보고서.txt",
+              "ext": "txt",
+              "sizeBytes": 3130,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_09______.txt_020865a1.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_09______.txt_020865a1.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "10_검증과_최종_평가.txt",
+              "relPath": "미니프로젝트발표/10_검증과_최종_평가.txt",
+              "ext": "txt",
+              "sizeBytes": 3253,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_10______.txt_53e9b5f6.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_10______.txt_53e9b5f6.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "11_구현_성과와_개선_과제.txt",
+              "relPath": "미니프로젝트발표/11_구현_성과와_개선_과제.txt",
+              "ext": "txt",
+              "sizeBytes": 3082,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_gumyeonghoe/mini_m_gumyeonghoe_11________.txt_ef819ecb.txt.html",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe_11________.txt_ef819ecb.txt",
+              "externalUrl": "https://github.com/FutureComputing4AI/EMBER2024"
+            },
+            {
+              "name": "미니프로젝트_피드백.pdf",
+              "relPath": "미니프로젝트_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 687906,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe____.pdf_52e1a7d6.pdf",
+              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe____.pdf_52e1a7d6.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_mini_m_gumyeonghoe.zip",
+          "bundleZipBytes": 18169508
+        },
+        {
+          "id": "m_shinsanga",
+          "title": "NASA IMS 기반 베어링 예지보전(PdM) 시스템",
+          "authors": [
+            "신상아"
+          ],
+          "grade": "B+",
+          "score": 85,
+          "summary": "NASA IMS 진동(RMS·Kurtosis·FFT/STFT) 분석, RF 결함 분류(97.35%), 실측 MAD×5 경보 + 조건부 FFT 워터폴(Render·Streamlit Cloud 배포)",
+          "presentations": [
+            {
+              "name": "베어링예지보전_신상아.pdf",
+              "relPath": "베어링예지보전_신상아.pdf",
+              "ext": "pdf",
+              "sizeBytes": 769095,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_shinsanga/mini_m_shinsanga____.pdf_7d8da311.pdf",
+              "downloadUrl": "./assets/files/mini/m_shinsanga/mini_m_shinsanga____.pdf_7d8da311.pdf",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": false,
+            "statusText": "미제공",
+            "files": []
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "베어링예지보전_신상아_피드백.pdf",
+              "relPath": "베어링예지보전_신상아_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 682055,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_shinsanga/mini_m_shinsanga______.pdf_18fdf94a.pdf",
+              "downloadUrl": "./assets/files/mini/m_shinsanga/mini_m_shinsanga______.pdf_18fdf94a.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "베어링예지보전_신상아.pdf",
+              "relPath": "베어링예지보전_신상아.pdf",
+              "ext": "pdf",
+              "sizeBytes": 769095,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_shinsanga/mini_m_shinsanga____.pdf_7d8da311.pdf",
+              "downloadUrl": "./assets/files/mini/m_shinsanga/mini_m_shinsanga____.pdf_7d8da311.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "베어링예지보전_신상아_피드백.pdf",
+              "relPath": "베어링예지보전_신상아_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 682055,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_shinsanga/mini_m_shinsanga______.pdf_18fdf94a.pdf",
+              "downloadUrl": "./assets/files/mini/m_shinsanga/mini_m_shinsanga______.pdf_18fdf94a.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_mini_m_shinsanga.zip",
+          "bundleZipBytes": 783078
+        },
+        {
+          "id": "m_leeinae",
+          "title": "Windows PE 다중 엔진(ClamAV·YARA·LightGBM) 악성코드 탐지",
+          "authors": [
+            "이인애"
+          ],
+          "grade": "B+",
+          "score": 83,
+          "summary": "BODMAS 134,435건 LightGBM(99.69%) + ClamAV + YARA Forge 10규칙 ThreadPool 병렬 스캔 및 후기 융합 아키텍처 구현",
+          "presentations": [
+            {
+              "name": "미니프로젝트ppt.pptx",
+              "relPath": "미니프로젝트ppt.pptx",
+              "ext": "pptx",
+              "sizeBytes": 56724,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_leeinae/mini_m_leeinae__ppt.pptx_ae70c480.pptx.html",
+              "downloadUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae__ppt.pptx_ae70c480.pptx",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": true,
+            "statusText": "제공",
+            "files": [
+              {
+                "name": "Windows PE 다중 엔진 탐지 - Chrome 2026-11-05 21-48-22.mp4",
+                "relPath": "Windows PE 다중 엔진 탐지 - Chrome 2026-11-05 21-48-22.mp4",
+                "ext": "mp4",
+                "sizeBytes": 13322479,
+                "role": "video",
+                "hostedOn": "pages",
+                "previewUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae_Windows_PE_-_Chrome_2026-11-05_21_afa9efa6.mp4",
+                "downloadUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae_Windows_PE_-_Chrome_2026-11-05_21_afa9efa6.mp4",
+                "externalUrl": null
+              }
+            ]
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "미니프로젝트ppt_피드백.pdf",
+              "relPath": "미니프로젝트ppt_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 677318,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae__ppt__.pdf_baf3fbdf.pdf",
+              "downloadUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae__ppt__.pdf_baf3fbdf.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "Windows PE 다중 엔진 탐지 - Chrome 2026-11-05 21-48-22.mp4",
+              "relPath": "Windows PE 다중 엔진 탐지 - Chrome 2026-11-05 21-48-22.mp4",
+              "ext": "mp4",
+              "sizeBytes": 13322479,
+              "role": "video",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae_Windows_PE_-_Chrome_2026-11-05_21_afa9efa6.mp4",
+              "downloadUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae_Windows_PE_-_Chrome_2026-11-05_21_afa9efa6.mp4",
+              "externalUrl": null
+            },
+            {
+              "name": "미니프로젝트ppt.pptx",
+              "relPath": "미니프로젝트ppt.pptx",
+              "ext": "pptx",
+              "sizeBytes": 56724,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/mini/m_leeinae/mini_m_leeinae__ppt.pptx_ae70c480.pptx.html",
+              "downloadUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae__ppt.pptx_ae70c480.pptx",
+              "externalUrl": null
+            },
+            {
+              "name": "미니프로젝트ppt_피드백.pdf",
+              "relPath": "미니프로젝트ppt_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 677318,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae__ppt__.pdf_baf3fbdf.pdf",
+              "downloadUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae__ppt__.pdf_baf3fbdf.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_mini_m_leeinae.zip",
+          "bundleZipBytes": 11336722
+        },
+        {
+          "id": "m_ohjuwon",
+          "title": "안전감지자동화 119 호출서비스 (실시간 위기감지 & HITL)",
+          "authors": [
+            "오주원"
+          ],
+          "grade": "B",
+          "score": 79,
+          "summary": "Edge PII Shield(원본 영상/음성 차단) → Kafka/LightGBM 5초 슬라이딩 윈도우 핫패스 → 10초 HITL 관제 유예 게이트 설계",
+          "presentations": [
+            {
+              "name": "안전감지자동화 119 호출서비스_수정.pdf",
+              "relPath": "안전감지자동화 119 호출서비스_수정.pdf",
+              "ext": "pdf",
+              "sizeBytes": 4374122,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_ohjuwon/mini_m_ohjuwon__119___.pdf_4dfb437b.pdf",
+              "downloadUrl": "./assets/files/mini/m_ohjuwon/mini_m_ohjuwon__119___.pdf_4dfb437b.pdf",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": true,
+            "statusText": "제공",
+            "files": [
+              {
+                "name": "안전감지자동화 119 호출서비스_영상.mp4",
+                "relPath": "안전감지자동화 119 호출서비스_영상.mp4",
+                "ext": "mp4",
+                "sizeBytes": 97244443,
+                "role": "video",
+                "hostedOn": "releases",
+                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_ohjuwon__119___.mp4_ff3d36ee.mp4",
+                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_ohjuwon__119___.mp4_ff3d36ee.mp4",
+                "externalUrl": null
+              }
+            ]
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "안전감지자동화 119 호출서비스_수정_피드백.pdf",
+              "relPath": "안전감지자동화 119 호출서비스_수정_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 675539,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_ohjuwon/mini_m_ohjuwon__119_____.pdf_27d26815.pdf",
+              "downloadUrl": "./assets/files/mini/m_ohjuwon/mini_m_ohjuwon__119_____.pdf_27d26815.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "안전감지자동화 119 호출서비스_수정.pdf",
+              "relPath": "안전감지자동화 119 호출서비스_수정.pdf",
+              "ext": "pdf",
+              "sizeBytes": 4374122,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_ohjuwon/mini_m_ohjuwon__119___.pdf_4dfb437b.pdf",
+              "downloadUrl": "./assets/files/mini/m_ohjuwon/mini_m_ohjuwon__119___.pdf_4dfb437b.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "안전감지자동화 119 호출서비스_영상.mp4",
+              "relPath": "안전감지자동화 119 호출서비스_영상.mp4",
+              "ext": "mp4",
+              "sizeBytes": 97244443,
+              "role": "video",
+              "hostedOn": "releases",
+              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_ohjuwon__119___.mp4_ff3d36ee.mp4",
+              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_ohjuwon__119___.mp4_ff3d36ee.mp4",
+              "externalUrl": null
+            },
+            {
+              "name": "안전감지자동화 119 호출서비스_수정_피드백.pdf",
+              "relPath": "안전감지자동화 119 호출서비스_수정_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 675539,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/mini/m_ohjuwon/mini_m_ohjuwon__119_____.pdf_27d26815.pdf",
+              "downloadUrl": "./assets/files/mini/m_ohjuwon/mini_m_ohjuwon__119_____.pdf_27d26815.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_mini_m_ohjuwon.zip",
+          "bundleZipBytes": 31463262
+        }
+      ]
+    },
+    {
+      "id": "final",
+      "label": "최종 프로젝트 기획안",
+      "sourceFolder": "최종 기획안",
+      "projects": [
+        {
+          "id": "p_mirimakum",
+          "title": "AI 기반 업로드 파일 악성코드 사전 탐지·차단 시스템 (미리막음)",
+          "authors": [
+            "김윤준",
+            "구명회",
+            "이인애",
+            "남유진",
+            "백선병"
+          ],
+          "grade": "A+",
+          "score": 95,
+          "summary": "PE·MS Office·HWP/HWPX 다형식 정적 추출과 선택적 CAPEv2(정상 2~5%) 동적 분석을 결합한 B2B MSP 보안 솔루션 기획서(35p)",
+          "presentations": [
+            {
+              "name": "미리막음_김윤준_구명회_이인애_남유진_백선병.pdf",
+              "relPath": "미리막음_김윤준_구명회_이인애_남유진_백선병.pdf",
+              "ext": "pdf",
+              "sizeBytes": 3112015,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_mirimakum/final_p_mirimakum____________.pdf_c0c473ba.pdf",
+              "downloadUrl": "./assets/files/final/p_mirimakum/final_p_mirimakum____________.pdf_c0c473ba.pdf",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": false,
+            "statusText": "미제공",
+            "files": []
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "미리막음_김윤준_구명회_이인애_남유진_백선병_피드백.pdf",
+              "relPath": "미리막음_김윤준_구명회_이인애_남유진_백선병_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 692641,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_mirimakum/final_p_mirimakum______________.pdf_e4fbb2b2.pdf",
+              "downloadUrl": "./assets/files/final/p_mirimakum/final_p_mirimakum______________.pdf_e4fbb2b2.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "미리막음_김윤준_구명회_이인애_남유진_백선병.pdf",
+              "relPath": "미리막음_김윤준_구명회_이인애_남유진_백선병.pdf",
+              "ext": "pdf",
+              "sizeBytes": 3112015,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_mirimakum/final_p_mirimakum____________.pdf_c0c473ba.pdf",
+              "downloadUrl": "./assets/files/final/p_mirimakum/final_p_mirimakum____________.pdf_c0c473ba.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "미리막음_김윤준_구명회_이인애_남유진_백선병_피드백.pdf",
+              "relPath": "미리막음_김윤준_구명회_이인애_남유진_백선병_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 692641,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_mirimakum/final_p_mirimakum______________.pdf_e4fbb2b2.pdf",
+              "downloadUrl": "./assets/files/final/p_mirimakum/final_p_mirimakum______________.pdf_e4fbb2b2.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_final_p_mirimakum.zip",
+          "bundleZipBytes": 2644104
+        },
+        {
+          "id": "p_baek",
+          "title": "다변량 IoT 센서 스트림 기반 회전설비 사전감지 고장예측(PdM) 시스템",
+          "authors": [
+            "백선병 (협약: 쓰리뷰)"
+          ],
+          "grade": "A-",
+          "score": 88,
+          "summary": "첨도·파고율 도메인 특성공학(기여도 40.2%)과 Random Forest 0.0569ms 초저지연 추론·SQLite·하이브리드 관제 대시보드 구축 기획서",
+          "presentations": [
+            {
+              "name": "회전설비_사전감지_고장예측_시스템_구축_기획서_백선병.pdf",
+              "relPath": "회전설비_사전감지_고장예측_시스템_구축_기획서_백선병.pdf",
+              "ext": "pdf",
+              "sizeBytes": 723843,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_baek/final_p_baek______________.pdf_ae0074f8.pdf",
+              "downloadUrl": "./assets/files/final/p_baek/final_p_baek______________.pdf_ae0074f8.pdf",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": false,
+            "statusText": "미제공",
+            "files": []
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "회전설비_사전감지_고장예측_시스템_구축_기획서_백선병_피드백.pdf",
+              "relPath": "회전설비_사전감지_고장예측_시스템_구축_기획서_백선병_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 686940,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_baek/final_p_baek________________.pdf_dbd5cdf0.pdf",
+              "downloadUrl": "./assets/files/final/p_baek/final_p_baek________________.pdf_dbd5cdf0.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "회전설비_사전감지_고장예측_시스템_구축_기획서_백선병.pdf",
+              "relPath": "회전설비_사전감지_고장예측_시스템_구축_기획서_백선병.pdf",
+              "ext": "pdf",
+              "sizeBytes": 723843,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_baek/final_p_baek______________.pdf_ae0074f8.pdf",
+              "downloadUrl": "./assets/files/final/p_baek/final_p_baek______________.pdf_ae0074f8.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "회전설비_사전감지_고장예측_시스템_구축_기획서_백선병_피드백.pdf",
+              "relPath": "회전설비_사전감지_고장예측_시스템_구축_기획서_백선병_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 686940,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_baek/final_p_baek________________.pdf_dbd5cdf0.pdf",
+              "downloadUrl": "./assets/files/final/p_baek/final_p_baek________________.pdf_dbd5cdf0.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_final_p_baek.zip",
+          "bundleZipBytes": 554668
+        },
+        {
+          "id": "p_baemin",
+          "title": "배차의 민족 · 자동 화물 기사 매칭 플랫폼 개발 기획서",
+          "authors": [
+            "오주원",
+            "신상아",
+            "김지선",
+            "방호원"
+          ],
+          "grade": "A-",
+          "score": 87,
+          "summary": "KTDB 실데이터 기반 PostGIS/OSRM·Extreme Point 3D 적재·LightGBM·헝가리안 전역 배차 및 FSM/SHA-256 감사 로그 플랫폼 기획서",
+          "presentations": [
+            {
+              "name": "배차의 민족_오주원_신상아, 김지선, 방호원.pdf",
+              "relPath": "배차의 민족_오주원_신상아, 김지선, 방호원.pdf",
+              "ext": "pdf",
+              "sizeBytes": 244451,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_baemin/final_p_baemin______.pdf_30a5e758.pdf",
+              "downloadUrl": "./assets/files/final/p_baemin/final_p_baemin______.pdf_30a5e758.pdf",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": false,
+            "statusText": "미제공",
+            "files": []
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "배차의 민족_오주원_신상아, 김지선, 방호원_피드백.pdf",
+              "relPath": "배차의 민족_오주원_신상아, 김지선, 방호원_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 676941,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_baemin/final_p_baemin________.pdf_9d4f6fd3.pdf",
+              "downloadUrl": "./assets/files/final/p_baemin/final_p_baemin________.pdf_9d4f6fd3.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "배차의 민족_오주원_신상아, 김지선, 방호원.pdf",
+              "relPath": "배차의 민족_오주원_신상아, 김지선, 방호원.pdf",
+              "ext": "pdf",
+              "sizeBytes": 244451,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_baemin/final_p_baemin______.pdf_30a5e758.pdf",
+              "downloadUrl": "./assets/files/final/p_baemin/final_p_baemin______.pdf_30a5e758.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "배차의 민족_오주원_신상아, 김지선, 방호원_피드백.pdf",
+              "relPath": "배차의 민족_오주원_신상아, 김지선, 방호원_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 676941,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_baemin/final_p_baemin________.pdf_9d4f6fd3.pdf",
+              "downloadUrl": "./assets/files/final/p_baemin/final_p_baemin________.pdf_9d4f6fd3.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_final_p_baemin.zip",
+          "bundleZipBytes": 464106
+        },
+        {
+          "id": "p_kimjehyung",
+          "title": "화물 기사 자동 배정 플랫폼 기획서 (Automated Driver Dispatch)",
+          "authors": [
+            "김제형"
+          ],
+          "grade": "B+",
+          "score": 84,
+          "summary": "운송사 10곳 직접 인터뷰 기반 소형 운송사 전용 SaaS, 도로교통법 제49조 정차 안전 UX 및 84개 자동 테스트를 완료한 실행형 기획서",
+          "presentations": [
+            {
+              "name": "Freight_Dispatch_Proposal_화물배차기획서_김제형.docx",
+              "relPath": "Freight_Dispatch_Proposal_화물배차기획서_김제형.docx",
+              "ext": "docx",
+              "sizeBytes": 5967,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/final/p_kimjehyung/final_p_kimjehyung_Freight_Dispatch_Proposal_____fff5d23f.docx.html",
+              "downloadUrl": "./assets/files/final/p_kimjehyung/final_p_kimjehyung_Freight_Dispatch_Proposal_____fff5d23f.docx",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": false,
+            "statusText": "미제공",
+            "files": []
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "Freight_Dispatch_Proposal_화물배차기획서_김제형_피드백.pdf",
+              "relPath": "Freight_Dispatch_Proposal_화물배차기획서_김제형_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 680166,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_kimjehyung/final_p_kimjehyung_Freight_Dispatch_Proposal_____b21d34b6.pdf",
+              "downloadUrl": "./assets/files/final/p_kimjehyung/final_p_kimjehyung_Freight_Dispatch_Proposal_____b21d34b6.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "Freight_Dispatch_Proposal_화물배차기획서_김제형.docx",
+              "relPath": "Freight_Dispatch_Proposal_화물배차기획서_김제형.docx",
+              "ext": "docx",
+              "sizeBytes": 5967,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/previews/final/p_kimjehyung/final_p_kimjehyung_Freight_Dispatch_Proposal_____fff5d23f.docx.html",
+              "downloadUrl": "./assets/files/final/p_kimjehyung/final_p_kimjehyung_Freight_Dispatch_Proposal_____fff5d23f.docx",
+              "externalUrl": null
+            },
+            {
+              "name": "Freight_Dispatch_Proposal_화물배차기획서_김제형_피드백.pdf",
+              "relPath": "Freight_Dispatch_Proposal_화물배차기획서_김제형_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 680166,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/final/p_kimjehyung/final_p_kimjehyung_Freight_Dispatch_Proposal_____b21d34b6.pdf",
+              "downloadUrl": "./assets/files/final/p_kimjehyung/final_p_kimjehyung_Freight_Dispatch_Proposal_____b21d34b6.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_final_p_kimjehyung.zip",
+          "bundleZipBytes": 249381
+        }
+      ]
+    }
+  ]
+}

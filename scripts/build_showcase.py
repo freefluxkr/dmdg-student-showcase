@@ -14,6 +14,7 @@ import hashlib
 import xml.etree.ElementTree as ET
 from datetime import datetime
 import docx
+import openpyxl
 
 SRC_ROOT = r"C:\Users\PC\Downloads\발표 프로젝트"
 PRJ_ROOT = r"c:\DMDG_Jobs\DMDG_PRJ\dmdg-student-showcase"
@@ -60,11 +61,13 @@ def convert_pptx_to_html(pptx_path: str, out_html_path: str, title: str):
 
     slides_html = []
     with zipfile.ZipFile(pptx_path, "r") as z:
-        # extract all media
+        # extract all non-video image media (skip large embedded videos like .mp4 inside PPTX)
         media_map = {}
         for m in z.namelist():
             if m.startswith("ppt/media/") and not m.endswith("/"):
                 fn = os.path.basename(m)
+                if os.path.splitext(fn)[1].lower() in (".mp4", ".mov", ".avi", ".mkv", ".wmv", ".bin", ".media"):
+                    continue
                 with open(os.path.join(media_dir, fn), "wb") as f:
                     f.write(z.read(m))
                 media_map[m] = f"{media_rel_prefix}/{fn}"
@@ -302,15 +305,98 @@ def convert_text_to_html(txt_path: str, out_html_path: str, title: str):
         f.write(doc_html)
 
 
+def convert_xlsx_to_html(xlsx_path: str, out_html_path: str, title: str):
+    """openpyxl로 Excel 시트(최대 200행/시트)를 오로라 테이블 HTML 뷰어로 변환."""
+    os.makedirs(os.path.dirname(out_html_path), exist_ok=True)
+    sections = []
+    try:
+        wb = openpyxl.load_workbook(xlsx_path, data_only=True, read_only=True)
+        for sname in wb.sheetnames:
+            ws = wb[sname]
+            rows_html = []
+            row_count = 0
+            for r_idx, row in enumerate(ws.iter_rows(values_only=True)):
+                if row_count >= 200:
+                    rows_html.append('<tr><td colspan="12" style="color:#94a3b8;text-align:center;">… (이후 행은 원본 Excel 다운로드로 확인 가능) …</td></tr>')
+                    break
+                vals = ["" if v is None else str(v) for v in row[:18]]
+                if not any(v.strip() for v in vals):
+                    continue
+                tag = "th" if row_count == 0 else "td"
+                cells = "".join(f"<{tag}>{esc(v[:200])}</{tag}>" for v in vals)
+                rows_html.append(f"<tr>{cells}</tr>")
+                row_count += 1
+            if not rows_html:
+                rows_html.append('<tr><td style="color:#94a3b8;">(비어 있는 시트)</td></tr>')
+            sections.append(f'<section class="sheet-card"><h2>📑 시트: {esc(sname)}</h2><div class="tbl-wrap"><table>{"".join(rows_html)}</table></div></section>')
+        wb.close()
+    except Exception as e:
+        sections.append(f'<section class="sheet-card"><p>시트 파싱 중 참고 메시지: {esc(str(e))}</p></section>')
+
+    doc_html = f"""<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{esc(title)} - Excel 미리보기</title>
+<style>
+  body {{ margin:0; padding:18px; background:#0b1936; color:#f8fafc; font-family:'Pretendard',sans-serif; line-height:1.5; }}
+  .top-bar {{ max-width:1100px; margin:0 auto 14px; padding:12px 18px; border-radius:14px; background:rgba(15,26,52,0.8); border:1px solid rgba(52,211,153,0.4); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }}
+  .top-bar h1 {{ margin:0; font-size:15px; color:#34d399; }}
+  .top-bar span {{ font-size:12px; color:#94a3b8; }}
+  .sheet-card {{ max-width:1100px; margin:0 auto 18px; background:rgba(15,26,52,0.75); border:1px solid rgba(255,255,255,0.16); border-radius:14px; padding:14px 16px; }}
+  .sheet-card h2 {{ margin:0 0 10px; font-size:14px; color:#38bdf8; }}
+  .tbl-wrap {{ overflow-x:auto; }}
+  table {{ width:100%; border-collapse:collapse; font-size:12.5px; }}
+  th, td {{ border:1px solid rgba(255,255,255,0.12); padding:6px 8px; text-align:left; vertical-align:top; white-space:pre-wrap; word-break:break-word; }}
+  th {{ background:rgba(56,189,248,0.16); color:#fff; font-weight:800; position:sticky; top:0; }}
+  tr:nth-child(even) td {{ background:rgba(255,255,255,0.025); }}
+</style>
+</head>
+<body>
+  <div class="top-bar"><h1>📊 {esc(title)}</h1><span>Excel 시트 웹 미리보기</span></div>
+  {''.join(sections)}
+</body></html>"""
+    with open(out_html_path, "w", encoding="utf-8") as f:
+        f.write(doc_html)
+
+
+def convert_hwp_to_html(out_html_path: str, title: str):
+    """HWP 바이너리 문서용 안내 카드 생성 (동일 폴더 PDF/PPTX 열람 및 /admin 다운로드 안내)."""
+    os.makedirs(os.path.dirname(out_html_path), exist_ok=True)
+    doc_html = f"""<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{esc(title)} - 한글(HWP) 문서 안내</title>
+<style>
+  body {{ margin:0; padding:32px 18px; background:#0b1936; color:#f8fafc; font-family:'Pretendard',sans-serif; display:flex; align-items:center; justify-content:center; min-height:80vh; }}
+  .card {{ max-width:620px; background:rgba(15,26,52,0.85); border:1px solid rgba(56,189,248,0.38); border-radius:18px; padding:26px; text-align:center; box-shadow:0 16px 36px rgba(0,0,0,0.4); }}
+  .badge {{ display:inline-block; padding:4px 12px; border-radius:999px; background:rgba(56,189,248,0.16); color:#38bdf8; font-size:12px; font-weight:800; margin-bottom:12px; }}
+  h1 {{ margin:0 0 10px; font-size:17px; color:#fff; }}
+  p {{ margin:8px 0; font-size:13.5px; color:#cbd5e1; line-height:1.65; }}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge">한글(HWP) 원본 파일</div>
+    <h1>📄 {esc(title)}</h1>
+    <p>HWP 포맷은 브라우저 내장 렌더링을 지원하지 않아 동일 프로젝트의 <strong>PDF / PPTX / AI 심사 피드백 PDF</strong> 탭에서 내용을 바로 열람하실 수 있습니다.</p>
+    <p style="color:#94a3b8;font-size:12.5px;">관리자 모드(/admin)에서는 원본 .hwp 파일 직접 다운로드가 제공됩니다.</p>
+  </div>
+</body></html>"""
+    with open(out_html_path, "w", encoding="utf-8") as f:
+        f.write(doc_html)
+
+
 def parse_url_file(path: str) -> str:
     txt = open(path, "r", encoding="utf-8", errors="replace").read()
     m = re.search(r"https?://[^\s\)\]>\"']+", txt)
     return m.group(0) if m else ""
 
 
-def register_file(src_path: str, rel_subpath: str, tab_id: str, proj_id: str, role: str):
+def register_file(src_path: str, rel_subpath: str, tab_id: str, proj_id: str, role: str, is_expansion: bool = False):
     """
-    파일을 Pages(<=35MB) 또는 Releases(>35MB or .csv)에 배치하고 메타데이터 반환.
+    파일을 Pages 또는 Releases에 배치하고 메타데이터 반환.
     필요 시 웹 뷰어용 previewUrl 생성.
     """
     fname = os.path.basename(src_path)
@@ -321,8 +407,11 @@ def register_file(src_path: str, rel_subpath: str, tab_id: str, proj_id: str, ro
     if not slug_name.endswith(ext_suffix):
         slug_name += ext_suffix
 
-    # 저장 위치 결정: CSV 전부 또는 35MB 초과는 GitHub Releases, 나머지는 GitHub Pages
-    is_release = (ext == "csv") or (sz > PAGES_MAX_BYTES)
+    # 저장 위치 결정: 기존 18개 프로젝트는 기존 규칙 유지, 확장 트랙은 대용량/바이너리를 Releases로 분리해 Pages 1GB 한도 준수
+    if is_expansion:
+        is_release = (ext in ("csv", "zip", "mp4", "mov", "avi", "mkv", "hwp", "xls")) or (sz > 20 * 1024 * 1024)
+    else:
+        is_release = (ext == "csv") or (sz > PAGES_MAX_BYTES)
     if is_release:
         rel_dest = os.path.join(RELEASE_DIR, slug_name)
         shutil.copy2(src_path, rel_dest)
@@ -348,6 +437,16 @@ def register_file(src_path: str, rel_subpath: str, tab_id: str, proj_id: str, ro
         p_rel = f"assets/previews/{tab_id}/{proj_id}/{slug_name}.html"
         p_dest = os.path.join(SITE_DIR, p_rel.replace("/", os.sep))
         convert_pptx_to_html(src_path, p_dest, fname)
+        preview_url = f"./{p_rel}"
+    elif ext == "xlsx":
+        p_rel = f"assets/previews/{tab_id}/{proj_id}/{slug_name}.html"
+        p_dest = os.path.join(SITE_DIR, p_rel.replace("/", os.sep))
+        convert_xlsx_to_html(src_path, p_dest, fname)
+        preview_url = f"./{p_rel}"
+    elif ext == "hwp":
+        p_rel = f"assets/previews/{tab_id}/{proj_id}/{slug_name}.html"
+        p_dest = os.path.join(SITE_DIR, p_rel.replace("/", os.sep))
+        convert_hwp_to_html(p_dest, fname)
         preview_url = f"./{p_rel}"
     elif ext == "docx":
         p_rel = f"assets/previews/{tab_id}/{proj_id}/{slug_name}.html"
@@ -389,18 +488,38 @@ def register_file(src_path: str, rel_subpath: str, tab_id: str, proj_id: str, ro
     }
 
 
-def make_bundle_zip(proj_files_src: list[str], zip_name: str) -> tuple[str, int]:
-    """프로젝트 내 경량/전체 파일을 ZIP으로 묶어 Release(또는 Pages)에 저장. (CSV 대용량 19종은 별도 ZIP)"""
+def make_bundle_zip(proj_files_src: list[tuple[str, str]], zip_name: str) -> tuple[str, int]:
+    """프로젝트 내 경량/전체 파일을 ZIP으로 묶어 Release에 저장."""
     z_path = os.path.join(RELEASE_DIR, zip_name)
+    seen = set()
     with zipfile.ZipFile(z_path, "w", zipfile.ZIP_DEFLATED) as zf:
         for fp, arcname in proj_files_src:
-            zf.write(fp, arcname=arcname)
+            key = arcname.replace("\\", "/")
+            if key in seen:
+                base, ext = os.path.splitext(key)
+                idx = 2
+                while f"{base}_{idx}{ext}" in seen:
+                    idx += 1
+                key = f"{base}_{idx}{ext}"
+            seen.add(key)
+            zf.write(fp, arcname=key)
     return f"{RELEASE_BASE}/{zip_name}", os.path.getsize(z_path)
 
 
 def build_all():
-    ensure_clean_dir(SITE_DIR)
+    use_cached_base = not os.path.exists(TAB1_DIR)
+    ensure_clean_dir(os.path.join(SITE_DIR, "data"))
     ensure_clean_dir(RELEASE_DIR)
+    if use_cached_base:
+        for sub in ("files", "previews"):
+            base_sub = os.path.join(SITE_DIR, "assets", sub)
+            os.makedirs(base_sub, exist_ok=True)
+            for entry in os.listdir(base_sub):
+                if entry not in ("stage1", "mini", "final"):
+                    shutil.rmtree(os.path.join(base_sub, entry), ignore_errors=True)
+    else:
+        ensure_clean_dir(os.path.join(SITE_DIR, "assets"))
+        os.makedirs(os.path.join(SITE_DIR, "assets"), exist_ok=True)
     os.makedirs(os.path.join(SITE_DIR, "data"), exist_ok=True)
 
     # ── TAB 1: 데이터 분석 1차 프로젝트 ──────────────────────────────────────────
@@ -607,10 +726,20 @@ def build_all():
         },
     ]
 
-    def process_tab(tab_id: str, tab_label: str, source_folder: str, configs: list, extra_common=None):
+    def process_tab(
+        tab_id: str,
+        tab_label: str,
+        source_folder: str,
+        configs: list,
+        extra_common=None,
+        track_id: str = "adv_cohort_2",
+        track_label: str = "6. AI·데이터 심화 2기",
+        tab_badge: str = "",
+    ):
         projects_out = []
         for cfg in configs:
             pid = cfg["id"]
+            is_exp = bool(cfg.get("isExpansion", False))
             fb_set = {os.path.abspath(p) for p in cfg["feedbacks"]}
             raw_sources = []  # (abs_path, rel_path_in_proj, role)
 
@@ -640,6 +769,8 @@ def build_all():
             elif "files" in cfg:
                 for fp in cfg["files"]:
                     raw_sources.append((fp, os.path.basename(fp), "presentation"))
+            elif "explicitFiles" in cfg:
+                raw_sources.extend(cfg["explicitFiles"])
 
             for ex in cfg.get("extra_raw", []):
                 if os.path.exists(ex):
@@ -653,7 +784,7 @@ def build_all():
             zip_inputs = []
 
             for fp, rel, role in raw_sources:
-                meta = register_file(fp, rel, tab_id, pid, role)
+                meta = register_file(fp, rel, tab_id, pid, role, is_expansion=is_exp)
                 all_files.append(meta)
                 if role == "video":
                     videos.append(meta)
@@ -663,14 +794,14 @@ def build_all():
                     datasets.append(meta)
                 elif role == "presentation":
                     presentations.append(meta)
-                # CSV 19종(1.38GB)은 개별 다운로드 + 별도 CSV 통합 ZIP, 일반 산출물은 프로젝트 ZIP에 묶음
-                if meta["ext"] != "csv":
+                # CSV 및 거대 ZIP은 개별 다운로드로 분리, 나머지 산출물은 프로젝트 ZIP에 묶음
+                if meta["ext"] not in ("csv", "zip"):
                     zip_inputs.append((fp, rel))
 
             # 피드백 PDF 전용 처리 (4페이지 *_피드백.pdf만)
             feedbacks_out = []
             for fbp in cfg["feedbacks"]:
-                fmeta = register_file(fbp, os.path.basename(fbp), tab_id, pid, "feedback")
+                fmeta = register_file(fbp, os.path.basename(fbp), tab_id, pid, "feedback", is_expansion=is_exp)
                 feedbacks_out.append(fmeta)
                 all_files.append(fmeta)
                 zip_inputs.append((fbp, os.path.basename(fbp)))
@@ -685,7 +816,7 @@ def build_all():
                 "files": videos,
             }
 
-            projects_out.append({
+            proj_obj = {
                 "id": pid,
                 "title": cfg["title"],
                 "authors": cfg["authors"],
@@ -700,11 +831,17 @@ def build_all():
                 "allFiles": all_files,
                 "bundleZipUrl": zip_url,
                 "bundleZipBytes": zip_sz,
-            })
+            }
+            if cfg.get("extraNote"):
+                proj_obj["extraNote"] = cfg["extraNote"]
+            projects_out.append(proj_obj)
 
         res = {
             "id": tab_id,
             "label": tab_label,
+            "tabBadge": tab_badge or tab_label,
+            "trackId": track_id,
+            "trackLabel": track_label,
             "sourceFolder": source_folder,
             "projects": projects_out,
         }
@@ -712,45 +849,102 @@ def build_all():
             res["commonResources"] = extra_common
         return res
 
-    # Tab 1 공통 배점 기준 파일 등록
-    rubric_path = os.path.join(TAB1_DIR, "10월 23일 오후 14시 발표 배점.txt")
-    rubric_meta = register_file(rubric_path, "10월 23일 오후 14시 발표 배점.txt", "stage1", "common", "rubric")
-    rubric_text = open(rubric_path, "r", encoding="utf-8", errors="replace").read()
+    if use_cached_base:
+        base_manifest_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "base_adv2_manifest.json")
+        if not os.path.exists(base_manifest_path):
+            raise FileNotFoundError(f"Missing both {TAB1_DIR} and fallback {base_manifest_path}")
+        with open(base_manifest_path, "r", encoding="utf-8") as bf:
+            base_m = json.load(bf)
+        tab1, tab2, tab3 = base_m["tabs"][0], base_m["tabs"][1], base_m["tabs"][2]
+        tab1["label"] = "1차 · 데이터 분석 프로젝트 (6팀)"
+        tab1["tabBadge"] = "1차 · 6팀"
+        tab2["label"] = "미니 · 프로젝트 발표 (6팀)"
+        tab2["tabBadge"] = "미니 · 6팀"
+        tab3["label"] = "2차 최종 · 프로젝트 기획안 (6팀)"
+        tab3["tabBadge"] = "2차 최종 · 6팀"
+        for t in (tab1, tab2, tab3):
+            t["trackId"] = "adv_cohort_2"
+            t["trackLabel"] = "6. AI·데이터 심화 2기"
+        print("Loaded cached 심화 2기 stage1/mini/final from scripts/base_adv2_manifest.json")
+    else:
+        # Tab 1 공통 배점 기준 파일 등록
+        rubric_path = os.path.join(TAB1_DIR, "10월 23일 오후 14시 발표 배점.txt")
+        rubric_meta = register_file(rubric_path, "10월 23일 오후 14시 발표 배점.txt", "stage1", "common", "rubric")
+        rubric_text = open(rubric_path, "r", encoding="utf-8", errors="replace").read()
 
-    tab1 = process_tab(
-        "stage1",
-        "데이터 분석 1차 프로젝트",
-        "데이터 분석 1차 프로젝트 최종 자료(발표 자료  및  시연영상_피드백 포함)",
-        t1_configs,
-        extra_common=[{**rubric_meta, "content": rubric_text}]
-    )
-    tab2 = process_tab(
-        "mini",
-        "미니 프로젝트 발표자료",
-        "미니 프로젝트 발표자료 제출 폴더 (11.5까지)",
-        t2_configs,
-    )
-    tab3 = process_tab(
-        "final",
-        "최종 프로젝트 기획안",
-        "최종 기획안",
-        t3_configs,
-    )
+        tab1 = process_tab(
+            "stage1",
+            "1차 · 데이터 분석 프로젝트 (6팀)",
+            "데이터 분석 1차 프로젝트 최종 자료(발표 자료  및  시연영상_피드백 포함)",
+            t1_configs,
+            extra_common=[{**rubric_meta, "content": rubric_text}],
+            track_id="adv_cohort_2",
+            track_label="6. AI·데이터 심화 2기",
+            tab_badge="1차 · 6팀",
+        )
+        tab2 = process_tab(
+            "mini",
+            "미니 · 프로젝트 발표 (6팀)",
+            "미니 프로젝트 발표자료 제출 폴더 (11.5까지)",
+            t2_configs,
+            track_id="adv_cohort_2",
+            track_label="6. AI·데이터 심화 2기",
+            tab_badge="미니 · 6팀",
+        )
+        tab3 = process_tab(
+            "final",
+            "2차 최종 · 프로젝트 기획안 (6팀)",
+            "최종 기획안",
+            t3_configs,
+            track_id="adv_cohort_2",
+            track_label="6. AI·데이터 심화 2기",
+            tab_badge="2차 최종 · 6팀",
+        )
 
-    tabs = [tab1, tab2, tab3]
+    # ── 확장 5개 교육과정 + 심화 2기 0차 분석 기획안 통합 빌드 ────────────────────
+    import sys
+    scripts_dir = os.path.dirname(os.path.abspath(__file__))
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    from expansion_tracks import build_expansion_raw_tabs
+
+    pre_raw_tabs, adv2_prefix_raw_tabs, tracks_meta = build_expansion_raw_tabs(register_file)
+
+    def _convert_raw_tab(spec: dict) -> dict:
+        return process_tab(
+            spec["id"],
+            spec["label"],
+            spec["sourceFolder"],
+            spec["projects"],
+            extra_common=spec.get("commonResources"),
+            track_id=spec["trackId"],
+            track_label=spec["trackLabel"],
+            tab_badge=spec.get("tabBadge", spec["label"]),
+        )
+
+    pre_tabs = [_convert_raw_tab(s) for s in pre_raw_tabs]
+    adv2_prefix_tabs = [_convert_raw_tab(s) for s in adv2_prefix_raw_tabs]
+
+    tabs = pre_tabs + adv2_prefix_tabs + [tab1, tab2, tab3]
+
     total_projects = sum(len(t["projects"]) for t in tabs)
-    total_files = sum(len(p["allFiles"]) for t in tabs for p in t["projects"]) + 1  # +rubric
+    total_common_files = sum(len(t.get("commonResources") or []) for t in tabs)
+    total_files = sum(len(p["allFiles"]) for t in tabs for p in t["projects"]) + total_common_files
     video_yes = sum(1 for t in tabs for p in t["projects"] if p["demoVideo"]["available"])
     video_no = total_projects - video_yes
     total_feedbacks = sum(len(p["feedbacks"]) for t in tabs for p in t["projects"])
 
     manifest = {
-        "siteTitle": "심화 : 심층 데이터 분석을 통한 개인 맞춤형 예측 자동화 서비스 솔루션 개발과정의 단계별 프로젝트들 발표자료 서비스",
+        "siteTitle": "DMDG ACADEMY SHOWCASE · 전체 교육과정 프로젝트 통합 아카이브",
         "generatedAt": datetime.now().strftime("%Y-%m-%d %H:%M"),
         "repoUrl": f"https://github.com/{GITHUB_OWNER}/{GITHUB_REPO}",
         "pagesUrl": f"https://{GITHUB_OWNER}.github.io/{GITHUB_REPO}/",
         "releaseTag": RELEASE_TAG,
+        "defaultTrackId": "adv_cohort_2",
+        "tracks": tracks_meta,
         "stats": {
+            "totalTracks": len(tracks_meta),
+            "totalTabs": len(tabs),
             "totalProjects": total_projects,
             "totalFiles": total_files,
             "videosAvailable": video_yes,
@@ -776,3 +970,4 @@ def build_all():
 
 if __name__ == "__main__":
     build_all()
+
