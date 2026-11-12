@@ -14,6 +14,12 @@
   let activeSubtab = "presentations";
   let selectedFileIndex = 0;
   let selectedVideoIndex = 0;
+  let pdfRenderToken = 0;
+
+  if (window.pdfjsLib && window.pdfjsLib.GlobalWorkerOptions) {
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  }
 
   const $ = (id) => document.getElementById(id);
 
@@ -266,6 +272,7 @@
         ${renderViewerToolbar(resItem)}
         ${renderFilePreviewElement(resItem)}
       </div>`;
+    mountPdfViewersIfNeeded($("modalBody"));
   }
 
   function renderCommonBanner() {
@@ -475,6 +482,7 @@
   }
 
   function closeModal() {
+    pdfRenderToken++;
     $("detailModal").classList.remove("show");
     document.body.style.overflow = "";
     $("modalBody").innerHTML = "";
@@ -537,9 +545,146 @@
       </div>`;
     }
     if (file.ext === "pdf") {
-      return `<iframe class="viewer-frame" src="${pdfEmbedUrl(file.previewUrl || file.downloadUrl)}" title="${esc(file.name)}"></iframe>`;
+      const pdfUrl = encodeUrlPath(file.previewUrl || file.downloadUrl);
+      const embedFallback = pdfEmbedUrl(file.previewUrl || file.downloadUrl);
+      return `
+        <div class="pdf-viewer-shell" data-pdf-url="${esc(pdfUrl)}" data-pdf-fallback="${esc(embedFallback)}" data-pdf-title="${esc(file.name)}">
+          <div class="pdf-controls-bar">
+            <span class="pdf-page-status" data-pdf-status>📄 PDF 불러오는 중...</span>
+            <div class="pdf-zoom-controls">
+              <button class="pdf-zoom-btn" type="button" data-pdf-zoom="out" aria-label="축소">－</button>
+              <span class="pdf-zoom-label" data-pdf-zoom-label>맞춤</span>
+              <button class="pdf-zoom-btn" type="button" data-pdf-zoom="in" aria-label="확대">＋</button>
+              <button class="pdf-zoom-btn" type="button" data-pdf-zoom="fit">너비 맞춤</button>
+            </div>
+          </div>
+          <div class="pdf-pages-viewport" data-pdf-pages>
+            <div class="pdf-loading-note">⏳ PDF 전체 페이지를 세로 스크롤 뷰로 렌더링하고 있습니다...</div>
+          </div>
+        </div>`;
     }
     return `<iframe class="viewer-frame" src="${url}" title="${esc(file.name)}" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>`;
+  }
+
+  function mountPdfViewersIfNeeded(rootEl) {
+    if (!rootEl) return;
+    const shells = rootEl.querySelectorAll(".pdf-viewer-shell");
+    if (!shells.length) return;
+
+    shells.forEach((shell) => {
+      const pdfUrl = shell.getAttribute("data-pdf-url");
+      const fallbackUrl = shell.getAttribute("data-pdf-fallback") || pdfUrl;
+      const pdfTitle = shell.getAttribute("data-pdf-title") || "PDF 문서";
+      const pagesEl = shell.querySelector("[data-pdf-pages]");
+      const statusEl = shell.querySelector("[data-pdf-status]");
+      const zoomLabelEl = shell.querySelector("[data-pdf-zoom-label]");
+
+      const renderFallbackIframe = () => {
+        shell.outerHTML = `<iframe class="viewer-frame" src="${esc(fallbackUrl)}" title="${esc(pdfTitle)}"></iframe>`;
+      };
+
+      if (!window.pdfjsLib || typeof window.pdfjsLib.getDocument !== "function") {
+        renderFallbackIframe();
+        return;
+      }
+
+      const myToken = ++pdfRenderToken;
+      let zoomMode = "fit"; // "fit" or explicit numeric factor relative to fitScale
+      let zoomFactor = 1.0;
+      let loadedPdf = null;
+
+      async function drawAllPages() {
+        if (!loadedPdf || myToken !== pdfRenderToken) return;
+        const total = loadedPdf.numPages || 1;
+        const containerWidth = Math.max((pagesEl.clientWidth || 340) - 20, 260);
+        if (zoomLabelEl) {
+          zoomLabelEl.textContent = zoomMode === "fit" ? "맞춤" : `${Math.round(zoomFactor * 100)}%`;
+        }
+        if (statusEl) {
+          statusEl.textContent = `📄 총 ${total}페이지 · 세로 스크롤 열람 (0/${total})`;
+        }
+
+        pagesEl.innerHTML = "";
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        for (let pageNum = 1; pageNum <= total; pageNum++) {
+          if (myToken !== pdfRenderToken) return;
+          const page = await loadedPdf.getPage(pageNum);
+          if (myToken !== pdfRenderToken) return;
+
+          const baseViewport = page.getViewport({ scale: 1 });
+          const fitScale = containerWidth / Math.max(baseViewport.width, 1);
+          const cssScale = (zoomMode === "fit" ? fitScale : fitScale * zoomFactor);
+          const viewport = page.getViewport({ scale: cssScale });
+
+          const card = document.createElement("div");
+          card.className = "pdf-page-card";
+
+          const label = document.createElement("div");
+          label.className = "pdf-page-label";
+          label.textContent = `Page ${pageNum} / ${total}`;
+
+          const wrap = document.createElement("div");
+          wrap.className = "pdf-canvas-wrap";
+
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.max(1, Math.floor(viewport.width * dpr));
+          canvas.height = Math.max(1, Math.floor(viewport.height * dpr));
+          canvas.style.width = `${Math.floor(viewport.width)}px`;
+          canvas.style.height = `${Math.floor(viewport.height)}px`;
+
+          wrap.appendChild(canvas);
+          card.appendChild(label);
+          card.appendChild(wrap);
+          pagesEl.appendChild(card);
+
+          const ctx = canvas.getContext("2d");
+          const renderContext = {
+            canvasContext: ctx,
+            viewport,
+            transform: dpr !== 1 ? [dpr, 0, 0, dpr, 0, 0] : null,
+          };
+          await page.render(renderContext).promise;
+
+          if (statusEl && myToken === pdfRenderToken) {
+            statusEl.textContent =
+              pageNum === total
+                ? `📄 총 ${total}페이지 · 위아래로 스크롤하여 전체 열람`
+                : `📄 총 ${total}페이지 렌더링 중 (${pageNum}/${total})`;
+          }
+          await new Promise((r) => setTimeout(r, 0));
+        }
+      }
+
+      shell.addEventListener("click", (ev) => {
+        const btn = ev.target.closest("[data-pdf-zoom]");
+        if (!btn || !loadedPdf) return;
+        const action = btn.getAttribute("data-pdf-zoom");
+        if (action === "fit") {
+          zoomMode = "fit";
+          zoomFactor = 1.0;
+        } else if (action === "in") {
+          zoomMode = "custom";
+          zoomFactor = Math.min(2.5, Number((zoomFactor + 0.25).toFixed(2)));
+        } else if (action === "out") {
+          zoomMode = "custom";
+          zoomFactor = Math.max(0.6, Number((zoomFactor - 0.25).toFixed(2)));
+        }
+        drawAllPages().catch(() => {});
+      });
+
+      const loadingTask = window.pdfjsLib.getDocument({ url: pdfUrl });
+      loadingTask.promise
+        .then((pdfDoc) => {
+          if (myToken !== pdfRenderToken) return;
+          loadedPdf = pdfDoc;
+          return drawAllPages();
+        })
+        .catch(() => {
+          if (myToken !== pdfRenderToken) return;
+          renderFallbackIframe();
+        });
+    });
   }
 
   function renderModalBody() {
@@ -575,6 +720,7 @@
             ${renderFilePreviewElement(cur)}
           </div>
         </div>`;
+      mountPdfViewersIfNeeded(body);
     } else if (activeSubtab === "video") {
       if (!p.demoVideo.available) {
         const audioNote = p.audios.length
@@ -649,7 +795,7 @@
         body.innerHTML = `
           <div class="viewer-pane" style="flex:1;">
             ${renderViewerToolbar(cur)}
-            <iframe class="viewer-frame" src="${fbSrc}" title="${esc(cur.name)}"></iframe>
+            ${renderFilePreviewElement({ ...cur, ext: "pdf" })}
           </div>`;
       } else {
         const sidebar = fbs
@@ -663,10 +809,11 @@
             <div class="file-sidebar">${sidebar}</div>
             <div class="viewer-pane">
               ${renderViewerToolbar(cur)}
-              <iframe class="viewer-frame" src="${fbSrc}" title="${esc(cur.name)}"></iframe>
+              ${renderFilePreviewElement({ ...cur, ext: "pdf" })}
             </div>
           </div>`;
       }
+      mountPdfViewersIfNeeded(body);
     } else if (activeSubtab === "downloads") {
       if (!ALLOW_DOWNLOAD) {
         body.innerHTML = `<div class="single-panel-scroll">다운로드는 관리자(/admin) 페이지에서만 제공됩니다.</div>`;
