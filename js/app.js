@@ -65,15 +65,25 @@
     return matched.length ? matched : tabs;
   }
 
+  function syncModeSwitchLinks() {
+    const qs = `track=${encodeURIComponent(activeTrackId)}&tab=${encodeURIComponent(activeTabId)}`;
+    const toPublic = $("btnToPublic");
+    if (toPublic) toPublic.href = `../?${qs}&from=admin`;
+    const backAdmin = $("btnBackToAdmin");
+    if (backAdmin) backAdmin.href = `./admin/?${qs}`;
+  }
+
   function syncUrlState() {
     try {
       const url = new URL(window.location.href);
       url.searchParams.set("track", activeTrackId);
       url.searchParams.set("tab", activeTabId);
+      url.searchParams.delete("from");
       window.history.replaceState({}, "", url.toString());
     } catch (_) {
       /* ignore URL sync errors in restricted contexts */
     }
+    syncModeSwitchLinks();
   }
 
   async function init() {
@@ -83,7 +93,30 @@
     if ($("repoLink")) $("repoLink").href = manifest.repoUrl;
     $("generatedAt").textContent = manifest.generatedAt;
 
+    const params = new URLSearchParams(window.location.search);
+    const hasAdminMode = ALLOW_DOWNLOAD || SHOW_SCORES;
+    let hasAdminReturnAccess = false;
+    try {
+      if (hasAdminMode) {
+        sessionStorage.setItem("dmdg_showcase_admin_session", "1");
+      } else {
+        const ref = (document.referrer || "").toLowerCase();
+        hasAdminReturnAccess =
+          params.get("from") === "admin" ||
+          sessionStorage.getItem("dmdg_showcase_admin_session") === "1" ||
+          ref.includes("/admin");
+        if (hasAdminReturnAccess) {
+          sessionStorage.setItem("dmdg_showcase_admin_session", "1");
+        }
+      }
+    } catch (_) {
+      hasAdminReturnAccess = params.get("from") === "admin";
+    }
+
     if (!ALLOW_DOWNLOAD) {
+      if ($("btnBackToAdmin")) {
+        $("btnBackToAdmin").style.display = hasAdminReturnAccess ? "" : "none";
+      }
       if ($("btnAllFilesIndex")) $("btnAllFilesIndex").style.display = "none";
       if ($("repoLink")) $("repoLink").style.display = "none";
       const dlSubtab = document.querySelector('#modalSubtabs [data-subtab="downloads"]');
@@ -94,7 +127,6 @@
     }
 
     activeTrackId = manifest.defaultTrackId || "adv_cohort_2";
-    const params = new URLSearchParams(window.location.search);
 
     const reqTrack = params.get("track");
     if (reqTrack && (manifest.tracks || []).some((tr) => tr.id === reqTrack)) {
@@ -128,6 +160,10 @@
     renderCommonBanner();
     renderGrid();
     bindEvents();
+    syncModeSwitchLinks();
+    if (params.has("from")) {
+      syncUrlState();
+    }
 
     if (pid) {
       const tab = manifest.tabs.find((t) => t.id === activeTabId);
