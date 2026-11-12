@@ -856,12 +856,12 @@ def build_all():
         with open(base_manifest_path, "r", encoding="utf-8") as bf:
             base_m = json.load(bf)
         tab1, tab2, tab3 = base_m["tabs"][0], base_m["tabs"][1], base_m["tabs"][2]
-        tab1["label"] = "1차 · 데이터 분석 프로젝트 (6팀)"
-        tab1["tabBadge"] = "1차 · 6팀"
-        tab2["label"] = "미니 · 프로젝트 발표 (6팀)"
-        tab2["tabBadge"] = "미니 · 6팀"
-        tab3["label"] = "2차 최종 · 프로젝트 기획안 (6팀)"
-        tab3["tabBadge"] = "2차 최종 · 6팀"
+        tab1["label"] = "1차 · 데이터 분석 프로젝트 (6건)"
+        tab1["tabBadge"] = "1차 · 6건"
+        tab2["label"] = "미니 · 프로젝트 발표 (8건)"
+        tab2["tabBadge"] = "미니 · 8건"
+        tab3["label"] = "2차 최종 · 프로젝트 기획안 (4건)"
+        tab3["tabBadge"] = "2차 최종 · 4건"
         for t in (tab1, tab2, tab3):
             t["trackId"] = "adv_cohort_2"
             t["trackLabel"] = "6. AI·데이터 심화 2기"
