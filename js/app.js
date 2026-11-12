@@ -1,4 +1,4 @@
-// app.js - DMDG Aurora Student Projects Showcase
+// app.js - DMDG ACADEMY SHOWCASE (Multi-Track Aurora Portal)
 (() => {
   const MODE = window.PORTAL_MODE || { showScores: false, allowDownload: false, assetBase: "." };
   const SHOW_SCORES = Boolean(MODE.showScores);
@@ -6,12 +6,14 @@
   const ASSET_BASE = String(MODE.assetBase || ".").replace(/\/$/, "");
 
   let manifest = null;
-  let activeTabId = "stage1";
+  let activeTrackId = "adv_cohort_2";
+  let activeTabId = "adv2_analysis";
   let activeFilter = "all";
   let searchQuery = "";
   let currentProject = null;
   let activeSubtab = "presentations";
   let selectedFileIndex = 0;
+  let selectedVideoIndex = 0;
 
   const $ = (id) => document.getElementById(id);
 
@@ -52,15 +54,35 @@
     return ALLOW_DOWNLOAD ? base : `${base}#toolbar=0&navpanes=0`;
   }
 
+  function getTrack(trackId) {
+    const tracks = manifest?.tracks || [];
+    return tracks.find((t) => t.id === trackId) || tracks[tracks.length - 1] || null;
+  }
+
+  function getTrackTabs(trackId) {
+    const tabs = manifest?.tabs || [];
+    const matched = tabs.filter((t) => (t.trackId || "adv_cohort_2") === trackId);
+    return matched.length ? matched : tabs;
+  }
+
+  function syncUrlState() {
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set("track", activeTrackId);
+      url.searchParams.set("tab", activeTabId);
+      window.history.replaceState({}, "", url.toString());
+    } catch (_) {
+      /* ignore URL sync errors in restricted contexts */
+    }
+  }
+
   async function init() {
     const res = await fetch(`${ASSET_BASE}/data/manifest.json`);
     manifest = await res.json();
 
-    $("siteTitle").textContent = manifest.siteTitle;
     if ($("repoLink")) $("repoLink").href = manifest.repoUrl;
     $("generatedAt").textContent = manifest.generatedAt;
 
-    // 모드별(공개용 vs /admin) UI 제어
     if (!ALLOW_DOWNLOAD) {
       if ($("btnAllFilesIndex")) $("btnAllFilesIndex").style.display = "none";
       if ($("repoLink")) $("repoLink").style.display = "none";
@@ -71,42 +93,102 @@
       if ($("kpiFilesLabel")) $("kpiFilesLabel").textContent = "다운로드 제공 파일";
     }
 
-    const s = manifest.stats;
-    $("kpiProjects").textContent = `${s.totalProjects}건`;
-    $("kpiFiles").textContent = `${s.totalFiles}개`;
-    $("kpiVideos").textContent = `${s.videosAvailable} 제공 / ${s.videosMissing} 미제공`;
-    $("kpiFeedbacks").textContent = `${s.totalFeedbackPdfs}건`;
-
+    activeTrackId = manifest.defaultTrackId || "adv_cohort_2";
     const params = new URLSearchParams(window.location.search);
-    if (params.get("tab") && manifest.tabs.some((t) => t.id === params.get("tab"))) {
-      activeTabId = params.get("tab");
+
+    const reqTrack = params.get("track");
+    if (reqTrack && (manifest.tracks || []).some((tr) => tr.id === reqTrack)) {
+      activeTrackId = reqTrack;
     }
 
+    const reqTab = params.get("tab");
+    if (reqTab && manifest.tabs.some((t) => t.id === reqTab)) {
+      const tObj = manifest.tabs.find((t) => t.id === reqTab);
+      if (tObj) {
+        activeTrackId = tObj.trackId || activeTrackId;
+        activeTabId = tObj.id;
+      }
+    } else {
+      const tTabs = getTrackTabs(activeTrackId);
+      activeTabId = tTabs[0]?.id || manifest.tabs[0]?.id || "stage1";
+    }
+
+    const pid = params.get("project");
+    if (pid) {
+      const pTab = manifest.tabs.find((t) => t.projects.some((p) => p.id === pid));
+      if (pTab) {
+        activeTrackId = pTab.trackId || activeTrackId;
+        activeTabId = pTab.id;
+      }
+    }
+
+    renderTrackSelector();
+    updateTrackHeaderAndKpis();
     renderTabs();
     renderCommonBanner();
     renderGrid();
     bindEvents();
 
-    const pid = params.get("project");
     if (pid) {
-      const tab = manifest.tabs.find((t) => t.projects.some((p) => p.id === pid));
-      if (tab) {
-        activeTabId = tab.id;
-        renderTabs();
-        renderCommonBanner();
-        renderGrid();
-        const proj = tab.projects.find((p) => p.id === pid);
-        if (proj) openModal(proj, "presentations");
+      const tab = manifest.tabs.find((t) => t.id === activeTabId);
+      const proj = tab?.projects.find((p) => p.id === pid);
+      if (proj) {
+        $("modalSubtabs").style.display = "flex";
+        openModal(proj, "presentations");
       }
     }
   }
 
+  function renderTrackSelector() {
+    const sel = $("trackSelect");
+    const tracks = manifest.tracks || [];
+    if (!sel) return;
+    sel.innerHTML = tracks
+      .map((tr) => `<option value="${esc(tr.id)}">${esc(tr.label)}</option>`)
+      .join("");
+    sel.value = activeTrackId;
+  }
+
+  function updateTrackHeaderAndKpis() {
+    const tr = getTrack(activeTrackId);
+    const tTabs = getTrackTabs(activeTrackId);
+    if (tr) {
+      $("siteTitle").textContent = tr.heroTitle || manifest.siteTitle;
+      const guide = $("heroSubGuide");
+      if (guide) {
+        guide.innerHTML = `${esc(tr.subtitle)} <span style="color:#94a3b8;">(전체 6개 과정 · 총 ${manifest.stats.totalProjects}개 프로젝트 아카이브)</span>`;
+      }
+      const hint = $("trackPeriodHint");
+      if (hint) {
+        hint.textContent = tr.id === manifest.defaultTrackId
+          ? `기본 선택 과정(최신) · ${tTabs.length}개 단계`
+          : `${tr.shortLabel} · ${tTabs.length}개 단계`;
+      }
+    }
+
+    const tProjs = tTabs.flatMap((t) => t.projects);
+    const commonCount = tTabs.reduce((acc, t) => acc + ((t.commonResources || []).length), 0);
+    const tFiles = tProjs.reduce((acc, p) => acc + p.allFiles.length, 0) + commonCount;
+    const tVidYes = tProjs.filter((p) => p.demoVideo.available).length;
+    const tVidNo = tProjs.length - tVidYes;
+    const tFbs = tProjs.reduce((acc, p) => acc + p.feedbacks.length, 0);
+
+    $("kpiProjects").textContent = `${tProjs.length}건 (전체 ${manifest.stats.totalProjects}건)`;
+    $("kpiFiles").textContent = `${tFiles}개 (전체 ${manifest.stats.totalFiles}개)`;
+    $("kpiVideos").textContent = `${tVidYes} 제공 / ${tVidNo} 미제공`;
+    $("kpiFeedbacks").textContent = `${tFbs}건 (전체 ${manifest.stats.totalFeedbackPdfs}건)`;
+  }
+
   function renderTabs() {
     const wrap = $("mainTabs");
-    wrap.innerHTML = manifest.tabs
+    const tTabs = getTrackTabs(activeTrackId);
+    if (!tTabs.some((t) => t.id === activeTabId) && tTabs.length) {
+      activeTabId = tTabs[0].id;
+    }
+    wrap.innerHTML = tTabs
       .map((t) => {
         const active = t.id === activeTabId ? "active" : "";
-        return `<button class="main-tab-btn ${active}" data-tab="${t.id}" type="button">
+        return `<button class="main-tab-btn ${active}" data-tab="${esc(t.id)}" type="button">
           <span>${esc(t.label)}</span>
           <span class="tab-count-pill">${t.projects.length}</span>
         </button>`;
@@ -114,29 +196,135 @@
       .join("");
   }
 
+  function openCommonResourceModal(resItem) {
+    currentProject = null;
+    $("modalTitle").textContent = `📌 공통 참고 자료 · ${resItem.name}`;
+    $("modalSub").textContent = `${resItem.groupLabel || "교육과정 공통 자료"} · ${fmtBytes(resItem.sizeBytes)}`;
+    $("modalSubtabs").style.display = "none";
+    $("detailModal").classList.add("show");
+    document.body.style.overflow = "hidden";
+
+    if (resItem.role === "video" || resItem.ext === "mp4" || resItem.ext === "mov") {
+      const vUrl = encodeUrlPath(resItem.previewUrl || resItem.downloadUrl);
+      const dlBtn = ALLOW_DOWNLOAD
+        ? `<a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(resItem.downloadUrl)}" download="${esc(resItem.name)}">⬇ 다운로드</a>`
+        : `<span class="svc-pill svc-pdf" style="padding:0.3rem 0.75rem;">👁️ 스트리밍 열람 전용</span>`;
+      const attrs = ALLOW_DOWNLOAD
+        ? 'controls playsinline preload="metadata"'
+        : 'controls playsinline preload="metadata" controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;"';
+      $("modalBody").innerHTML = `
+        <div class="single-panel-scroll">
+          <div class="video-player-wrap">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.85rem;">
+              <strong style="color:#6ee7b7; font-size:0.95rem;">🎬 ${esc(resItem.name)}</strong>
+              ${dlBtn}
+            </div>
+            <video ${attrs} src="${vUrl}"></video>
+          </div>
+        </div>`;
+      return;
+    }
+
+    $("modalBody").innerHTML = `
+      <div class="viewer-pane" style="flex:1;">
+        ${renderViewerToolbar(resItem)}
+        ${renderFilePreviewElement(resItem)}
+      </div>`;
+  }
+
   function renderCommonBanner() {
     const wrap = $("commonBannerWrap");
     const tab = manifest.tabs.find((t) => t.id === activeTabId);
-    if (!tab || !tab.commonResources || !tab.commonResources.length) {
+    const items = tab?.commonResources || [];
+    if (!items.length) {
       wrap.innerHTML = "";
       return;
     }
-    const r = tab.commonResources[0];
-    const dlBtn = ALLOW_DOWNLOAD
-      ? `<a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(r.downloadUrl)}" download="${esc(r.name)}">⬇ 배점표 다운로드</a>`
-      : "";
-    wrap.innerHTML = `
-      <div class="common-info-banner">
-        <div>
-          <strong style="color:#67e8f9; font-size:0.9rem;">📌 공통 발표 평가 기준표 (${esc(r.name)})</strong>
-          <div style="font-size:0.78rem; color:#cbd5e1; margin-top:2px;">
-            총 200점 만점 — 분석모델(50) · 창의성(40) · 인사이트(30) · 사업화(30) · AI 의존도(20) · 데이터출처(10) · 현시점 서비스 가능(10) · 발표태도(10)
+
+    // 기존 심화 2기 1차 단일 배점표
+    if (items.length === 1 && items[0].role === "rubric") {
+      const r = items[0];
+      const dlBtn = ALLOW_DOWNLOAD
+        ? `<a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(r.downloadUrl)}" download="${esc(r.name)}">⬇ 배점표 다운로드</a>`
+        : "";
+      wrap.innerHTML = `
+        <div class="common-info-banner">
+          <div>
+            <strong style="color:#67e8f9; font-size:0.9rem;">📌 공통 발표 평가 기준표 (${esc(r.name)})</strong>
+            <div style="font-size:0.78rem; color:#cbd5e1; margin-top:2px;">
+              총 200점 만점 — 분석모델(50) · 창의성(40) · 인사이트(30) · 사업화(30) · AI 의존도(20) · 데이터출처(10) · 현시점 서비스 가능(10) · 발표태도(10)
+            </div>
           </div>
-        </div>
-        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-          <a class="nav-pill-btn pill-cyan" href="${encodeUrlPath(r.previewUrl)}" target="_blank" rel="noopener noreferrer">👁️ 배점표 열람</a>
-          ${dlBtn}
-        </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <a class="nav-pill-btn pill-cyan" href="${encodeUrlPath(r.previewUrl)}" target="_blank" rel="noopener noreferrer">👁️ 배점표 열람</a>
+            ${dlBtn}
+          </div>
+        </div>`;
+      return;
+    }
+
+    const photos = items.filter((i) => i.role === "photo");
+    const videos = items.filter((i) => i.role === "video");
+    const docs = items.filter((i) => i.role !== "photo" && i.role !== "video");
+
+    const vidHtml = videos.length
+      ? `<div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.6rem;">
+          <strong style="color:#6ee7b7; font-size:0.88rem;">🎬 ${esc(videos[0].groupLabel || "공통 시연 샘플 영상")}</strong>
+          <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+            ${videos.map((v, idx) => {
+              const rawIdx = items.indexOf(v);
+              return `<button class="nav-pill-btn pill-cyan" data-common-idx="${rawIdx}" type="button">▶ ${esc(v.name)} (${fmtBytes(v.sizeBytes)})</button>`;
+            }).join("")}
+          </div>
+        </div>`
+      : "";
+
+    const photoHtml = photos.length
+      ? `<div>
+          <div style="font-size:0.84rem; font-weight:800; color:#bae6fd; margin-bottom:0.45rem;">📸 2차 PRJ 현장 발표 사진 (${photos.length}장)</div>
+          <div class="common-photo-grid">
+            ${photos.map((ph) => {
+              const rawIdx = items.indexOf(ph);
+              const noCtx = ALLOW_DOWNLOAD ? "" : 'oncontextmenu="return false;" draggable="false"';
+              return `<button class="common-photo-card" data-common-idx="${rawIdx}" type="button" title="${esc(ph.name)}" style="padding:0; cursor:pointer;">
+                <img src="${encodeUrlPath(ph.previewUrl)}" alt="${esc(ph.name)}" loading="lazy" ${noCtx} />
+              </button>`;
+            }).join("")}
+          </div>
+        </div>`
+      : "";
+
+    const docsHtml = docs.length
+      ? `<details>
+          <summary style="cursor:pointer; font-size:0.86rem; font-weight:800; color:#67e8f9; user-select:none;">
+            📂 공통 배포 자료 · 데이터셋 · 일정 엑셀 (${docs.length}건 펼쳐보기)
+          </summary>
+          <div class="common-file-list" style="margin-top:0.65rem;">
+            ${docs.map((d) => {
+              const rawIdx = items.indexOf(d);
+              const canPreview = Boolean(d.previewUrl) && !["csv", "zip"].includes(d.ext);
+              const viewBtn = canPreview
+                ? `<button class="nav-pill-btn pill-cyan" style="padding:0.25rem 0.6rem; font-size:0.74rem;" data-common-idx="${rawIdx}" type="button">👁️ 열람</button>`
+                : "";
+              const dlBtn = ALLOW_DOWNLOAD
+                ? `<a class="nav-pill-btn pill-emerald" style="padding:0.25rem 0.6rem; font-size:0.74rem;" href="${encodeUrlPath(d.downloadUrl)}" download="${esc(d.name)}">⬇</a>`
+                : (!canPreview ? `<span style="font-size:0.7rem; color:#94a3b8;">/admin 전용</span>` : "");
+              return `<div class="common-file-pill">
+                <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${esc(d.relPath || d.name)}">
+                  <strong>[${esc((d.ext || "").toUpperCase())}]</strong> ${esc(d.name)} <span style="color:#94a3b8;">(${fmtBytes(d.sizeBytes)})</span>
+                </span>
+                <span style="display:inline-flex; gap:0.35rem; flex-shrink:0;">${viewBtn}${dlBtn}</span>
+              </div>`;
+            }).join("")}
+          </div>
+        </details>`
+      : "";
+
+    wrap.innerHTML = `
+      <div class="common-info-banner common-resources-box">
+        ${vidHtml}
+        ${photoHtml}
+        ${docsHtml}
       </div>`;
   }
 
@@ -174,9 +362,11 @@
       .map((p) => {
         const authorsHtml = p.authors.map((a) => `<span class="author-chip">${esc(a)}</span>`).join("");
         const vAvailable = p.demoVideo.available;
-        const vSize = vAvailable ? ` (${fmtBytes(p.demoVideo.files[0].sizeBytes)})` : "";
+        const vCountLabel = p.demoVideo.files.length > 1
+          ? `▶ ${p.demoVideo.files.length}편 제공`
+          : (vAvailable ? `▶ 제공 (${fmtBytes(p.demoVideo.files[0].sizeBytes)})` : "미제공");
         const videoPill = vAvailable
-          ? `<span class="svc-pill svc-ok">▶ 제공${vSize}</span>`
+          ? `<span class="svc-pill svc-ok">${esc(vCountLabel)}</span>`
           : `<span class="svc-pill svc-missing">미제공</span>`;
 
         const presCount = p.presentations.length + p.datasets.length + p.audios.length;
@@ -234,6 +424,7 @@
     currentProject = proj;
     activeSubtab = subtab;
     selectedFileIndex = 0;
+    selectedVideoIndex = 0;
     $("modalTitle").textContent = proj.title;
     $("modalSub").textContent = SHOW_SCORES
       ? `참여자: ${proj.authors.join(", ")} · 종합 평가: ${proj.grade} (${proj.score}점) · 총 ${proj.allFiles.length}개 파일`
@@ -295,14 +486,15 @@
         <audio ${audioAttr} style="width:100%; max-width:560px;" src="${url}"></audio>
       </div>`;
     }
-    if (file.ext === "csv") {
-      const csvAction = ALLOW_DOWNLOAD
-        ? `<a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(file.downloadUrl)}" download="${esc(file.name)}">⬇ CSV 원본 다운로드</a>`
-        : `<span class="svc-pill svc-missing" style="padding:0.4rem 0.95rem; font-size:0.84rem;">원천 데이터셋(CSV) 다운로드는 관리자(/admin) 전용입니다</span>`;
+    if (file.ext === "csv" || file.ext === "zip") {
+      const labelType = file.ext.toUpperCase();
+      const dlAction = ALLOW_DOWNLOAD
+        ? `<a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(file.downloadUrl)}" download="${esc(file.name)}">⬇ ${labelType} 원본 다운로드</a>`
+        : `<span class="svc-pill svc-missing" style="padding:0.4rem 0.95rem; font-size:0.84rem;">원천 파일(${labelType}) 다운로드는 관리자(/admin) 전용입니다</span>`;
       return `<div class="single-panel-scroll" style="text-align:center; padding-top:3rem;">
-        <div style="font-size:1.05rem; font-weight:800; color:#fde68a; margin-bottom:0.6rem;">📊 대용량 원천 데이터셋 (${esc(file.name)})</div>
+        <div style="font-size:1.05rem; font-weight:800; color:#fde68a; margin-bottom:0.6rem;">📊 대용량 원천 자료 (${esc(file.name)})</div>
         <p style="color:#cbd5e1; font-size:0.86rem;">파일 크기: ${fmtBytes(file.sizeBytes)}</p>
-        ${csvAction}
+        ${dlAction}
       </div>`;
     }
     if (file.ext === "pdf") {
@@ -328,9 +520,9 @@
       const sidebar = files
         .map((f, idx) => {
           const act = idx === selectedFileIndex ? "active" : "";
-          const badge = f.ext.toUpperCase();
+          const badge = (f.ext || "file").toUpperCase();
           return `<button class="file-select-item ${act}" data-fidx="${idx}" type="button">
-            <div class="file-item-name">[${badge}] ${esc(f.relPath || f.name)}</div>
+            <div class="file-item-name">[${esc(badge)}] ${esc(f.relPath || f.name)}</div>
             <div class="file-item-meta">${fmtBytes(f.sizeBytes)}</div>
           </button>`;
         })
@@ -373,7 +565,9 @@
         return;
       }
 
-      const v = p.demoVideo.files[0];
+      const vFiles = p.demoVideo.files;
+      if (selectedVideoIndex >= vFiles.length) selectedVideoIndex = 0;
+      const v = vFiles[selectedVideoIndex];
       const vUrl = encodeUrlPath(v.previewUrl || v.downloadUrl);
       const videoDlBtn = ALLOW_DOWNLOAD
         ? `<a class="nav-pill-btn pill-emerald" href="${encodeUrlPath(v.downloadUrl)}" download="${esc(v.name)}">⬇ 시연영상 원본 다운로드</a>`
@@ -382,9 +576,16 @@
         ? 'controls playsinline preload="metadata"'
         : 'controls playsinline preload="metadata" controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;"';
 
+      const switcher = vFiles.length > 1
+        ? `<div class="video-switcher-bar">
+            ${vFiles.map((vf, idx) => `<button class="filter-chip ${idx === selectedVideoIndex ? "active" : ""}" data-vidx="${idx}" type="button">🎬 영상 ${idx + 1}: ${esc(vf.name)} (${fmtBytes(vf.sizeBytes)})</button>`).join("")}
+          </div>`
+        : "";
+
       body.innerHTML = `
         <div class="single-panel-scroll">
           <div class="video-player-wrap">
+            ${switcher}
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.85rem;">
               <div>
                 <strong style="color:#6ee7b7; font-size:0.95rem;">🎬 ${esc(v.name)}</strong>
@@ -396,7 +597,6 @@
           </div>
         </div>`;
     } else if (activeSubtab === "feedback") {
-      // 4페이지 기술 감사 리포트(*_피드백.pdf만) 즉시 열람
       const fbs = p.feedbacks;
       if (!fbs.length) {
         body.innerHTML = `<div class="single-panel-scroll">피드백 PDF가 없습니다.</div>`;
@@ -474,8 +674,8 @@
   function openAllFilesIndexModal() {
     if (!ALLOW_DOWNLOAD) return;
     currentProject = null;
-    $("modalTitle").textContent = "📦 전체 3단계 프로젝트 자료 통합 인덱스";
-    $("modalSub").textContent = `총 ${manifest.stats.totalProjects}개 프로젝트 · ${manifest.stats.totalFiles}개 파일 다운로드 지원`;
+    $("modalTitle").textContent = "📦 전체 교육과정 프로젝트 자료 통합 인덱스";
+    $("modalSub").textContent = `총 ${manifest.tracks.length}개 과정 · ${manifest.stats.totalProjects}개 프로젝트 · ${manifest.stats.totalFiles}개 파일 다운로드 지원`;
     $("modalSubtabs").style.display = "none";
     $("detailModal").classList.add("show");
     document.body.style.overflow = "hidden";
@@ -483,7 +683,8 @@
     const rows = manifest.tabs.flatMap((t) =>
       t.projects.map((p) => `
         <tr>
-          <td><span class="author-chip">${esc(t.label)}</span></td>
+          <td><span class="author-chip">${esc(t.trackLabel || "심화 2기")}</span></td>
+          <td><span class="author-chip">${esc(t.tabBadge || t.label)}</span></td>
           <td><strong>${esc(p.title)}</strong><div style="font-size:0.74rem; color:#94a3b8;">${esc(p.authors.join(", "))}</div></td>
           <td>${p.demoVideo.available ? '<span class="svc-pill svc-ok">제공</span>' : '<span class="svc-pill svc-missing">미제공</span>'}</td>
           <td>${p.allFiles.length}개</td>
@@ -495,7 +696,7 @@
       <div class="single-panel-scroll">
         <table class="dl-table">
           <thead>
-            <tr><th>단계 탭</th><th>프로젝트 / 참여자</th><th>시연영상</th><th>파일 수</th><th>일괄 다운로드</th></tr>
+            <tr><th>교육과정</th><th>단계</th><th>프로젝트 / 참여자</th><th>시연영상</th><th>파일 수</th><th>일괄 다운로드</th></tr>
           </thead>
           <tbody>${rows}</tbody>
         </table>
@@ -503,6 +704,21 @@
   }
 
   function bindEvents() {
+    if ($("trackSelect")) {
+      $("trackSelect").addEventListener("change", (e) => {
+        activeTrackId = e.target.value;
+        const tTabs = getTrackTabs(activeTrackId);
+        activeTabId = tTabs[0]?.id || activeTabId;
+        activeFilter = "all";
+        document.querySelectorAll("#filterChips .filter-chip").forEach((c) => c.classList.toggle("active", c.dataset.filter === "all"));
+        updateTrackHeaderAndKpis();
+        renderTabs();
+        renderCommonBanner();
+        renderGrid();
+        syncUrlState();
+      });
+    }
+
     $("mainTabs").addEventListener("click", (e) => {
       const btn = e.target.closest(".main-tab-btn");
       if (!btn) return;
@@ -510,6 +726,15 @@
       renderTabs();
       renderCommonBanner();
       renderGrid();
+      syncUrlState();
+    });
+
+    $("commonBannerWrap").addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-common-idx]");
+      if (!btn) return;
+      const tab = manifest.tabs.find((t) => t.id === activeTabId);
+      const item = tab?.commonResources?.[Number(btn.dataset.commonIdx)];
+      if (item) openCommonResourceModal(item);
     });
 
     $("filterChips").addEventListener("click", (e) => {
@@ -543,15 +768,23 @@
       if (!btn) return;
       activeSubtab = btn.dataset.subtab;
       selectedFileIndex = 0;
+      selectedVideoIndex = 0;
       updateSubtabsUI();
       renderModalBody();
     });
 
     $("modalBody").addEventListener("click", (e) => {
       const item = e.target.closest("[data-fidx]");
-      if (!item) return;
-      selectedFileIndex = Number(item.dataset.fidx);
-      renderModalBody();
+      if (item) {
+        selectedFileIndex = Number(item.dataset.fidx);
+        renderModalBody();
+        return;
+      }
+      const vbtn = e.target.closest("[data-vidx]");
+      if (vbtn) {
+        selectedVideoIndex = Number(vbtn.dataset.vidx);
+        renderModalBody();
+      }
     });
 
     if ($("btnAllFilesIndex")) {

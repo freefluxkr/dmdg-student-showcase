@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>심화 : 심층 데이터 분석을 통한 개인 맞춤형 예측 자동화 서비스 솔루션 개발과정의 단계별 프로젝트들 발표자료 서비스</title>
-  <meta name="description" content="심화 : 심층 데이터 분석을 통한 개인 맞춤형 예측 자동화 서비스 솔루션 개발과정의 단계별 프로젝트들 발표자료, 시연영상, 기술심사 피드백(PDF) 및 전체 자료 다운로드 서비스" />
+  <title>DMDG ACADEMY SHOWCASE · 전체 교육과정 프로젝트 통합 아카이브</title>
+  <meta name="description" content="DMDG ACADEMY SHOWCASE — LG Uplus Why Not 1·2기, KDT 해커톤 1·2기, 삼성 AXI 6개월 과정, AI·데이터 심화 1·2기 단계별 프로젝트 발표자료, 시연영상 및 4페이지 기술 감사 피드백 리포트(PDF) 공개 아카이브" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%230b1936'/><text x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='30' fill='%2338bdf8'>AI</text></svg>" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="stylesheet" href="./css/aurora_showcase.css" />
@@ -34,12 +34,12 @@
 
     <!-- Hero Title & KPIs -->
     <section class="hero-studio-card">
-      <div class="studio-badge-label" id="modeBadge">✨ K-Digital Training · 단계별 프로젝트 통합 발표·피드백 아카이브</div>
+      <div class="studio-badge-label" id="modeBadge">✨ DMDG ACADEMY SHOWCASE · 6개 교육과정 · 64개 프로젝트 통합 아카이브</div>
       <h1 id="siteTitle" class="studio-main-title">
-        심화 : 심층 데이터 분석을 통한 개인 맞춤형 예측 자동화 서비스 솔루션 개발과정의 단계별 프로젝트들 발표자료 서비스
+        AI·데이터 심화 2기 단계별 프로젝트 발표 쇼케이스
       </h1>
       <p class="studio-sub-guide" id="heroSubGuide">
-        각 단계별 <strong>내용 발표 자료</strong>, <strong>시연 영상</strong>(미보유 시 <code>미제공</code> 표시), <strong>4페이지 기술 감사 피드백 리포트(PDF)</strong>를 웹에서 즉시 열람할 수 있습니다.
+        상단 <strong>교육과정 선택</strong>에서 6개 기수·과정을 전환하고, 각 단계별 <strong>발표 자료 · 시연 영상 · 4페이지 기술 감사 피드백 리포트(PDF)</strong>를 웹에서 바로 열람할 수 있습니다.
       </p>
 
       <div class="kpi-strip">
@@ -62,13 +62,22 @@
       </div>
     </section>
 
-    <!-- 3-Tab Navigation & Filters -->
-    <nav class="tabs-control-bar" aria-label="단계별 프로젝트 탭">
-      <div id="mainTabs" class="main-tabs-group"></div>
-      <div id="filterChips" class="filter-pills-group">
-        <button class="filter-chip active" data-filter="all" type="button">전체 보기</button>
-        <button class="filter-chip" data-filter="video-yes" type="button">🎬 시연영상 제공</button>
-        <button class="filter-chip" data-filter="video-no" type="button">🚫 미제공</button>
+    <!-- Course Combo Box & Stage Tabs Navigation -->
+    <nav class="tabs-control-bar" aria-label="교육과정 및 단계별 프로젝트 탭">
+      <div class="track-selector-row">
+        <label class="track-select-label" for="trackSelect">🎓 교육과정 선택</label>
+        <div class="track-select-wrap">
+          <select id="trackSelect" class="track-select" aria-label="교육과정 선택"></select>
+        </div>
+        <span id="trackPeriodHint" class="track-period-hint">최신 과정(심화 2기) 기본 선택 · 전체 6개 과정</span>
+      </div>
+      <div class="stage-filter-row">
+        <div id="mainTabs" class="main-tabs-group"></div>
+        <div id="filterChips" class="filter-pills-group">
+          <button class="filter-chip active" data-filter="all" type="button">전체 보기</button>
+          <button class="filter-chip" data-filter="video-yes" type="button">🎬 시연영상 제공</button>
+          <button class="filter-chip" data-filter="video-no" type="button">🚫 미제공</button>
+        </div>
       </div>
     </nav>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>[ADMIN] 심화 : 심층 데이터 분석을 통한 개인 맞춤형 예측 자동화 서비스 솔루션 개발과정의 단계별 프로젝트들 발표자료 서비스</title>
+  <title>[ADMIN] DMDG ACADEMY SHOWCASE · 전체 교육과정 프로젝트 통합 아카이브</title>
   <meta name="robots" content="noindex, nofollow" />
   <script>
     // /admin (trailing slash 없음) 접속 시 상대경로(../) 일관성을 위해 /admin/으로 정규화
@@ -45,10 +45,10 @@
         🔐 ADMIN MODE · 평가 점수 공개 &amp; 전체 자료 다운로드 활성화
       </div>
       <h1 id="siteTitle" class="studio-main-title">
-        심화 : 심층 데이터 분석을 통한 개인 맞춤형 예측 자동화 서비스 솔루션 개발과정의 단계별 프로젝트들 발표자료 서비스
+        AI·데이터 심화 2기 단계별 프로젝트 발표 쇼케이스
       </h1>
       <p class="studio-sub-guide" id="heroSubGuide">
-        각 단계별 <strong>내용 발표 자료</strong>, <strong>시연 영상</strong>(미보유 시 <code>미제공</code> 표시), <strong>4페이지 기술 감사 피드백 리포트(PDF)</strong> 및 <strong>평가 점수</strong>를 확인하고 모든 원본 자료를 다운로드할 수 있습니다.
+        6개 교육과정의 <strong>내용 발표 자료</strong>, <strong>시연 영상</strong>, <strong>4페이지 기술 감사 피드백 리포트(PDF)</strong> 및 <strong>평가 점수</strong>를 확인하고 모든 원본 자료와 일괄 ZIP을 다운로드할 수 있습니다.
       </p>
 
       <div class="kpi-strip">
@@ -71,13 +71,22 @@
       </div>
     </section>
 
-    <!-- 3-Tab Navigation & Filters -->
-    <nav class="tabs-control-bar" aria-label="단계별 프로젝트 탭">
-      <div id="mainTabs" class="main-tabs-group"></div>
-      <div id="filterChips" class="filter-pills-group">
-        <button class="filter-chip active" data-filter="all" type="button">전체 보기</button>
-        <button class="filter-chip" data-filter="video-yes" type="button">🎬 시연영상 제공</button>
-        <button class="filter-chip" data-filter="video-no" type="button">🚫 미제공</button>
+    <!-- Course Combo Box & Stage Tabs Navigation -->
+    <nav class="tabs-control-bar" aria-label="교육과정 및 단계별 프로젝트 탭">
+      <div class="track-selector-row">
+        <label class="track-select-label" for="trackSelect">🎓 교육과정 선택</label>
+        <div class="track-select-wrap">
+          <select id="trackSelect" class="track-select" aria-label="교육과정 선택"></select>
+        </div>
+        <span id="trackPeriodHint" class="track-period-hint">최신 과정(심화 2기) 기본 선택 · 전체 6개 과정</span>
+      </div>
+      <div class="stage-filter-row">
+        <div id="mainTabs" class="main-tabs-group"></div>
+        <div id="filterChips" class="filter-pills-group">
+          <button class="filter-chip active" data-filter="all" type="button">전체 보기</button>
+          <button class="filter-chip" data-filter="video-yes" type="button">🎬 시연영상 제공</button>
+          <button class="filter-chip" data-filter="video-no" type="button">🚫 미제공</button>
+        </div>
       </div>
     </nav>
 
@@ -124,3 +133,4 @@
   <script src="../js/app.js"></script>
 </body>
 </html>
+

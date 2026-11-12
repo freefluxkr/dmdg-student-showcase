@@ -298,19 +298,93 @@ body.aurora-portal-body::after {
   margin-top: 0.15rem;
 }
 
-/* ── 3-Tab Navigation Bar ── */
+/* ── Course Combo Box & Stage Navigation Bar ── */
 .tabs-control-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.78rem;
+  padding: 0.95rem 1.15rem;
+  margin-bottom: 1.15rem;
+  border-radius: 20px;
+  background: rgba(15, 26, 52, 0.58);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+}
+
+.track-selector-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 0.72rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.track-select-label {
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #bae6fd;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.track-select-wrap {
+  position: relative;
+  flex: 1 1 320px;
+  max-width: 480px;
+}
+
+.track-select {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0.58rem 2.3rem 0.58rem 1rem;
+  border-radius: 13px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(19, 34, 68, 0.92));
+  border: 1px solid rgba(56, 189, 248, 0.52);
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+}
+
+.track-select:hover,
+.track-select:focus {
+  outline: none;
+  border-color: #34d399;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.22);
+}
+
+.track-select option {
+  background: #0f172a;
+  color: #f8fafc;
+  font-weight: 700;
+}
+
+.track-period-hint {
+  font-size: 0.78rem;
+  color: #a7f3d0;
+  font-weight: 700;
+  margin-left: auto;
+  padding: 0.28rem 0.72rem;
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.14);
+  border: 1px solid rgba(52, 211, 153, 0.34);
+  white-space: nowrap;
+}
+
+.stage-filter-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 0.85rem;
-  padding: 0.85rem 1.1rem;
-  margin-bottom: 1.15rem;
-  border-radius: 20px;
-  background: rgba(15, 26, 52, 0.54);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
+  gap: 0.75rem;
 }
 
 .main-tabs-group {
@@ -822,9 +896,71 @@ body.aurora-portal-body::after {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.common-resources-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.common-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.55rem;
+}
+
+.common-photo-card {
+  display: block;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(56, 189, 248, 0.32);
+  background: rgba(15, 23, 42, 0.65);
+  transition: transform 0.16s ease, border-color 0.16s ease;
+}
+
+.common-photo-card:hover {
+  transform: translateY(-2px);
+  border-color: #34d399;
+}
+
+.common-photo-card img {
+  width: 100%;
+  height: 82px;
+  object-fit: cover;
+  display: block;
+}
+
+.common-file-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 0.5rem;
+}
+
+.common-file-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.45rem 0.72rem;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.62);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  font-size: 0.78rem;
+  color: #e2e8f0;
+}
+
+.video-switcher-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.8rem;
+}
+
 @media (max-width: 900px) {
   .kpi-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .projects-grid { grid-template-columns: 1fr; }
   .split-viewer { grid-template-columns: 1fr; grid-template-rows: 190px 1fr; }
   .file-sidebar { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+  .track-period-hint { margin-left: 0; }
 }
+
