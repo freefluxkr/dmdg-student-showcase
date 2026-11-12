@@ -1,6 +1,6 @@
 {
   "siteTitle": "DMDG ACADEMY SHOWCASE · 전체 교육과정 프로젝트 통합 아카이브",
-  "generatedAt": "2026-11-12 10:31",
+  "generatedAt": "2026-11-12 10:43",
   "repoUrl": "https://github.com/freefluxkr/dmdg-student-showcase",
   "pagesUrl": "https://freefluxkr.github.io/dmdg-student-showcase/",
   "releaseTag": "v1.0-assets",
@@ -6100,7 +6100,7 @@
     },
     {
       "id": "stage1",
-      "label": "1차 · 데이터 분석 프로젝트 (6팀)",
+      "label": "1차 · 데이터 분석 프로젝트 (6건)",
       "sourceFolder": "데이터 분석 1차 프로젝트 최종 자료(발표 자료  및  시연영상_피드백 포함)",
       "projects": [
         {
@@ -7658,13 +7658,13 @@
           "content": "발표 배점 : 총 200점\n\n분석모델 : 50점\n데이터 수집및 출처 : 10점\n인사이트 도출 : 30점\n현시점에서 서비스 가능 여부 : 10점\n\n창의성 : 40점\n발표 내용(태도) : 10점\n사업화(구현) 가능성 : 30점\nAI 의존도 : 20점\n\n"
         }
       ],
-      "tabBadge": "1차 · 6팀",
+      "tabBadge": "1차 · 6건",
       "trackId": "adv_cohort_2",
       "trackLabel": "6. AI·데이터 심화 2기"
     },
     {
       "id": "mini",
-      "label": "미니 · 프로젝트 발표 (6팀)",
+      "label": "미니 · 프로젝트 발표 (8건)",
       "sourceFolder": "미니 프로젝트 발표자료 제출 폴더 (11.5까지)",
       "projects": [
         {
@@ -8776,13 +8776,13 @@
           "bundleZipBytes": 31463262
         }
       ],
-      "tabBadge": "미니 · 6팀",
+      "tabBadge": "미니 · 8건",
       "trackId": "adv_cohort_2",
       "trackLabel": "6. AI·데이터 심화 2기"
     },
     {
       "id": "final",
-      "label": "2차 최종 · 프로젝트 기획안 (6팀)",
+      "label": "2차 최종 · 프로젝트 기획안 (4건)",
       "sourceFolder": "최종 기획안",
       "projects": [
         {
@@ -9069,7 +9069,7 @@
           "bundleZipBytes": 249381
         }
       ],
-      "tabBadge": "2차 최종 · 6팀",
+      "tabBadge": "2차 최종 · 4건",
       "trackId": "adv_cohort_2",
       "trackLabel": "6. AI·데이터 심화 2기"
     }
