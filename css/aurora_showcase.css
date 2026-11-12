@@ -900,20 +900,28 @@ body.aurora-portal-body::after {
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 0.75rem;
 }
 
+.common-resources-box > *,
+.common-resources-box details {
+  width: 100%;
+}
+
 .common-photo-grid {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 0.55rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.6rem;
 }
 
 .common-photo-card {
+  width: 100%;
   display: block;
   border-radius: 10px;
   overflow: hidden;
-  border: 1px solid rgba(56, 189, 248, 0.32);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   background: rgba(15, 23, 42, 0.65);
   transition: transform 0.16s ease, border-color 0.16s ease;
 }
@@ -925,12 +933,13 @@ body.aurora-portal-body::after {
 
 .common-photo-card img {
   width: 100%;
-  height: 82px;
+  height: 92px;
   object-fit: cover;
   display: block;
 }
 
 .common-file-list {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   gap: 0.5rem;
@@ -959,8 +968,13 @@ body.aurora-portal-body::after {
 @media (max-width: 900px) {
   .kpi-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .projects-grid { grid-template-columns: 1fr; }
+  .common-photo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .split-viewer { grid-template-columns: 1fr; grid-template-rows: 190px 1fr; }
   .file-sidebar { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
   .track-period-hint { margin-left: 0; }
+}
+
+@media (max-width: 520px) {
+  .common-photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 

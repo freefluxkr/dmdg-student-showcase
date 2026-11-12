@@ -271,17 +271,20 @@
       ? `<div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.6rem;">
           <strong style="color:#6ee7b7; font-size:0.88rem;">🎬 ${esc(videos[0].groupLabel || "공통 시연 샘플 영상")}</strong>
           <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
-            ${videos.map((v, idx) => {
+            ${videos.map((v) => {
               const rawIdx = items.indexOf(v);
-              return `<button class="nav-pill-btn pill-cyan" data-common-idx="${rawIdx}" type="button">▶ ${esc(v.name)} (${fmtBytes(v.sizeBytes)})</button>`;
+              const label = v.relPath || v.name;
+              return `<button class="nav-pill-btn pill-cyan" data-common-idx="${rawIdx}" type="button">▶ ${esc(label)} (${fmtBytes(v.sizeBytes)})</button>`;
             }).join("")}
           </div>
         </div>`
       : "";
 
     const photoHtml = photos.length
-      ? `<div>
-          <div style="font-size:0.84rem; font-weight:800; color:#bae6fd; margin-bottom:0.45rem;">📸 2차 PRJ 현장 발표 사진 (${photos.length}장)</div>
+      ? `<details open>
+          <summary style="cursor:pointer; font-size:0.84rem; font-weight:800; color:#bae6fd; margin-bottom:0.55rem; user-select:none;">
+            📸 2차 PRJ 현장 발표 사진 (${photos.length}장 · 5열 그리드 / 클릭하여 확대 또는 접기)
+          </summary>
           <div class="common-photo-grid">
             ${photos.map((ph) => {
               const rawIdx = items.indexOf(ph);
@@ -291,7 +294,7 @@
               </button>`;
             }).join("")}
           </div>
-        </div>`
+        </details>`
       : "";
 
     const docsHtml = docs.length
