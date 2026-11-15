@@ -592,9 +592,18 @@
       let zoomMode = "fit"; // "fit" or explicit numeric factor relative to fitScale
       let zoomFactor = 1.0;
       let loadedPdf = null;
+      let renderGen = 0;
+      let currentRenderTask = null;
 
       async function drawAllPages() {
         if (!loadedPdf || myToken !== pdfRenderToken) return;
+        const myGen = ++renderGen;
+
+        if (currentRenderTask && typeof currentRenderTask.cancel === "function") {
+          try { currentRenderTask.cancel(); } catch (e) {}
+          currentRenderTask = null;
+        }
+
         const total = loadedPdf.numPages || 1;
         const containerWidth = Math.max((pagesEl.clientWidth || 340) - 20, 260);
         if (zoomLabelEl) {
@@ -608,9 +617,9 @@
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
         for (let pageNum = 1; pageNum <= total; pageNum++) {
-          if (myToken !== pdfRenderToken) return;
+          if (myToken !== pdfRenderToken || myGen !== renderGen) return;
           const page = await loadedPdf.getPage(pageNum);
-          if (myToken !== pdfRenderToken) return;
+          if (myToken !== pdfRenderToken || myGen !== renderGen) return;
 
           const baseViewport = page.getViewport({ scale: 1 });
           const fitScale = containerWidth / Math.max(baseViewport.width, 1);
@@ -644,9 +653,24 @@
             viewport,
             transform: dpr !== 1 ? [dpr, 0, 0, dpr, 0, 0] : null,
           };
-          await page.render(renderContext).promise;
+          const renderTask = page.render(renderContext);
+          currentRenderTask = renderTask;
+          try {
+            await renderTask.promise;
+          } catch (err) {
+            if (err && err.name === "RenderingCancelledException") {
+              return;
+            }
+            throw err;
+          } finally {
+            if (currentRenderTask === renderTask) {
+              currentRenderTask = null;
+            }
+          }
 
-          if (statusEl && myToken === pdfRenderToken) {
+          if (myToken !== pdfRenderToken || myGen !== renderGen) return;
+
+          if (statusEl && myToken === pdfRenderToken && myGen === renderGen) {
             statusEl.textContent =
               pageNum === total
                 ? `📄 총 ${total}페이지 · 위아래로 스크롤하여 전체 열람`
