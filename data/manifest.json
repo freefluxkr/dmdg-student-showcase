@@ -140,9 +140,9 @@
                 "ext": "mp4",
                 "sizeBytes": 14647961,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t1_lg1_stage1_team1.mp4_09e3d6a3.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t1_lg1_stage1_team1.mp4_09e3d6a3.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t1_lg1_stage1_team1.mp4_09e3d6a3.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t1_lg1_stage1_team1.mp4_09e3d6a3.mp4",
                 "externalUrl": null
               }
             ]
@@ -191,9 +191,9 @@
               "ext": "mp4",
               "sizeBytes": 14647961,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t1_lg1_stage1_team1.mp4_09e3d6a3.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t1_lg1_stage1_team1.mp4_09e3d6a3.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t1_lg1_stage1_team1.mp4_09e3d6a3.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t1_lg1_stage1_team1.mp4_09e3d6a3.mp4",
               "externalUrl": null
             },
             {
@@ -249,9 +249,9 @@
                 "ext": "mp4",
                 "sizeBytes": 10426075,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t2_lg1_stage1_team2.mp4_6c671803.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t2_lg1_stage1_team2.mp4_6c671803.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t2_lg1_stage1_team2.mp4_6c671803.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t2_lg1_stage1_team2.mp4_6c671803.mp4",
                 "externalUrl": null
               }
             ]
@@ -289,9 +289,9 @@
               "ext": "mp4",
               "sizeBytes": 10426075,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t2_lg1_stage1_team2.mp4_6c671803.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t2_lg1_stage1_team2.mp4_6c671803.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t2_lg1_stage1_team2.mp4_6c671803.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t2_lg1_stage1_team2.mp4_6c671803.mp4",
               "externalUrl": null
             },
             {
@@ -347,9 +347,9 @@
                 "ext": "mp4",
                 "sizeBytes": 10588708,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t3_lg1_stage1_team3.mp4_64325030.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t3_lg1_stage1_team3.mp4_64325030.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t3_lg1_stage1_team3.mp4_64325030.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t3_lg1_stage1_team3.mp4_64325030.mp4",
                 "externalUrl": null
               }
             ]
@@ -387,9 +387,9 @@
               "ext": "mp4",
               "sizeBytes": 10588708,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t3_lg1_stage1_team3.mp4_64325030.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t3_lg1_stage1_team3.mp4_64325030.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t3_lg1_stage1_team3.mp4_64325030.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t3_lg1_stage1_team3.mp4_64325030.mp4",
               "externalUrl": null
             },
             {
@@ -455,9 +455,9 @@
                 "ext": "mp4",
                 "sizeBytes": 23730718,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t4_lg1_stage1_team4.mp4_5f7c4594.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t4_lg1_stage1_team4.mp4_5f7c4594.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t4_lg1_stage1_team4.mp4_5f7c4594.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t4_lg1_stage1_team4.mp4_5f7c4594.mp4",
                 "externalUrl": null
               },
               {
@@ -466,9 +466,9 @@
                 "ext": "mp4",
                 "sizeBytes": 34071682,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t4_VideoEditor_20240822_043534_85c45aa1.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t4_VideoEditor_20240822_043534_85c45aa1.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t4_VideoEditor_20240822_043534_85c45aa1.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t4_VideoEditor_20240822_043534_85c45aa1.mp4",
                 "externalUrl": null
               }
             ]
@@ -528,9 +528,9 @@
               "ext": "mp4",
               "sizeBytes": 23730718,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t4_lg1_stage1_team4.mp4_5f7c4594.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t4_lg1_stage1_team4.mp4_5f7c4594.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t4_lg1_stage1_team4.mp4_5f7c4594.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t4_lg1_stage1_team4.mp4_5f7c4594.mp4",
               "externalUrl": null
             },
             {
@@ -539,9 +539,9 @@
               "ext": "mp4",
               "sizeBytes": 34071682,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t4_VideoEditor_20240822_043534_85c45aa1.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t4_VideoEditor_20240822_043534_85c45aa1.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t4_VideoEditor_20240822_043534_85c45aa1.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t4_VideoEditor_20240822_043534_85c45aa1.mp4",
               "externalUrl": null
             },
             {
@@ -596,9 +596,9 @@
                 "ext": "mp4",
                 "sizeBytes": 25160892,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t5_lg1_stage1_team5.mp4_3698a630.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t5_lg1_stage1_team5.mp4_3698a630.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t5_lg1_stage1_team5.mp4_3698a630.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t5_lg1_stage1_team5.mp4_3698a630.mp4",
                 "externalUrl": null
               }
             ]
@@ -636,9 +636,9 @@
               "ext": "mp4",
               "sizeBytes": 25160892,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t5_lg1_stage1_team5.mp4_3698a630.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage1_lg1_s1_t5_lg1_stage1_team5.mp4_3698a630.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t5_lg1_stage1_team5.mp4_3698a630.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage1_lg1_s1_t5_lg1_stage1_team5.mp4_3698a630.mp4",
               "externalUrl": null
             },
             {
@@ -872,9 +872,9 @@
                 "ext": "mp4",
                 "sizeBytes": 11125567,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t1_1._.mp4_7dd4dc98.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t1_1._.mp4_7dd4dc98.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t1_1._.mp4_7dd4dc98.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t1_1._.mp4_7dd4dc98.mp4",
                 "externalUrl": null
               },
               {
@@ -883,9 +883,9 @@
                 "ext": "mp4",
                 "sizeBytes": 7285362,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t1_2._API_.mp4_430e86d6.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t1_2._API_.mp4_430e86d6.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t1_2._API_.mp4_430e86d6.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t1_2._API_.mp4_430e86d6.mp4",
                 "externalUrl": null
               },
               {
@@ -894,9 +894,9 @@
                 "ext": "mp4",
                 "sizeBytes": 17567627,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t1_lg1_stage2_team1_talk.mp4_408282bf.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t1_lg1_stage2_team1_talk.mp4_408282bf.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t1_lg1_stage2_team1_talk.mp4_408282bf.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t1_lg1_stage2_team1_talk.mp4_408282bf.mp4",
                 "externalUrl": null
               }
             ]
@@ -945,9 +945,9 @@
               "ext": "mp4",
               "sizeBytes": 11125567,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t1_1._.mp4_7dd4dc98.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t1_1._.mp4_7dd4dc98.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t1_1._.mp4_7dd4dc98.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t1_1._.mp4_7dd4dc98.mp4",
               "externalUrl": null
             },
             {
@@ -956,9 +956,9 @@
               "ext": "mp4",
               "sizeBytes": 7285362,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t1_2._API_.mp4_430e86d6.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t1_2._API_.mp4_430e86d6.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t1_2._API_.mp4_430e86d6.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t1_2._API_.mp4_430e86d6.mp4",
               "externalUrl": null
             },
             {
@@ -967,9 +967,9 @@
               "ext": "mp4",
               "sizeBytes": 17567627,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t1_lg1_stage2_team1_talk.mp4_408282bf.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t1_lg1_stage2_team1_talk.mp4_408282bf.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t1_lg1_stage2_team1_talk.mp4_408282bf.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t1_lg1_stage2_team1_talk.mp4_408282bf.mp4",
               "externalUrl": null
             },
             {
@@ -1036,9 +1036,9 @@
                 "ext": "mp4",
                 "sizeBytes": 24447310,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t2_LG_U__why_not_SW_camp_AICC__832083aa.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t2_LG_U__why_not_SW_camp_AICC__832083aa.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t2_LG_U__why_not_SW_camp_AICC__832083aa.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t2_LG_U__why_not_SW_camp_AICC__832083aa.mp4",
                 "externalUrl": null
               },
               {
@@ -1047,9 +1047,9 @@
                 "ext": "mp4",
                 "sizeBytes": 42022932,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t2_lg1_stage2_team2_talk.mp4_0926b00b.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t2_lg1_stage2_team2_talk.mp4_0926b00b.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t2_lg1_stage2_team2_talk.mp4_0926b00b.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t2_lg1_stage2_team2_talk.mp4_0926b00b.mp4",
                 "externalUrl": null
               }
             ]
@@ -1098,9 +1098,9 @@
               "ext": "mp4",
               "sizeBytes": 24447310,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t2_LG_U__why_not_SW_camp_AICC__832083aa.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t2_LG_U__why_not_SW_camp_AICC__832083aa.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t2_LG_U__why_not_SW_camp_AICC__832083aa.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t2_LG_U__why_not_SW_camp_AICC__832083aa.mp4",
               "externalUrl": null
             },
             {
@@ -1109,9 +1109,9 @@
               "ext": "mp4",
               "sizeBytes": 42022932,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t2_lg1_stage2_team2_talk.mp4_0926b00b.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t2_lg1_stage2_team2_talk.mp4_0926b00b.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t2_lg1_stage2_team2_talk.mp4_0926b00b.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t2_lg1_stage2_team2_talk.mp4_0926b00b.mp4",
               "externalUrl": null
             },
             {
@@ -1200,9 +1200,9 @@
                 "ext": "mp4",
                 "sizeBytes": 16925314,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t3_lg2_team3_dodi_demo.mp4_1f34117d.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t3_lg2_team3_dodi_demo.mp4_1f34117d.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t3_lg2_team3_dodi_demo.mp4_1f34117d.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t3_lg2_team3_dodi_demo.mp4_1f34117d.mp4",
                 "externalUrl": null
               },
               {
@@ -1211,9 +1211,9 @@
                 "ext": "mp4",
                 "sizeBytes": 26372268,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t3_lg1_stage2_team3_talk.mp4_942cf217.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t3_lg1_stage2_team3_talk.mp4_942cf217.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t3_lg1_stage2_team3_talk.mp4_942cf217.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t3_lg1_stage2_team3_talk.mp4_942cf217.mp4",
                 "externalUrl": null
               }
             ]
@@ -1284,9 +1284,9 @@
               "ext": "mp4",
               "sizeBytes": 16925314,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t3_lg2_team3_dodi_demo.mp4_1f34117d.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t3_lg2_team3_dodi_demo.mp4_1f34117d.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t3_lg2_team3_dodi_demo.mp4_1f34117d.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t3_lg2_team3_dodi_demo.mp4_1f34117d.mp4",
               "externalUrl": null
             },
             {
@@ -1295,9 +1295,9 @@
               "ext": "mp4",
               "sizeBytes": 26372268,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t3_lg1_stage2_team3_talk.mp4_942cf217.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t3_lg1_stage2_team3_talk.mp4_942cf217.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t3_lg1_stage2_team3_talk.mp4_942cf217.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t3_lg1_stage2_team3_talk.mp4_942cf217.mp4",
               "externalUrl": null
             },
             {
@@ -1385,9 +1385,9 @@
                 "ext": "mp4",
                 "sizeBytes": 13137662,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t4_5_IPTV_.mp4_d50f1241.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t4_5_IPTV_.mp4_d50f1241.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t4_5_IPTV_.mp4_d50f1241.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t4_5_IPTV_.mp4_d50f1241.mp4",
                 "externalUrl": null
               },
               {
@@ -1396,9 +1396,9 @@
                 "ext": "mp4",
                 "sizeBytes": 31446010,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t4_lg1_stage2_team4_talk.mp4_0691277a.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t4_lg1_stage2_team4_talk.mp4_0691277a.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t4_lg1_stage2_team4_talk.mp4_0691277a.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t4_lg1_stage2_team4_talk.mp4_0691277a.mp4",
                 "externalUrl": null
               }
             ]
@@ -1469,9 +1469,9 @@
               "ext": "mp4",
               "sizeBytes": 13137662,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t4_5_IPTV_.mp4_d50f1241.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t4_5_IPTV_.mp4_d50f1241.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t4_5_IPTV_.mp4_d50f1241.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t4_5_IPTV_.mp4_d50f1241.mp4",
               "externalUrl": null
             },
             {
@@ -1480,9 +1480,9 @@
               "ext": "mp4",
               "sizeBytes": 31446010,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t4_lg1_stage2_team4_talk.mp4_0691277a.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t4_lg1_stage2_team4_talk.mp4_0691277a.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t4_lg1_stage2_team4_talk.mp4_0691277a.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t4_lg1_stage2_team4_talk.mp4_0691277a.mp4",
               "externalUrl": null
             },
             {
@@ -1559,9 +1559,9 @@
                 "ext": "mp4",
                 "sizeBytes": 34962367,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t5___241030.mp4_dba0111e.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t5___241030.mp4_dba0111e.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t5___241030.mp4_dba0111e.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t5___241030.mp4_dba0111e.mp4",
                 "externalUrl": null
               },
               {
@@ -1570,9 +1570,9 @@
                 "ext": "mp4",
                 "sizeBytes": 63859552,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t5_lg1_stage2_team5_talk.mp4_35334d62.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t5_lg1_stage2_team5_talk.mp4_35334d62.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t5_lg1_stage2_team5_talk.mp4_35334d62.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t5_lg1_stage2_team5_talk.mp4_35334d62.mp4",
                 "externalUrl": null
               }
             ]
@@ -1632,9 +1632,9 @@
               "ext": "mp4",
               "sizeBytes": 34962367,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t5___241030.mp4_dba0111e.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t5___241030.mp4_dba0111e.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t5___241030.mp4_dba0111e.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t5___241030.mp4_dba0111e.mp4",
               "externalUrl": null
             },
             {
@@ -1643,9 +1643,9 @@
               "ext": "mp4",
               "sizeBytes": 63859552,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t5_lg1_stage2_team5_talk.mp4_35334d62.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg1_stage2_lg1_s2_t5_lg1_stage2_team5_talk.mp4_35334d62.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t5_lg1_stage2_team5_talk.mp4_35334d62.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg1_stage2_lg1_s2_t5_lg1_stage2_team5_talk.mp4_35334d62.mp4",
               "externalUrl": null
             },
             {
@@ -3380,9 +3380,9 @@
                 "ext": "mp4",
                 "sizeBytes": 11125567,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t1_1._.mp4_92f043ac.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t1_1._.mp4_92f043ac.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t1_1._.mp4_92f043ac.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t1_1._.mp4_92f043ac.mp4",
                 "externalUrl": null
               },
               {
@@ -3391,9 +3391,9 @@
                 "ext": "mp4",
                 "sizeBytes": 7285362,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t1_2._API_.mp4_b201ea07.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t1_2._API_.mp4_b201ea07.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t1_2._API_.mp4_b201ea07.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t1_2._API_.mp4_b201ea07.mp4",
                 "externalUrl": null
               }
             ]
@@ -3453,9 +3453,9 @@
               "ext": "mp4",
               "sizeBytes": 11125567,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t1_1._.mp4_92f043ac.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t1_1._.mp4_92f043ac.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t1_1._.mp4_92f043ac.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t1_1._.mp4_92f043ac.mp4",
               "externalUrl": null
             },
             {
@@ -3464,9 +3464,9 @@
               "ext": "mp4",
               "sizeBytes": 7285362,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t1_2._API_.mp4_b201ea07.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t1_2._API_.mp4_b201ea07.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t1_2._API_.mp4_b201ea07.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t1_2._API_.mp4_b201ea07.mp4",
               "externalUrl": null
             },
             {
@@ -3533,9 +3533,9 @@
                 "ext": "mp4",
                 "sizeBytes": 24447310,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t2_LG_U__why_not_SW_camp_AICC___.m_241ee7df.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t2_LG_U__why_not_SW_camp_AICC___.m_241ee7df.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t2_LG_U__why_not_SW_camp_AICC___.m_241ee7df.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t2_LG_U__why_not_SW_camp_AICC___.m_241ee7df.mp4",
                 "externalUrl": null
               }
             ]
@@ -3584,9 +3584,9 @@
               "ext": "mp4",
               "sizeBytes": 24447310,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t2_LG_U__why_not_SW_camp_AICC___.m_241ee7df.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t2_LG_U__why_not_SW_camp_AICC___.m_241ee7df.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t2_LG_U__why_not_SW_camp_AICC___.m_241ee7df.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t2_LG_U__why_not_SW_camp_AICC___.m_241ee7df.mp4",
               "externalUrl": null
             },
             {
@@ -3675,9 +3675,9 @@
                 "ext": "mp4",
                 "sizeBytes": 16925314,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t3_lg2_team3_dodi_demo.mp4_1acfa11c.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t3_lg2_team3_dodi_demo.mp4_1acfa11c.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t3_lg2_team3_dodi_demo.mp4_1acfa11c.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t3_lg2_team3_dodi_demo.mp4_1acfa11c.mp4",
                 "externalUrl": null
               }
             ]
@@ -3748,9 +3748,9 @@
               "ext": "mp4",
               "sizeBytes": 16925314,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t3_lg2_team3_dodi_demo.mp4_1acfa11c.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t3_lg2_team3_dodi_demo.mp4_1acfa11c.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t3_lg2_team3_dodi_demo.mp4_1acfa11c.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t3_lg2_team3_dodi_demo.mp4_1acfa11c.mp4",
               "externalUrl": null
             },
             {
@@ -3838,9 +3838,9 @@
                 "ext": "mp4",
                 "sizeBytes": 34071682,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t4_VideoEditor_20240822_043534.mp4_b966cbe9.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t4_VideoEditor_20240822_043534.mp4_b966cbe9.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t4_VideoEditor_20240822_043534.mp4_b966cbe9.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t4_VideoEditor_20240822_043534.mp4_b966cbe9.mp4",
                 "externalUrl": null
               },
               {
@@ -3849,9 +3849,9 @@
                 "ext": "mp4",
                 "sizeBytes": 13137662,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t4_5_IPTV_.mp4_b0bb6158.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t4_5_IPTV_.mp4_b0bb6158.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t4_5_IPTV_.mp4_b0bb6158.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t4_5_IPTV_.mp4_b0bb6158.mp4",
                 "externalUrl": null
               }
             ]
@@ -3933,9 +3933,9 @@
               "ext": "mp4",
               "sizeBytes": 34071682,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t4_VideoEditor_20240822_043534.mp4_b966cbe9.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t4_VideoEditor_20240822_043534.mp4_b966cbe9.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t4_VideoEditor_20240822_043534.mp4_b966cbe9.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t4_VideoEditor_20240822_043534.mp4_b966cbe9.mp4",
               "externalUrl": null
             },
             {
@@ -3944,9 +3944,9 @@
               "ext": "mp4",
               "sizeBytes": 13137662,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t4_5_IPTV_.mp4_b0bb6158.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t4_5_IPTV_.mp4_b0bb6158.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t4_5_IPTV_.mp4_b0bb6158.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t4_5_IPTV_.mp4_b0bb6158.mp4",
               "externalUrl": null
             },
             {
@@ -4023,9 +4023,9 @@
                 "ext": "mp4",
                 "sizeBytes": 34962367,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t5___241030.mp4_268032cd.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t5___241030.mp4_268032cd.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t5___241030.mp4_268032cd.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t5___241030.mp4_268032cd.mp4",
                 "externalUrl": null
               }
             ]
@@ -4085,9 +4085,9 @@
               "ext": "mp4",
               "sizeBytes": 34962367,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t5___241030.mp4_268032cd.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/lg2_mid_lg2_m_t5___241030.mp4_268032cd.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t5___241030.mp4_268032cd.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/lg2_mid_lg2_m_t5___241030.mp4_268032cd.mp4",
               "externalUrl": null
             },
             {
@@ -6146,9 +6146,9 @@
                 "ext": "mp4",
                 "sizeBytes": 8812078,
                 "role": "video",
-                "hostedOn": "pages",
-                "previewUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu__1_.mp4_caeecca5.mp4",
-                "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu__1_.mp4_caeecca5.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_gu__1_.mp4_caeecca5.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_gu__1_.mp4_caeecca5.mp4",
                 "externalUrl": null
               }
             ]
@@ -6186,9 +6186,9 @@
               "ext": "mp4",
               "sizeBytes": 8812078,
               "role": "video",
-              "hostedOn": "pages",
-              "previewUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu__1_.mp4_caeecca5.mp4",
-              "downloadUrl": "./assets/files/stage1/s1_gu/stage1_s1_gu__1_.mp4_caeecca5.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_gu__1_.mp4_caeecca5.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_gu__1_.mp4_caeecca5.mp4",
               "externalUrl": null
             },
             {
@@ -6318,9 +6318,9 @@
                 "ext": "mp4",
                 "sizeBytes": 47520685,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_card_fds_CARD_FDS_N___.mp4_631b81a7.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_card_fds_CARD_FDS_N___.mp4_631b81a7.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_card_fds_CARD_FDS_N___.mp4_631b81a7.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_card_fds_CARD_FDS_N___.mp4_631b81a7.mp4",
                 "externalUrl": null
               }
             ]
@@ -6380,9 +6380,9 @@
               "ext": "mp4",
               "sizeBytes": 47520685,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_card_fds_CARD_FDS_N___.mp4_631b81a7.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/stage1_s1_card_fds_CARD_FDS_N___.mp4_631b81a7.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_card_fds_CARD_FDS_N___.mp4_631b81a7.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_card_fds_CARD_FDS_N___.mp4_631b81a7.mp4",
               "externalUrl": null
             },
             {
@@ -6468,9 +6468,9 @@
                 "ext": "mp4",
                 "sizeBytes": 20505374,
                 "role": "video",
-                "hostedOn": "pages",
-                "previewUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon__.mp4_0e37be15.mp4",
-                "downloadUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon__.mp4_0e37be15.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_minwon__.mp4_0e37be15.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_minwon__.mp4_0e37be15.mp4",
                 "externalUrl": null
               }
             ]
@@ -6530,9 +6530,9 @@
               "ext": "mp4",
               "sizeBytes": 20505374,
               "role": "video",
-              "hostedOn": "pages",
-              "previewUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon__.mp4_0e37be15.mp4",
-              "downloadUrl": "./assets/files/stage1/s1_minwon/stage1_s1_minwon__.mp4_0e37be15.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_minwon__.mp4_0e37be15.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_minwon__.mp4_0e37be15.mp4",
               "externalUrl": null
             },
             {
@@ -6604,9 +6604,9 @@
                 "ext": "mp4",
                 "sizeBytes": 16757849,
                 "role": "video",
-                "hostedOn": "pages",
-                "previewUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict__.ipynb_-_Colab_-_Chrome_2_577e56e9.mp4",
-                "downloadUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict__.ipynb_-_Colab_-_Chrome_2_577e56e9.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_logipredict__.ipynb_-_Colab_-_Chrome_2_577e56e9.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_logipredict__.ipynb_-_Colab_-_Chrome_2_577e56e9.mp4",
                 "externalUrl": null
               }
             ]
@@ -6655,9 +6655,9 @@
               "ext": "mp4",
               "sizeBytes": 16757849,
               "role": "video",
-              "hostedOn": "pages",
-              "previewUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict__.ipynb_-_Colab_-_Chrome_2_577e56e9.mp4",
-              "downloadUrl": "./assets/files/stage1/s1_logipredict/stage1_s1_logipredict__.ipynb_-_Colab_-_Chrome_2_577e56e9.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_logipredict__.ipynb_-_Colab_-_Chrome_2_577e56e9.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/stage1_s1_logipredict__.ipynb_-_Colab_-_Chrome_2_577e56e9.mp4",
               "externalUrl": null
             },
             {
@@ -7768,9 +7768,9 @@
                 "ext": "mp4",
                 "sizeBytes": 67637393,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_kimjisun__.mp4_c8589421.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_kimjisun__.mp4_c8589421.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/mini_m_kimjisun__.mp4_c8589421.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/mini_m_kimjisun__.mp4_c8589421.mp4",
                 "externalUrl": null
               }
             ]
@@ -7797,9 +7797,9 @@
               "ext": "mp4",
               "sizeBytes": 67637393,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_kimjisun__.mp4_c8589421.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_kimjisun__.mp4_c8589421.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/mini_m_kimjisun__.mp4_c8589421.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/mini_m_kimjisun__.mp4_c8589421.mp4",
               "externalUrl": null
             },
             {
@@ -7893,9 +7893,9 @@
                 "ext": "mp4",
                 "sizeBytes": 4398855,
                 "role": "video",
-                "hostedOn": "pages",
-                "previewUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__________.mp4_5497b916.mp4",
-                "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__________.mp4_5497b916.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/mini_m_kimyunjun1__________.mp4_5497b916.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/mini_m_kimyunjun1__________.mp4_5497b916.mp4",
                 "externalUrl": null
               }
             ]
@@ -7966,9 +7966,9 @@
               "ext": "mp4",
               "sizeBytes": 4398855,
               "role": "video",
-              "hostedOn": "pages",
-              "previewUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__________.mp4_5497b916.mp4",
-              "downloadUrl": "./assets/files/mini/m_kimyunjun1/mini_m_kimyunjun1__________.mp4_5497b916.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/mini_m_kimyunjun1__________.mp4_5497b916.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/mini_m_kimyunjun1__________.mp4_5497b916.mp4",
               "externalUrl": null
             },
             {
@@ -8029,9 +8029,9 @@
                 "ext": "mp4",
                 "sizeBytes": 4398855,
                 "role": "video",
-                "hostedOn": "pages",
-                "previewUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2_malware-mini-demo.mp4_84aa951c.mp4",
-                "downloadUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2_malware-mini-demo.mp4_84aa951c.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/mini_m_kimyunjun2_malware-mini-demo.mp4_84aa951c.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/mini_m_kimyunjun2_malware-mini-demo.mp4_84aa951c.mp4",
                 "externalUrl": null
               }
             ]
@@ -8069,9 +8069,9 @@
               "ext": "mp4",
               "sizeBytes": 4398855,
               "role": "video",
-              "hostedOn": "pages",
-              "previewUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2_malware-mini-demo.mp4_84aa951c.mp4",
-              "downloadUrl": "./assets/files/mini/m_kimyunjun2/mini_m_kimyunjun2_malware-mini-demo.mp4_84aa951c.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/mini_m_kimyunjun2_malware-mini-demo.mp4_84aa951c.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/mini_m_kimyunjun2_malware-mini-demo.mp4_84aa951c.mp4",
               "externalUrl": null
             },
             {
@@ -8297,9 +8297,9 @@
                 "ext": "mp4",
                 "sizeBytes": 25598556,
                 "role": "video",
-                "hostedOn": "pages",
-                "previewUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.mp4_19d6aaba.mp4",
-                "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.mp4_19d6aaba.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/mini_m_gumyeonghoe__.mp4_19d6aaba.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/mini_m_gumyeonghoe__.mp4_19d6aaba.mp4",
                 "externalUrl": null
               }
             ]
@@ -8348,9 +8348,9 @@
               "ext": "mp4",
               "sizeBytes": 25598556,
               "role": "video",
-              "hostedOn": "pages",
-              "previewUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.mp4_19d6aaba.mp4",
-              "downloadUrl": "./assets/files/mini/m_gumyeonghoe/mini_m_gumyeonghoe__.mp4_19d6aaba.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/mini_m_gumyeonghoe__.mp4_19d6aaba.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/mini_m_gumyeonghoe__.mp4_19d6aaba.mp4",
               "externalUrl": null
             },
             {
@@ -8623,9 +8623,9 @@
                 "ext": "mp4",
                 "sizeBytes": 13322479,
                 "role": "video",
-                "hostedOn": "pages",
-                "previewUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae_Windows_PE_-_Chrome_2026-11-05_21_afa9efa6.mp4",
-                "downloadUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae_Windows_PE_-_Chrome_2026-11-05_21_afa9efa6.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/mini_m_leeinae_Windows_PE_-_Chrome_2026-11-05_21_afa9efa6.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/mini_m_leeinae_Windows_PE_-_Chrome_2026-11-05_21_afa9efa6.mp4",
                 "externalUrl": null
               }
             ]
@@ -8652,9 +8652,9 @@
               "ext": "mp4",
               "sizeBytes": 13322479,
               "role": "video",
-              "hostedOn": "pages",
-              "previewUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae_Windows_PE_-_Chrome_2026-11-05_21_afa9efa6.mp4",
-              "downloadUrl": "./assets/files/mini/m_leeinae/mini_m_leeinae_Windows_PE_-_Chrome_2026-11-05_21_afa9efa6.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/mini_m_leeinae_Windows_PE_-_Chrome_2026-11-05_21_afa9efa6.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/mini_m_leeinae_Windows_PE_-_Chrome_2026-11-05_21_afa9efa6.mp4",
               "externalUrl": null
             },
             {
@@ -8715,9 +8715,9 @@
                 "ext": "mp4",
                 "sizeBytes": 97244443,
                 "role": "video",
-                "hostedOn": "releases",
-                "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_ohjuwon__119___.mp4_ff3d36ee.mp4",
-                "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_ohjuwon__119___.mp4_ff3d36ee.mp4",
+                "hostedOn": "cloudflare_pages",
+                "previewUrl": "https://dmdg-showcase-media.pages.dev/mini_m_ohjuwon__119___.mp4_ff3d36ee.mp4",
+                "downloadUrl": "https://dmdg-showcase-media.pages.dev/mini_m_ohjuwon__119___.mp4_ff3d36ee.mp4",
                 "externalUrl": null
               }
             ]
@@ -8755,9 +8755,9 @@
               "ext": "mp4",
               "sizeBytes": 97244443,
               "role": "video",
-              "hostedOn": "releases",
-              "previewUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_ohjuwon__119___.mp4_ff3d36ee.mp4",
-              "downloadUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/mini_m_ohjuwon__119___.mp4_ff3d36ee.mp4",
+              "hostedOn": "cloudflare_pages",
+              "previewUrl": "https://dmdg-showcase-media.pages.dev/mini_m_ohjuwon__119___.mp4_ff3d36ee.mp4",
+              "downloadUrl": "https://dmdg-showcase-media.pages.dev/mini_m_ohjuwon__119___.mp4_ff3d36ee.mp4",
               "externalUrl": null
             },
             {
