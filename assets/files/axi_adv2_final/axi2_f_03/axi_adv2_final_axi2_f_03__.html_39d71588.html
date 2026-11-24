@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>발표자료 제출본 · AI 기반 업로드 파일 악성코드 사전 탐지·차단 시스템</title>
+<!-- 글꼴: SUIT (SIL OFL). 인터넷이 없으면 맑은 고딕으로 보입니다. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+
+:root { --font: 'SUIT Variable', 'SUIT', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; }
+body { font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; word-break: keep-all; }
+.slide { color: var(--ink); font-family: var(--font); background: var(--slide-bg); }
+ul, ol { list-style: none; }
+strong { font-weight: 800; }
+button { font-family: var(--font); }
+.tb { all: unset; cursor: pointer; box-sizing: border-box; font-family: var(--font); }
+
+/* ---------- 등장 효과 (한 번만, 반복 없음) ---------- */
+.rv { opacity: 0; transform: translateY(26px); transition: opacity .5s cubic-bezier(.2,.7,.2,1), transform .5s cubic-bezier(.2,.7,.2,1); }
+.slide.chain .rv { transform: translateX(56px); }          /* 3~5장: 옆으로 이어지는 이동 */
+.slide.visible .rv { opacity: 1; transform: none; }
+.blur { opacity: .3; filter: blur(16px); transform: scale(1.03); transition: opacity .8s ease .1s, filter .8s ease .1s, transform .8s ease .1s; }
+.slide.visible .blur { opacity: 1; filter: blur(0); transform: none; }
+.fill { transform: scaleX(0); transform-origin: left center; transition: transform .75s cubic-bezier(.2,.7,.2,1) .25s; }
+.slide.visible .fill { transform: scaleX(1); }
+.pop { opacity: 0; transform: scale(.55); transform-box: fill-box; transform-origin: center; transition: opacity .3s ease .6s, transform .5s cubic-bezier(.3,1.35,.5,1) .6s; }
+.slide.visible .pop { opacity: 1; transform: none; }
+.d1 { transition-delay: .02s; } .d2 { transition-delay: .08s; } .d3 { transition-delay: .15s; }
+.d4 { transition-delay: .23s; } .d5 { transition-delay: .31s; } .d6 { transition-delay: .39s; }
+.d7 { transition-delay: .47s; } .d8 { transition-delay: .55s; }
+
+/* ---------- 무대 위 공통 장치 ---------- */
+.chrome { position: absolute; z-index: 5; }
+.story { display: grid; grid-template-columns: repeat(3, 200px); height: 52px; opacity: 0; transition: opacity .4s; pointer-events: none; }
+.story.on { opacity: 1; }
+.story::before { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; border-radius: 2px; background: var(--line); }
+.story .ind { position: absolute; left: 0; bottom: 0; width: 200px; height: 4px; border-radius: 2px; background: var(--accent); transform: translateX(calc(var(--pos, 0) * 200px)); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+.story .st { display: flex; align-items: center; gap: 10px; padding-bottom: 8px; font-size: 24px; font-weight: 600; color: var(--muted); white-space: nowrap; transition: color .3s; }
+.story .st i { font-style: normal; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 2px solid currentColor; font-size: 18px; font-weight: 800; }
+.story .st em { font-style: normal; font-size: 20px; font-weight: 800; padding: 1px 9px; border-radius: 6px; }
+.story .st em.real { color: var(--accent); background: var(--soft); }
+.story .st em.assume { color: var(--warn); background: var(--warn-soft); }
+.story .st.on { color: var(--ink); font-weight: 800; }
+.story .st.on i { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* ---------- 글 블록 ---------- */
+.txt { position: absolute; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; }
+.eyebrow { display: flex; align-items: center; gap: 18px; height: 52px; }
+.eyebrow .badge { flex: none; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--badge-bg); color: var(--badge-ink); font-size: 22px; font-weight: 800; }
+.eyebrow .en { font-size: 22px; font-weight: 700; letter-spacing: .18em; color: var(--muted); white-space: nowrap; }
+.tag { font-size: 24px; font-weight: 800; padding: 6px 18px; border-radius: 999px; line-height: 1.3; white-space: nowrap; }
+.tag.real { color: var(--accent); background: var(--soft); }
+.tag.assume { color: var(--warn); background: var(--warn-soft); outline: 3px dashed var(--warn); outline-offset: -3px; }
+.kick { display: flex; align-items: center; gap: 18px; font-size: 28px; font-weight: 700; color: var(--ink2); white-space: nowrap; }
+.kick i { width: 48px; height: 6px; border-radius: 3px; background: var(--accent2); }
+.hl { margin-top: 28px; font-size: var(--hl-size, 72px); line-height: 1.17; letter-spacing: -0.045em; font-weight: 400; }
+.hl span { display: block; white-space: nowrap; }
+.hl .l1 { color: var(--hl1); font-weight: var(--hl1-w, 400); }
+.hl .l2 { color: var(--hl2); font-weight: var(--hl2-w, 800); }
+.lead { margin-top: 34px; font-size: 30px; line-height: 1.55; font-weight: 500; color: var(--ink2); letter-spacing: -0.015em; }
+.evi { margin-top: 44px; font-size: 28px; line-height: 1.6; font-weight: 500; color: var(--ink2); letter-spacing: -0.015em; }
+.evi .k { display: inline-block; margin-right: 14px; padding: 2px 14px; border-radius: 8px; font-size: 24px; font-weight: 800; color: var(--accent); background: var(--soft); vertical-align: 2px; line-height: 1.5; }
+.evi strong { color: var(--ink); }
+.team { margin-top: 110px; display: flex; flex-direction: column; gap: 12px; }
+.team b { font-size: 30px; font-weight: 800; color: var(--ink); }
+.team span { font-size: 28px; font-weight: 500; color: var(--muted); }
+.src, .slide-note { position: absolute; z-index: 2; font-size: 24px; line-height: 1.5; font-weight: 500; color: var(--muted); letter-spacing: -0.01em; }
+
+/* ---------- 그림 영역 ---------- */
+.vis { position: absolute; z-index: 1; display: flex; align-items: center; justify-content: center; }
+.art { height: 100%; display: flex; justify-content: center; }
+.fileart { height: 100%; width: auto; max-width: none; max-height: none; overflow: visible; }
+.fileart .pg { fill: var(--paper); stroke: var(--paper-line); stroke-width: 4; }
+.fileart .fold { fill: var(--soft); stroke: var(--paper-line); stroke-width: 4; stroke-linejoin: round; }
+.fileart .ln { fill: var(--paper-line); }
+.fileart .ln.a { fill: var(--accent2); }
+.fileart .sh { fill: var(--accent); }
+.fileart .ck { fill: none; stroke: #fff; stroke-width: 13; stroke-linecap: round; stroke-linejoin: round; }
+
+/* 2장: 큰 숫자 + 막대 */
+.stat { display: flex; flex-direction: column; align-items: flex-start; width: 100%; }
+.stat .big { display: flex; align-items: baseline; color: var(--accent); font-weight: 800; letter-spacing: -0.05em; line-height: .9; }
+.stat .big b { font-size: 200px; font-weight: 800; }
+.stat .big span { font-size: 96px; margin-left: 6px; }
+.stat-r { width: 100%; }
+.stat .cap { margin-top: 26px; font-size: 30px; line-height: 1.5; font-weight: 500; color: var(--ink2); }
+.stat .cap strong { color: var(--ink); }
+.stat .bar { margin-top: 34px; width: 100%; height: 48px; border-radius: 12px; overflow: hidden; display: flex; background: var(--track); }
+.stat .bar .known { flex: none; width: 1.4%; min-width: 14px; background: var(--danger); }
+.stat .bar .rest { flex: 1; background: var(--rest); }
+.stat .bl { margin-top: 16px; width: 100%; display: flex; justify-content: space-between; gap: 24px; font-size: 28px; font-weight: 700; white-space: nowrap; }
+.stat .bl .k { color: var(--danger); }
+.stat .bl .r { color: var(--ink2); font-weight: 600; }
+
+/* 3장: 미끼 문서 재현 그림 */
+.docfig { height: 100%; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.docblur { flex: 1; min-height: 0; display: flex; justify-content: center; }
+.docart { height: 100%; width: auto; max-width: none; max-height: none; overflow: visible; filter: drop-shadow(0 22px 36px rgba(16,40,90,.16)); }
+.docart .pg { fill: #fff; stroke: var(--paper-line); stroke-width: 2; }
+.docart .hd { fill: var(--doc-hd); }
+.docart .t1 { font-family: var(--font); font-size: 40px; font-weight: 800; fill: #fff; letter-spacing: -1px; }
+.docart .t2 { font-family: var(--font); font-size: 20px; font-weight: 700; fill: rgba(255,255,255,.72); letter-spacing: 3px; }
+.docart .ln { fill: #E2E8F0; }
+.docart .cbg { fill: var(--soft2); }
+.docart .br { fill: var(--accent2); opacity: .45; }
+.docart .br.b2 { opacity: .9; }
+.docart .stamp rect { fill: rgba(255,255,255,.94); stroke: var(--danger); stroke-width: 6; }
+.docart .stamp text { font-family: var(--font); font-size: 48px; font-weight: 800; fill: var(--danger); letter-spacing: -1px; }
+.cap2 { font-size: 24px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+
+/* 4·6장: 흐름 그림 (기본은 가로) */
+.flow { position: relative; display: flex; align-items: center; justify-content: center; gap: 22px; }
+.flow .node { position: relative; flex: none; display: flex; align-items: center; justify-content: center; }
+.flow .ic { flex: none; width: 112px; height: 112px; border-radius: 50%; display: grid; place-items: center; background: var(--soft); color: var(--accent); }
+.flow .ic svg, .gate .gt svg { width: 56px; height: 56px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.flow .node > b { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%); font-size: 28px; font-weight: 800; color: var(--ink); white-space: nowrap; }
+.flow .node.bad .ic { background: var(--danger-soft); color: var(--danger); }
+.flow .node.ok .ic { background: var(--accent); color: #fff; }
+.flow .users { display: flex; align-items: center; gap: 4px; height: 112px; color: var(--danger); }
+.flow .users svg { width: 48px; height: 48px; fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+.flow .users .u { opacity: 0; transform: translateY(14px); transition: opacity .35s ease, transform .35s ease; }
+.slide.visible .flow .users .u { opacity: 1; transform: none; }
+.u1 { transition-delay: .55s !important; } .u2 { transition-delay: .63s !important; } .u3 { transition-delay: .71s !important; } .u4 { transition-delay: .79s !important; } .u5 { transition-delay: .87s !important; }
+.arr { position: relative; flex: none; width: 104px; height: 4px; border-radius: 2px; background: var(--arrow); }
+.arr::after { content: ''; position: absolute; right: 1px; top: 50%; width: 16px; height: 16px; border-top: 4px solid var(--arrow); border-right: 4px solid var(--arrow); transform: translateY(-50%) rotate(45deg); }
+.arr.dash { background: repeating-linear-gradient(90deg, var(--arrow) 0 14px, transparent 14px 24px); }
+.arr.ok { background: var(--accent); width: 230px; }
+.arr.ok::after { border-color: var(--accent); }
+.arw { display: inline-block; width: .82em; height: .42em; margin: 0 .2em 0 .3em; vertical-align: .16em; max-width: none; max-height: none; fill: none; stroke: currentColor; stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.arr .al { font-style: normal; position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); font-size: 28px; font-weight: 800; color: var(--accent); white-space: nowrap; }
+.flow.assume { padding: 64px 64px 84px; border: 3px dashed var(--warn); border-radius: 28px; }
+.flow.assume::before { content: '가정 시나리오'; position: absolute; top: -24px; left: 44px; padding: 0 16px; background: var(--vis-bg, var(--slide-bg)); color: var(--warn); font-size: 28px; font-weight: 800; line-height: 44px; }
+.gate { flex: none; display: flex; flex-direction: column; gap: 14px; padding: 28px 34px; border-radius: 24px; border: 3px solid var(--accent); background: var(--soft2); }
+.gate .gt { display: flex; align-items: center; gap: 14px; font-size: 32px; font-weight: 800; color: var(--accent); white-space: nowrap; }
+.gate .gt svg { width: 46px; height: 46px; }
+.gate .row { display: flex; align-items: center; gap: 14px; font-size: 28px; font-weight: 800; color: var(--ink); white-space: nowrap; }
+.gate .row .n { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #fff; font-size: 22px; font-weight: 800; }
+.gate .row .m { color: var(--muted); font-weight: 600; }
+.gate .blk { align-self: flex-start; margin-top: 4px; padding: 4px 18px; border-radius: 999px; background: var(--danger-soft); color: var(--danger); font-size: 28px; font-weight: 800; white-space: nowrap; }
+
+/* 5장: 감염 단계 (기본은 세로) */
+.steps { display: flex; flex-direction: column; width: 100%; }
+.steps li { position: relative; display: flex; align-items: flex-start; gap: 28px; padding: 22px 0; }
+.steps .no { flex: none; width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font-size: 28px; font-weight: 800; color: var(--accent); background: var(--slide-bg); border: 3px solid var(--accent); position: relative; z-index: 1; }
+.steps li > div { padding-top: 8px; }
+.steps b { display: block; font-size: 32px; font-weight: 800; line-height: 1.4; color: var(--ink); letter-spacing: -0.02em; }
+.steps em { display: block; margin-top: 8px; font-style: normal; font-size: 28px; font-weight: 500; color: var(--ink2); }
+.steps li.hot .no { background: var(--danger); border-color: var(--danger); color: #fff; }
+.steps li.hot b { color: var(--danger); }
+.steps li:not(:last-child)::after { content: ''; position: absolute; left: 30.5px; top: 86px; bottom: -22px; width: 3px; background: var(--line2); }
+
+/* 7장: 차트 */
+.chartwrap { width: 100%; height: 100%; display: flex; align-items: flex-end; gap: 40px; }
+.chartbox { position: relative; flex: 1; min-width: 0; height: 100%; }
+.chartbox canvas { max-width: none; max-height: none; }
+.delta { flex: none; display: flex; flex-direction: column; align-items: flex-start; padding-bottom: 96px; }
+.delta .dv { display: flex; align-items: baseline; color: var(--accent); font-weight: 800; letter-spacing: -0.05em; line-height: 1; }
+.delta .dv b { font-size: 132px; font-weight: 800; }
+.delta .dv small { font-size: 56px; margin-left: 6px; }
+.delta .dc { margin-top: 14px; font-size: 28px; font-weight: 700; color: var(--ink2); white-space: nowrap; }
+.chart-fallback { font-size: 40px; font-weight: 800; color: var(--accent); }
+
+/* ---------- 발표 조작 버튼 (무대 밖) ---------- */
+.deck-controls { display: flex; align-items: center; gap: 4px; padding: 6px; border-radius: 999px; background: rgba(15,23,42,.78); color: #fff; font: 600 14px/1 var(--font); opacity: 0; transition: opacity .3s; }
+.deck-controls.on, .deck-controls:hover { opacity: 1; }
+.deck-controls button { all: unset; cursor: pointer; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; font-size: 16px; }
+.deck-controls button:hover { background: rgba(255,255,255,.16); }
+.deck-controls span { min-width: 56px; text-align: center; }
+.embedded .deck-controls { display: none; }
+/* 장 탭(눌러서 이동)이 무대 안에 있어 아래 조작 버튼은 숨김. 방향키·스와이프·F는 그대로 */
+.deck-controls { display: none !important; }
+
+
+/* ===== 발표자료 v01 · A1 디자인(흰 바탕 + 짙은 파랑) · 대목차 탭 · 36장 ===== */
+:root {
+  --stage-bg: #D9E0EA; --slide-bg: #FFFFFF;
+  --ink: #141C2E; --ink2: #45506A; --muted: #79859A; --line: #E3E8F0; --line2: #CBD5E3;
+  --accent: #0B3A8F; --accent2: #2E6BE6; --soft: #EDF2FB; --soft2: #F6F9FE;
+  --hl1: #2A3344; --hl2: #0B3A8F; --hl1-w: 400; --hl2-w: 800;
+  --badge-bg: #0B3A8F; --badge-ink: #FFFFFF;
+  --danger: #D2384E; --danger-soft: #FCEBEE; --warn: #B4650A; --warn-soft: #FFF4E3;
+  --pass: #0E8C7E; --pass-soft: #E5F5F2;
+  --arrow: #9AA8BD; --paper: #FFFFFF; --paper-line: #D3DCE8; --doc-hd: #0B3A8F;
+  --track: #E3E8F0; --rest: #C7D3E6; --bar-base: #C3CCDA; --bar-ours: #0B3A8F;
+  /* 신호 색 (18장) */
+  --sg-score: #2E6BE6; --sg-a: #DB2777; --sg-b: #C58A06; --sg-f: #6366F1;
+  --sg-m: #F08C00; --sg-o: #8B5CF6; --sg-s: #0E9F9E;
+}
+/* ---------- 화면 틀 ---------- */
+.topbar { left: 0; right: 0; top: 0; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 120px 0 200px; border-bottom: 2px solid var(--line); font-size: 22px; }
+.topbar .brand { display: flex; align-items: center; gap: 14px; font-weight: 800; color: var(--ink); white-space: nowrap; }
+.topbar .brand i { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 16px 0 0 var(--accent2); margin-right: 18px; }
+.topbar .right { display: flex; align-items: center; gap: 22px; }
+.topbar .meta { color: var(--muted); font-weight: 600; white-space: nowrap; }
+.topbar .meta b { color: var(--warn); font-weight: 800; }
+.fs { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--line2); display: grid; place-items: center; color: var(--ink); transition: background .2s, border-color .2s; }
+.fs:hover { background: var(--soft); border-color: var(--accent2); }
+.fs svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.fs .ex { display: none; }
+.is-fs .fs .en { display: none; }
+.is-fs .fs .ex { display: block; }
+.embedded .fs { display: none; }
+/* 왼쪽 대목차 탭 */
+.rail { left: 0; top: 64px; width: 168px; height: 920px; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+.rail .tb { position: relative; display: flex; align-items: baseline; gap: 10px; padding: 12px 0 12px 62px; font-size: 24px; font-weight: 700; color: var(--muted); transition: color .25s; white-space: nowrap; }
+.rail .tb span { font-size: 22px; font-weight: 600; }
+.rail .tb::before { content: ''; position: absolute; left: 0; top: 50%; width: 0; height: 3px; background: var(--accent); transition: width .3s; }
+.rail .tb.on { color: var(--accent); }
+.rail .tb.on span { font-weight: 800; }
+.rail .tb.on::before { width: 46px; }
+.foot { left: 200px; right: 120px; top: 984px; height: 90px; border-top: 2px solid var(--line); display: flex; align-items: center; justify-content: space-between; font-size: 24px; color: var(--muted); }
+.foot .pg { white-space: nowrap; }
+.foot .pg b { color: var(--accent); font-weight: 800; }
+.foot .pg .lab { margin-left: 24px; color: var(--ink); font-weight: 700; }
+.foot .nav { display: flex; gap: 14px; }
+.foot .nav .tb { width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--line2); display: grid; place-items: center; color: var(--ink); font-size: 20px; }
+.prog { left: 0; right: 0; bottom: 0; height: 6px; background: var(--line); }
+.prog i { display: block; height: 100%; width: calc(var(--p, 0) * 100%); background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .4s; }
+.asteps { left: 640px; right: auto; top: 1004px; grid-template-columns: repeat(3, 230px); }
+.asteps .ind { width: 230px; transform: translateX(calc(var(--pos, 0) * 230px)); }
+
+/* ---------- 장 틀: 머리(소제목 + 제목) → 본문(.vis) → 출처 ---------- */
+.frame { position: absolute; left: 200px; top: 86px; width: 1600px; height: 884px; display: flex; flex-direction: column; }
+.frame > .txt { position: static; }
+.frame > .vis { position: relative; flex: 1; min-height: 0; margin-top: 26px; display: flex; align-items: center; justify-content: center; }
+.frame > .src, .frame > .slide-note { position: static; margin-top: auto; padding-top: 12px; max-width: 1600px; }
+.frame.no-source { padding-bottom: 48px; }
+.eyebrow { display: flex; align-items: center; gap: 14px; height: 44px; }
+.eyebrow .chip { flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #FFFFFF; font-size: 22px; font-weight: 800; }
+.eyebrow .cn { font-size: 22px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+.pgx { font-size: 22px; font-weight: 800; color: var(--accent2); background: var(--soft); padding: 4px 14px; border-radius: 999px; white-space: nowrap; }
+.hl { --hl-size: 64px; margin-top: 12px; line-height: 1.16; }
+.hl.one span { display: inline; }
+.tag.new { color: var(--pass); background: var(--pass-soft); }
+.tag.chk { color: var(--warn); background: var(--warn-soft); outline: 3px dashed var(--warn); outline-offset: -3px; }
+/* 한 줄 머리(아키텍처 장) */
+.arow { display: flex; align-items: center; gap: 18px; height: 76px; }
+.arow .chip { flex: none; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #FFFFFF; font-size: 22px; font-weight: 800; }
+.atitle { font-size: 64px; line-height: 1.15; letter-spacing: -0.045em; white-space: nowrap; }
+.atitle .l1 { color: var(--hl1); font-weight: 400; }
+.atitle .l2 { color: var(--hl2); font-weight: 800; }
+
+/* ---------- 표지 ---------- */
+.cover .txt { left: 200px; top: 196px; width: 1000px; }
+.cover .kick { white-space: normal; }
+.cover .kick i { flex: none; }
+.cover .aib { display: inline-flex; align-items: center; gap: 12px; margin-top: 30px; padding: 6px 22px 6px 14px; border-radius: 999px; background: var(--accent); color: #FFFFFF; font-size: 32px; font-weight: 800; }
+.cover .aib svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.cover .hl { --hl-size: 80px; margin-top: 18px; }
+.cover .lead { max-width: 900px; }
+.cover .vis { left: 1220px; top: 190px; width: 520px; height: 640px; }
+.cover .team { margin-top: 70px; }
+
+/* ---------- 공통 부품 ---------- */
+.cards { display: grid; gap: 26px; width: 100%; }
+.cards.c2 { grid-template-columns: repeat(2, 1fr); }
+.cards.c3 { grid-template-columns: repeat(3, 1fr); }
+.cards.c4 { grid-template-columns: repeat(4, 1fr); }
+.card { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 30px 32px; border-radius: 24px; background: var(--soft2); border: 2px solid var(--line); }
+.card .ch { display: flex; align-items: center; gap: 16px; }
+.card .ci { flex: none; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--soft); color: var(--accent); font-size: 24px; font-weight: 800; }
+.card .ci svg { width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+.card .ct { font-size: 32px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1.3; }
+.card .cb { font-size: 28px; font-weight: 500; color: var(--ink2); line-height: 1.5; letter-spacing: -0.015em; }
+.card .cb b { color: var(--ink); font-weight: 800; }
+.card .cs { font-size: 26px; font-weight: 500; color: var(--muted); line-height: 1.45; }
+.card.k { border-color: var(--accent); }
+.card.k .ci { background: var(--accent); color: #FFFFFF; }
+.card.d { background: var(--danger-soft); border-color: transparent; }
+.card.d .ci { background: var(--danger); color: #FFFFFF; }
+.card.d .ct { color: var(--danger); }
+.card.w { background: var(--warn-soft); border-color: transparent; }
+.card.w .ci { background: var(--warn); color: #FFFFFF; }
+.card.w .ct { color: var(--warn); }
+.card.p { background: var(--pass-soft); border-color: transparent; }
+.card.p .ci { background: var(--pass); color: #FFFFFF; }
+.card.p .ct { color: var(--pass); }
+.card.dim { opacity: .55; }
+/* 흐름 줄 */
+.fl { display: flex; align-items: flex-start; justify-content: center; gap: 14px; width: 100%; }
+.fi { flex: none; width: 250px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.fi .ic { width: 104px; height: 104px; border-radius: 50%; display: grid; place-items: center; background: var(--soft); color: var(--accent); }
+.fi .ic svg { width: 52px; height: 52px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.fi b { font-size: 30px; font-weight: 800; color: var(--ink); line-height: 1.3; letter-spacing: -0.02em; }
+.fi span { font-size: 28px; font-weight: 500; color: var(--ink2); line-height: 1.4; }
+.fi.k .ic { background: var(--accent); color: #FFFFFF; }
+.fi.d .ic { background: var(--danger-soft); color: var(--danger); }
+.fi.d b { color: var(--danger); }
+.fi.p .ic { background: var(--pass); color: #FFFFFF; }
+.fi.p b { color: var(--pass); }
+.fi.w .ic { background: var(--warn-soft); color: var(--warn); }
+.fa { position: relative; flex: none; width: 70px; height: 4px; margin-top: 50px; border-radius: 2px; background: var(--arrow); }
+.fa::after { content: ''; position: absolute; right: 1px; top: 50%; width: 14px; height: 14px; border-top: 4px solid var(--arrow); border-right: 4px solid var(--arrow); transform: translateY(-50%) rotate(45deg); }
+.fa.k { background: var(--accent); } .fa.k::after { border-color: var(--accent); }
+.fa.d { background: var(--danger); } .fa.d::after { border-color: var(--danger); }
+/* 앞뒤 비교 숫자 */
+.ba { display: flex; flex-direction: column; gap: 10px; }
+.ba .bl { font-size: 30px; font-weight: 800; color: var(--ink); }
+.ba .bv { display: flex; align-items: baseline; gap: 10px; white-space: nowrap; }
+.ba .bv .f { font-size: 72px; font-weight: 800; color: var(--muted); letter-spacing: -0.04em; }
+.ba .bv .t { font-size: 112px; font-weight: 800; color: var(--accent); letter-spacing: -0.05em; line-height: 1; }
+.ba .bv .t.p { color: var(--pass); }
+.ba .bv small { font-size: 44px; font-weight: 800; margin-left: 2px; }
+.ba .bv .arw { color: var(--arrow); width: 64px; height: 28px; margin: 0 8px; align-self: center; vertical-align: 0; }
+.ba .bn { font-size: 28px; font-weight: 600; color: var(--ink2); }
+/* 큰 숫자 하나 */
+.kpi { display: flex; flex-direction: column; gap: 8px; }
+.kpi .kv { font-size: 136px; font-weight: 800; color: var(--accent); letter-spacing: -0.05em; line-height: 1; }
+.kpi .kv small { font-size: 60px; margin-left: 4px; }
+.kpi .kl { font-size: 32px; font-weight: 800; color: var(--ink); }
+.kpi .ks { font-size: 28px; font-weight: 500; color: var(--ink2); line-height: 1.45; }
+/* 조건 줄 */
+.cond { display: flex; flex-wrap: wrap; gap: 12px; }
+.cond span { font-size: 28px; font-weight: 600; color: var(--ink2); background: var(--soft2); border: 2px solid var(--line); border-radius: 12px; padding: 6px 16px; }
+.cond span.w { color: var(--warn); background: var(--warn-soft); border-color: transparent; }
+/* 표 */
+.tbl { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 28px; }
+.tbl th { text-align: left; font-size: 26px; font-weight: 800; color: var(--muted); padding: 0 22px 14px; border-bottom: 3px solid var(--line2); }
+.tbl td { padding: 20px 22px; border-bottom: 2px solid var(--line); color: var(--ink2); line-height: 1.45; vertical-align: top; }
+.tbl td.h { font-weight: 800; color: var(--ink); white-space: nowrap; }
+.tbl .hi { color: var(--warn); font-weight: 800; }
+/* 목차 */
+/* 목차(v02): 상자 없이 두 단 목록 — 왼쪽 Ⅰ~Ⅳ, 오른쪽 Ⅴ~Ⅶ, 줄 사이 가는 선 */
+.frame > .vis.toc-layout { align-items: flex-start; padding-top: 52px; }
+.toc { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, auto); grid-auto-flow: column; column-gap: 120px; width: 100%; }
+.toc .tc { display: grid; grid-template-columns: 96px 1fr auto; align-items: baseline; column-gap: 8px; padding: 30px 4px 26px; border-bottom: 2px solid var(--line); }
+.toc .tc .tn { font-size: 44px; font-weight: 800; color: var(--accent); line-height: 1; }
+.toc .tc .tt { font-size: 34px; font-weight: 800; color: var(--ink); line-height: 1.3; letter-spacing: -0.02em; }
+.toc .tc .tr { font-size: 26px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+/* 두 칸 나눔 */
+.split { display: grid; grid-template-columns: 600px 1fr; gap: 60px; width: 100%; align-items: center; }
+.lead2 { font-size: 30px; line-height: 1.55; font-weight: 500; color: var(--ink2); }
+.lead2 b { color: var(--ink); font-weight: 800; }
+.decision-conclusion {
+  flex: none;
+  margin-bottom: 32px;
+  padding-top: 20px;
+  color: var(--ink2);
+  font-size: 36px;
+  line-height: 1.4;
+  font-weight: 600;
+  text-align: center;
+}
+.decision-conclusion b { color: var(--accent); font-weight: 800; }
+.pts { display: flex; flex-direction: column; gap: 22px; }
+.pts li { display: flex; gap: 16px; font-size: 30px; line-height: 1.45; color: var(--ink2); font-weight: 500; }
+.pts li::before { content: ''; flex: none; width: 12px; height: 12px; margin-top: 15px; border-radius: 50%; background: var(--accent2); }
+.pts li b { color: var(--ink); font-weight: 800; }
+.svgv { width: 100%; height: 100%; max-width: none; max-height: none; overflow: visible; }
+.svgv text { font-family: var(--font); }
+/* 10장 카메라: 창 높이를 출처 줄 위까지로 */
+.archview { position: absolute; left: 200px; top: 192px; width: 1600px; height: 724px; overflow: hidden; z-index: 3; opacity: 0; pointer-events: none; transition: opacity .4s ease;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 40px, #000 calc(100% - 44px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 40px, #000 calc(100% - 44px), transparent 100%); }
+.archview.on { opacity: 1; }
+.atrack { position: absolute; left: 0; top: 0; width: 1600px; height: 1800px; transform: translateY(calc(var(--off, 0) * -1px)); transition: transform .8s cubic-bezier(.65, 0, .35, 1); }
+.alines { position: absolute; left: 0; top: 0; max-width: none; max-height: none; overflow: visible; }
+.alines > path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.alines .ln { stroke: var(--arrow); stroke-width: 4; marker-end: url(#m-n); }
+.alines .ln.a { stroke: var(--accent); marker-end: url(#m-a); }
+.alines .ln.d { stroke: var(--danger); marker-end: url(#m-d); }
+.alines .ln.p { stroke: var(--pass); marker-end: url(#m-p); }
+.alines .ln.nm { marker-end: none; }
+.alines .lane { stroke-width: 8; stroke-opacity: .24; stroke: var(--arrow); }
+.atrack [data-lv] { opacity: 0; transition: opacity .35s ease; }
+.atrack [data-lv].lvon { opacity: 1; transition: opacity .45s ease .28s; }
+.atrack .an[data-lv], .atrack .al2[data-lv] { transform: translateY(26px); transition: opacity .35s ease, transform .5s cubic-bezier(.2, .7, .2, 1); }
+.atrack .an.lvon, .atrack .al2.lvon { transform: none; transition: opacity .45s ease .28s, transform .55s cubic-bezier(.2, .7, .2, 1) .28s; }
+/* v02: 아키텍처 상자는 모두 같은 크기(640×96), 글자도 키움 */
+.an { position: absolute; left: calc(var(--cx) * 1px); translate: -50% 0; box-sizing: border-box; width: 640px; height: 96px; display: flex; align-items: center; gap: 20px; padding: 0 24px 0 20px; border-radius: 24px; background: #FFFFFF; border: 2px solid var(--line2); box-shadow: 0 10px 28px rgba(16, 40, 90, .07); white-space: nowrap; overflow: hidden; }
+.an .ai { flex: none; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--soft); color: var(--accent); }
+.an .ai svg, .sig svg, .fb svg { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.an .ai svg { width: 34px; height: 34px; stroke-width: 3.4; }
+.an .at { display: flex; flex-direction: column; gap: 0; min-width: 0; }
+.an b { font-size: 34px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1.18; }
+.an .at > span { font-size: 25px; font-weight: 600; color: var(--muted); line-height: 1.3; }
+.an.key { border: 3px solid var(--accent); background: var(--soft2); }
+.an.key .ai { background: var(--accent); color: #FFFFFF; }
+.an.pc { border: 3px dashed var(--accent2); }
+.an.pc .ai { background: var(--soft); color: var(--accent2); }
+.an.de { background: var(--accent); border-color: var(--accent); }
+.an.de b { color: #FFFFFF; }
+.an.de .at > span { color: rgba(255, 255, 255, .8); }
+.an.de .ai { background: rgba(255, 255, 255, .16); color: #FFFFFF; }
+.an.q { border: 3px solid var(--danger); }
+.an.q .ai { background: var(--danger-soft); color: var(--danger); }
+.an.p { border: 3px solid var(--pass); }
+.an.p .ai { background: var(--pass-soft); color: var(--pass); }
+.al2 { position: absolute; left: calc(var(--x) * 1px); display: flex; align-items: center; height: 44px; font-size: 28px; font-weight: 500; color: var(--ink2); white-space: nowrap; }
+.al2.c { translate: -50% 0; }
+.al2.r { translate: -100% 0; }
+.al2 b { font-weight: 800; color: var(--ink); margin-right: 12px; }
+.al2.d b { color: var(--danger); } .al2.p b { color: var(--pass); }
+.sig { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px 0 12px; margin-right: 14px; border-radius: 999px; background: var(--accent); color: #FFFFFF; font-size: 28px; font-weight: 800; }
+.sig svg { width: 24px; height: 24px; fill: currentColor; stroke: none; }
+.fb { color: var(--muted); font-weight: 600; }
+.fb svg { width: 28px; height: 28px; stroke-width: 3; margin-right: 10px; color: var(--danger); }
+/* 전체 흐름도(3장) */
+.ov { position: relative; width: 1600px; height: 560px; }
+.ovlines { position: absolute; left: 0; top: 0; max-width: none; max-height: none; overflow: visible; }
+.ovlines .e { fill: none; stroke-width: 5; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .5s ease; }
+.slide.visible .ovlines .e { stroke-dashoffset: 0; }
+.ovlines .h { opacity: 0; transition: opacity .2s ease; }
+.slide.visible .ovlines .h { opacity: 1; }
+.ovlines .a { stroke: var(--accent); fill: var(--accent); }
+.ovlines .n { stroke: var(--arrow); fill: var(--arrow); }
+.ovlines .p { stroke: var(--pass); fill: var(--pass); }
+.ovlines .d { stroke: var(--danger); fill: var(--danger); }
+.ovlines .e.a, .ovlines .e.n, .ovlines .e.p, .ovlines .e.d { fill: none; }
+.ovn { position: absolute; left: calc(var(--cx) * 1px); top: calc(var(--cy) * 1px); translate: -50% -50%; width: 124px; height: 124px; border-radius: 50%; display: grid; place-items: center; background: var(--soft); color: var(--accent); }
+.ovn svg { width: 56px; height: 56px; fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+.ovn.k { background: var(--accent); color: #FFFFFF; }
+.ovn.p { background: var(--pass); color: #FFFFFF; }
+.ovn.d { background: var(--danger); color: #FFFFFF; }
+.ovt { position: absolute; left: calc(var(--cx) * 1px); top: calc(var(--cy) * 1px); translate: -50% 0; font-size: 30px; font-weight: 800; color: var(--ink); white-space: nowrap; text-align: center; line-height: 1.3; }
+.ovt span { display: block; font-size: 24px; font-weight: 600; color: var(--muted); }
+.ovt.p { color: var(--pass); } .ovt.d { color: var(--danger); }
+.ovs { position: absolute; left: calc(var(--cx) * 1px); top: calc(var(--cy) * 1px); translate: -50% -50%; white-space: nowrap; font-size: 28px; font-weight: 700; color: var(--ink2); }
+.ovs.sig { margin: 0; color: #FFFFFF; font-weight: 800; }
+.ovs.p { color: var(--pass); font-weight: 800; } .ovs.d { color: var(--danger); font-weight: 800; }
+.ov .rv { transform: translateY(18px); }
+/* 12장(v02): 전체 아키텍처 한눈에 — 작은 동그라미, 위 줄 이름은 위에 */
+.ov.ov2 { height: 590px; }
+.ovn.sm { width: 92px; height: 92px; }
+.ovn.sm svg { width: 42px; height: 42px; }
+.ovn.pcn { background: #FFFFFF; color: var(--accent2); border: 3px dashed var(--accent2); }
+.ovt.sm { font-size: 28px; }
+.ovt.sm span { font-size: 22px; }
+.ovt.up { translate: -50% -100%; }
+.ovz { position: absolute; border: 3px dashed var(--accent2); border-radius: 28px; background: rgba(46, 107, 230, .04); }
+.ovs.zl { font-size: 26px; font-weight: 800; color: var(--accent2); }
+
+/* ---------- 18장 결합층 애니메이션 ---------- */
+.comb { position: relative; width: 1600px; height: 560px; flex: none; }
+.comb .cl { position: absolute; left: 0; top: 0; max-width: none; max-height: none; overflow: visible; }
+.comb .cl .bus { fill: none; stroke: var(--line2); stroke-width: 6; stroke-linecap: round; transition: stroke .25s; }
+.comb .cl .bus.lit { stroke: var(--c); }
+.comb .cl .pl { fill: none; stroke: var(--c); stroke-width: 10; stroke-linecap: round; stroke-dasharray: 14 100; stroke-dashoffset: 14; opacity: 0; }
+.comb .cl .ot { fill: none; stroke: var(--line2); stroke-width: 5; stroke-linecap: round; transition: stroke .25s; }
+.comb .cl .ot.k { stroke: var(--accent); } .comb .cl .ot.p { stroke: var(--pass); } .comb .cl .ot.d { stroke: var(--danger); }
+.comb .box { position: absolute; border-radius: 22px; border: 2px solid var(--line2); background: #FFFFFF; }
+.comb .bt { position: absolute; left: 0; right: 0; text-align: center; font-size: 28px; font-weight: 800; color: var(--ink); }
+.comb .dock { left: 20px; top: 210px; width: 140px; height: 140px; border-style: dashed; background: var(--soft2); }
+.comb .dock .bt { top: 146px; }
+.comb .gate { left: 210px; top: 150px; width: 220px; height: 260px; }
+.comb .gate .bt { top: 18px; }
+.comb .gl { position: absolute; left: 34px; display: flex; align-items: center; gap: 14px; font-size: 24px; font-weight: 700; color: var(--ink2); }
+.comb .dot { width: 26px; height: 26px; border-radius: 50%; background: var(--line); border: 3px solid var(--line2); transition: background .2s, border-color .2s, box-shadow .2s; }
+.comb .gl.red .dot { background: var(--danger); border-color: var(--danger); box-shadow: 0 0 0 8px rgba(210, 56, 78, .18); }
+.comb .gl.ok .dot { background: var(--pass); border-color: var(--pass); box-shadow: 0 0 0 8px rgba(14, 140, 126, .16); }
+.comb .gck { position: absolute; left: 0; right: 0; bottom: 18px; text-align: center; font-size: 26px; font-weight: 800; color: var(--pass); opacity: 0; transition: opacity .2s; }
+.comb .gate.ok .gck { opacity: 1; }
+.comb .blk { position: absolute; left: 370px; top: 28px; width: 140px; height: 60px; border-radius: 999px; display: grid; place-items: center; font-size: 30px; font-weight: 800; color: var(--danger); background: var(--danger-soft); border: 3px solid var(--danger); }
+.comb .hit { animation: hitpop .45s cubic-bezier(.3, 1.4, .5, 1); }
+.comb .blk.hit { box-shadow: 0 0 0 10px rgba(210, 56, 78, .2); }
+.comb .out.k.hit { box-shadow: 0 0 0 10px rgba(46, 107, 230, .28); }
+.comb .out.p.hit { box-shadow: 0 0 0 10px rgba(14, 140, 126, .22); }
+@keyframes hitpop { 0% { transform: scale(1); } 40% { transform: scale(1.12); } 100% { transform: scale(1); } }
+.comb .gtx { position: absolute; left: 128px; top: 96px; font-size: 22px; font-weight: 800; color: var(--danger); }
+.comb .row { position: absolute; left: 500px; width: 610px; height: 104px; border-radius: 22px; background: var(--soft2); border: 2px solid var(--line); }
+.comb .row .rn { position: absolute; left: 22px; top: 0; height: 104px; display: flex; align-items: center; font-size: 28px; font-weight: 800; color: var(--ink); }
+.comb .lamp { position: absolute; top: 24px; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; font-size: 24px; font-weight: 800; color: var(--muted); background: #FFFFFF; border: 3px solid var(--line2); transition: background .2s, color .2s, border-color .2s, box-shadow .25s; }
+.comb .lamp.on { background: var(--c); border-color: var(--c); color: #FFFFFF; box-shadow: 0 0 0 10px color-mix(in srgb, var(--c) 22%, transparent), 0 0 28px var(--c); }
+.comb .lamp.dim { border-style: dashed; color: var(--line2); background: transparent; }
+.comb .lamp.sc { width: 68px; border-radius: 28px; font-size: 22px; letter-spacing: -0.03em; }
+.comb .rec { position: absolute; top: -30px; font-size: 22px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+.comb .gauge { position: absolute; top: 40px; width: 200px; height: 24px; border-radius: 12px; background: #FFFFFF; border: 2px solid var(--line2); overflow: hidden; }
+.comb .gauge i { display: block; height: 100%; width: 0; background: var(--sg-score); transition: width .35s cubic-bezier(.2, .7, .2, 1); }
+.comb .gtick { position: absolute; top: 30px; width: 4px; height: 44px; border-radius: 2px; background: var(--ink); }
+.comb .core { left: 1200px; top: 150px; width: 180px; height: 260px; border: 3px solid var(--accent); background: var(--soft2); }
+.comb .core .bt { top: 14px; color: var(--accent); }
+.comb .vbar { position: absolute; left: 70px; top: 64px; width: 40px; height: 150px; border-radius: 12px; background: #FFFFFF; border: 2px solid var(--line2); overflow: hidden; }
+.comb .vbar i { position: absolute; left: 0; right: 0; bottom: 0; height: 8%; background: var(--rest); transition: height .35s cubic-bezier(.2, .7, .2, 1), background .2s; }
+.comb .vbar i.hi { background: var(--accent); }
+.comb .thr { position: absolute; left: 52px; top: 110px; width: 76px; height: 4px; background: var(--danger); border-radius: 2px; }
+.comb .mou { position: absolute; left: 0; right: 0; top: 220px; text-align: center; font-size: 26px; font-weight: 800; color: var(--sg-m); opacity: 0; transition: opacity .2s; }
+.comb .mou.on { opacity: 1; }
+.comb .out { position: absolute; left: 1440px; width: 160px; height: 76px; border-radius: 18px; display: grid; place-items: center; font-size: 28px; font-weight: 800; }
+.comb .out.k { top: 122px; background: var(--accent); color: #FFFFFF; }
+.comb .out.p { top: 362px; background: var(--pass-soft); color: var(--pass); border: 3px solid var(--pass); }
+.comb .pdft { position: absolute; left: 1404px; top: 208px; width: 196px; padding: 6px 12px; border-radius: 10px; font-size: 22px; font-weight: 800; line-height: 1.3; color: var(--warn); background: var(--warn-soft); opacity: 0; transition: opacity .2s; }
+.comb .pdft.on { opacity: 1; }
+.comb .leg { position: absolute; left: 0; right: 0; top: 506px; text-align: center; font-size: 24px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.comb .leg b { font-weight: 800; }
+.comb .tok { position: absolute; left: 0; top: 0; width: 76px; height: 90px; opacity: 0; pointer-events: none; z-index: 4; }
+.comb .tok .tb2 { width: 100%; height: 100%; border-radius: 10px 22px 10px 10px; background: #FFFFFF; border: 3px solid var(--ink2); display: grid; place-items: center; font-size: 22px; font-weight: 800; color: var(--ink2); box-shadow: 0 10px 22px rgba(16, 40, 90, .18); }
+.comb .tok.bad .tb2 { border-color: var(--danger); color: var(--danger); background: var(--danger-soft); }
+.comb .tok.k .tb2 { border-color: var(--accent); color: var(--accent); }
+/* 장 안 단계 표시 */
+.stepdots { position: absolute; right: 0; top: 4px; display: flex; gap: 10px; }
+.stepdots i { width: 14px; height: 14px; border-radius: 50%; background: var(--line2); transition: background .2s; }
+.stepdots i.on { background: var(--accent2); }
+/* 18장(v02 19장) 단계 설명 한 줄: 지금 단계만 보임 */
+.stepcap { position: absolute; left: 0; top: 0; right: 120px; height: 40px; margin: 0; }
+.stepcap span { position: absolute; left: 0; top: 0; font-size: 28px; font-weight: 700; color: var(--ink2); white-space: nowrap; opacity: 0; transition: opacity .25s ease; }
+.stepcap span.on { opacity: 1; }
+.stepcap b { color: var(--accent); margin-right: 10px; }
+
+
+@font-face { font-family: 'ArrowFix'; src: local('Segoe UI Symbol'), local('Segoe UI'), local('Malgun Gothic'), local('Apple SD Gothic Neo'), local('Arial'); unicode-range: U+2190-21FF, U+2794, U+222A; }
+:root { --font: 'ArrowFix', 'SUIT Variable', 'SUIT', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; }
+.fl.pipe .fi { width: 232px; }
+.fl.pipe .fa { width: 56px; }
+.fl.demo-flow { gap: 12px; }
+.fl.demo-flow .fi { flex: 1; width: auto; min-width: 0; }
+.fl.demo-flow .fi.wide { flex-grow: 1.4; }
+.fl.demo-flow .fa { width: 44px; }
+.demo-actions { position: relative; bottom: 32px; flex: none; display: flex; justify-content: center; margin-bottom: 32px; }
+.demo-play, .demo-close { font: inherit; font-weight: 800; cursor: pointer; }
+.demo-play { display: inline-flex; align-items: center; gap: 12px; padding: 14px 24px; border: 0; border-radius: 12px; background: var(--accent); color: #FFFFFF; font-size: 28px; }
+.demo-play:focus-visible, .demo-close:focus-visible { outline: 3px solid var(--accent2); outline-offset: 4px; }
+.demo-dialog { margin: auto; width: min(92vw, 1320px); max-height: 94vh; padding: 16px; border: 0; border-radius: 16px; background: var(--ink); color: #FFFFFF; }
+.demo-dialog::backdrop { background: rgba(6, 14, 31, .82); }
+.demo-dialog-toolbar { display: flex; justify-content: flex-end; margin-bottom: 10px; }
+.demo-close { padding: 8px 14px; border: 1px solid var(--line2); border-radius: 8px; background: transparent; color: inherit; }
+.demo-dialog video { display: block; width: 100%; max-height: 76vh; aspect-ratio: 16 / 9; background: #000000; object-fit: contain; }
+.demo-video-status { margin-top: 12px; line-height: 1.5; }
+.col { display: flex; flex-direction: column; gap: 34px; width: 100%; }
+.cond.bottom-notes { flex: none; justify-content: center; margin-bottom: 80px; text-align: center; }
+.col.c { align-items: center; }
+.split.w5 { grid-template-columns: 520px 1fr; }
+.split.w6 { grid-template-columns: 700px 1fr; }
+.split.w9 { grid-template-columns: 900px 1fr; }
+.comb .dic { position: absolute; left: 0; right: 0; top: 32px; display: grid; place-items: center; color: var(--accent); }
+.comb .dic svg { width: 64px; height: 64px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.zones { display: grid; grid-template-columns: 1fr 200px 1fr; align-items: center; gap: 24px; width: 100%; }
+.zone2 { display: flex; flex-direction: column; gap: 14px; padding: 26px 30px; border-radius: 24px; border: 3px solid var(--accent); background: var(--soft2); }
+.zone2.pc { border-style: dashed; border-color: var(--accent2); }
+.zone2 .zh { display: flex; align-items: center; gap: 12px; font-size: 32px; font-weight: 800; color: var(--accent); }
+.zone2 .zh svg { width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.zone2 .zi { display: flex; align-items: baseline; gap: 16px; padding: 12px 18px; border-radius: 14px; background: #FFFFFF; }
+.zone2 .zi b { flex: none; width: 120px; font-size: 30px; font-weight: 800; color: var(--ink); }
+.zone2 .zi span { font-size: 28px; color: var(--ink2); }
+.zlink { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 26px; font-weight: 800; color: var(--accent2); text-align: center; }
+.zlink span { white-space: nowrap; }
+.zlink em { font-style: normal; font-size: 22px; font-weight: 600; color: var(--ink2); white-space: nowrap; }
+.zlink .arw { width: 120px; height: 30px; margin: 0; vertical-align: 0; }
+.mini { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 6px 0 4px; }
+.mini .arw { width: 34px; height: 18px; color: var(--arrow); }
+.ftk { display: inline-flex; align-items: center; height: 52px; padding: 0 18px; border-radius: 12px; border: 2px solid var(--line2); background: #FFFFFF; font-size: 28px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.ftk.m { font-family: Consolas, 'Courier New', monospace; font-size: 26px; color: var(--ink2); }
+.ftk.w { border-color: var(--warn); color: var(--warn); background: var(--warn-soft); }
+.mini.format-flow { flex-wrap: nowrap; gap: 6px; }
+.mini.format-flow .arw { flex: 0 0 20px; margin: 0; }
+.mini.format-flow .ftk { padding-inline: 8px; font-size: 24px; }
+.ftk.big { height: 60px; font-size: 30px; }
+.fi .ftk { margin-bottom: 4px; }
+.scope { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.scope span { padding: 18px 22px; border-radius: 16px; border: 2px solid var(--line2); font-size: 28px; font-weight: 700; color: var(--ink2); text-align: center; }
+.scope span.on { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+.scope span.off { border-style: dashed; color: var(--muted); }
+.rules { display: flex; flex-direction: column; gap: 18px; }
+.rule { display: grid; grid-template-columns: 180px 1fr 460px; align-items: center; gap: 24px; padding: 18px 28px; border-radius: 20px; background: var(--soft2); border: 2px solid var(--line); }
+.rule .rf { font-size: 32px; font-weight: 800; color: var(--ink); }
+.rule .rc { display: flex; align-items: center; gap: 12px; font-size: 28px; font-weight: 700; color: var(--muted); }
+.rule .rc i { font-style: normal; display: inline-grid; place-items: center; min-width: 56px; height: 56px; padding: 0 14px; border-radius: 999px; background: var(--c); color: #FFFFFF; font-size: 26px; font-weight: 800; }
+.rule .rc i.s { border-radius: 14px; }
+.rule .rr { font-size: 28px; font-weight: 800; color: var(--accent); }
+.dplot .dn { fill: #B8C4D6; } .dplot .dm { fill: var(--danger); }
+.dplot .zone { fill: var(--soft); } .dplot .zt { font-size: 28px; font-weight: 800; fill: var(--accent); }
+.dplot .ax { stroke: var(--ink2); stroke-width: 3; } .dplot .axl, .dplot .lg { font-size: 24px; font-weight: 700; fill: var(--ink2); }
+.dplot .alt { stroke: var(--arrow); stroke-width: 3; stroke-dasharray: 8 8; }
+.dplot .thr2 { stroke: var(--accent); stroke-width: 6; }
+.dplot .tl { font-size: 28px; font-weight: 800; fill: var(--accent); } .dplot .al { font-size: 24px; font-weight: 700; fill: var(--muted); }
+.ptree { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.ptree span { display: inline-flex; align-items: center; height: 56px; padding: 0 20px; border-radius: 12px; border: 2px solid var(--ink2); background: #FFFFFF; font-family: Consolas, 'Courier New', monospace; font-size: 28px; font-weight: 700; color: var(--ink); }
+.ptree span.bad { border-color: var(--danger); color: var(--danger); }
+.ptree .arw { width: 44px; height: 20px; color: var(--danger); }
+.ptree em { font-style: normal; font-size: 28px; font-weight: 700; color: var(--danger); }
+.fc { position: relative; width: 1600px; height: 650px; flex: none; }
+.fc .fcl .fe { fill: none; stroke: var(--arrow); stroke-width: 4; marker-end: url(#f-n); }
+.fc .fcl .fe.d { stroke: var(--danger); marker-end: url(#f-d); }
+.fc .fcl .fe.w { stroke: var(--warn); marker-end: url(#f-w); }
+.fc .fcl .fe.p { stroke: var(--pass); marker-end: url(#f-p); }
+.fc .fn { position: absolute; left: calc(var(--cx) * 1px); top: calc(var(--cy) * 1px); translate: -50% -50%; min-width: 320px; height: 64px; display: grid; place-items: center; padding: 0 22px; border-radius: 16px; border: 3px solid var(--line2); background: #FFFFFF; font-size: 28px; font-weight: 800; color: var(--ink); white-space: nowrap; }
+.fc .fn.k { border-color: var(--accent); color: var(--accent); background: var(--soft2); }
+.fc .fd { position: absolute; left: calc(var(--cx) * 1px); top: calc(var(--cy) * 1px); translate: -50% -50%; width: 380px; height: 96px; display: grid; place-items: center; background: var(--soft); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); font-size: 28px; font-weight: 800; color: var(--accent); white-space: nowrap; }
+.fc .fy { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); font-size: 24px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+.fc .fy.c { translate: -50% 0; }
+.fc .fo { position: absolute; left: calc(var(--cx) * 1px); top: calc(var(--cy) * 1px); translate: -50% -50%; width: 150px; height: 58px; display: grid; place-items: center; border-radius: 999px; font-size: 30px; font-weight: 800; border: 3px solid; }
+.fc .fo.sm { width: 140px; height: 50px; font-size: 28px; }
+.fc .fo.d { color: var(--danger); border-color: var(--danger); background: var(--danger-soft); }
+.fc .fo.w { color: var(--warn); border-color: var(--warn); background: var(--warn-soft); }
+.fc .fo.p { color: var(--pass); border-color: var(--pass); background: var(--pass-soft); }
+.fc .fr { position: absolute; left: calc(var(--x) * 1px); top: calc(var(--y) * 1px); translate: 0 -50%; font-size: 26px; font-weight: 600; color: var(--ink2); white-space: nowrap; }
+.fc .fnote { position: absolute; left: 0; top: 90px; width: 330px; display: flex; flex-direction: column; gap: 12px; padding: 24px 26px; border-radius: 20px; background: var(--soft2); border: 2px solid var(--line); }
+.fc .fnote b { font-size: 28px; font-weight: 800; color: var(--accent); }
+.fc .fnote span { font-size: 28px; font-weight: 700; color: var(--ink); line-height: 1.4; }
+.fc .fnote em { font-style: normal; font-size: 26px; font-weight: 700; color: var(--warn); line-height: 1.45; padding-top: 10px; border-top: 2px dashed var(--line2); }
+.dgrid { display: grid; grid-template-columns: repeat(10, 30px); gap: 12px; }
+.dgrid i { width: 30px; height: 30px; border-radius: 50%; background: #C9D3E2; }
+.dgrid i.mid { background: color-mix(in srgb, var(--accent2) 40%, #FFFFFF); }
+.dgrid i.on { background: var(--accent); box-shadow: 0 0 0 5px rgba(11, 58, 143, .18); }
+.bas { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.sct .band { fill: var(--pass-soft); } .sct .bt2 { font-size: 22px; font-weight: 800; fill: var(--pass); }
+.sct .ax { stroke: var(--ink2); stroke-width: 3; } .sct .tk { font-size: 22px; font-weight: 600; fill: var(--muted); }
+.sct .axl { font-size: 24px; font-weight: 700; fill: var(--ink2); }
+.sct .pn { fill: #B8C4D6; } .sct .pk { fill: var(--accent); }
+.sct .pl2 { font-size: 26px; font-weight: 700; fill: var(--ink2); } .sct .plk { font-size: 28px; font-weight: 800; fill: var(--accent); }
+.code { display: flex; align-items: center; gap: 18px; padding: 22px 26px; border-radius: 18px; background: #0F1A2E; color: #E3E8F0; font-size: 28px; font-weight: 600; }
+.code .m { flex: none; padding: 6px 14px; border-radius: 10px; background: rgba(255, 255, 255, .12); font-family: Consolas, 'Courier New', monospace; font-size: 26px; color: #9EC1FF; }
+.code b { color: #FFD38A; font-weight: 800; }
+.endc { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+.end1 { font-size: 56px; font-weight: 500; color: var(--hl1); letter-spacing: -0.03em; }
+.end2 { font-size: 64px; font-weight: 800; color: var(--accent); letter-spacing: -0.04em; }
+.qa { margin-top: 40px; padding: 14px 40px; border-radius: 999px; background: var(--accent); color: #FFFFFF; font-size: 36px; font-weight: 800; }
+
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="stage">
+
+<section class="slide cover" data-ch="1" data-chs="소개" data-chn="프로젝트 소개 및 정의" data-label="표지" aria-label="표지">
+  <div class="txt">
+    <p class="kick rv d1"><i></i><span>심화 심층 데이터 분석을 통한 개인 맞춤형 예측 자동화 서비스 최종프로젝트</span></p>
+    <span class="aib rv d2"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/><path d="M38 32l1.6 4.4L44 38l-4.4 1.6L38 44l-1.6-4.4L32 38l4.4-1.6z"/></svg>AI 기반</span>
+    <h1 class="hl rv d2"><span class="l1">업로드 파일 악성코드</span><span class="l2">사전 탐지·차단 시스템</span></h1>
+    <p class="lead rv d3">올라온 파일을 배포 전에 검사하고, 통과한 파일만 내보냅니다.</p>
+    <div class="team rv d5"><b>팀명 미리막음 · 발표자 구명회 김윤준 남유진 이인애</b><span>스피디 기업 연계 프로젝트 · 2026. 11. 24.</span></div>
+  </div>
+  <div class="vis"><div class="art blur"><svg class="fileart" viewBox="0 0 400 500" role="img" aria-label="검사를 통과한 파일 그림">
+  <path class="pg" d="M40 14h220l100 100v356a16 16 0 0 1-16 16H40a16 16 0 0 1-16-16V30a16 16 0 0 1 16-16z"/>
+  <path class="fold" d="M260 14v84a16 16 0 0 0 16 16h84z"/>
+  <rect class="ln a" x="72" y="150" width="150" height="20" rx="10"/>
+  <rect class="ln" x="72" y="198" width="230" height="14" rx="7"/>
+  <rect class="ln" x="72" y="230" width="250" height="14" rx="7"/>
+  <rect class="ln" x="72" y="262" width="196" height="14" rx="7"/>
+  <rect class="ln" x="72" y="294" width="150" height="14" rx="7"/>
+  <rect class="ln" x="72" y="326" width="120" height="14" rx="7"/>
+  <g class="pop"><path class="sh" d="M300 300l70 26v52c0 44-30 78-70 94-40-16-70-50-70-94v-52z"/><path class="ck" d="M268 386l22 22 44-48"/></g>
+</svg></div></div>
+</section>
+
+<section class="slide" data-ch="1" data-chs="소개" data-chn="프로젝트 소개 및 정의" data-label="발표 목차" aria-label="발표 목차">
+<div class="frame">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅰ</span><span class="cn">프로젝트 소개 및 정의</span></div><h2 class="hl one rv d2"><span class="l2">발표 목차</span></h2></div><div class="vis toc-layout"><div class="toc"><div class="tc rv d2"><span class="tn">Ⅰ</span><span class="tt">프로젝트 소개 및 정의</span><span class="tr" data-range="1"></span></div><div class="tc rv d3"><span class="tn">Ⅱ</span><span class="tt">추진 배경과 서비스 설계</span><span class="tr" data-range="2"></span></div><div class="tc rv d4"><span class="tn">Ⅲ</span><span class="tt">정적 분석과 정밀 검사 대상 선별</span><span class="tr" data-range="3"></span></div><div class="tc rv d5"><span class="tn">Ⅳ</span><span class="tt">동적 분석과 최종 판정</span><span class="tr" data-range="4"></span></div><div class="tc rv d6"><span class="tn">Ⅴ</span><span class="tt">정적 분석 검증과 개선</span><span class="tr" data-range="5"></span></div><div class="tc rv d7"><span class="tn">Ⅵ</span><span class="tt">정적 분석 시연</span><span class="tr" data-range="6"></span></div><div class="tc rv d8"><span class="tn">Ⅶ</span><span class="tt">서비스 기대 효과와 운영 한계</span><span class="tr" data-range="7"></span></div></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="1" data-chs="소개" data-chn="프로젝트 소개 및 정의" data-label="배포 전 검사 시스템" aria-label="배포 전 검사 시스템">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅰ</span><span class="cn">프로젝트 소개 및 정의</span></div><h2 class="hl one rv d2"><span class="l1">업로드 파일을 </span><span class="l2">배포 전에 검사하는 시스템</span></h2></div><div class="vis"><div class="col"><div class="cond rv d3"><span>주요 고객 · 공공·교육기관 · 게임·에듀테크</span></div><div class="ov">
+<svg class="ovlines" width="1600" height="560" viewBox="0 0 1600 560" aria-hidden="true">
+  <path class="e a" pathLength="1" style="transition-delay:0.15s" d="M170 270 H398"/><path class="h a" style="transition-delay:0.5s" d="M392 258L414 270L392 282z"/>
+  <path class="e a" pathLength="1" style="transition-delay:0.4s" d="M550 270 H748"/><path class="h a" style="transition-delay:0.75s" d="M742 258L764 270L742 282z"/>
+  <path class="e n" pathLength="1" style="transition-delay:0.4s" d="M480 202 C480 40 1170 40 1170 186"/><path class="h n" style="transition-delay:0.75s" d="M1158 180L1170 202L1182 180z"/>
+  <path class="e n" pathLength="1" style="transition-delay:0.65s" d="M900 270 H1086"/><path class="h n" style="transition-delay:1s" d="M1080 258L1102 270L1080 282z"/>
+  <path class="e p" pathLength="1" style="transition-delay:0.9s" d="M1224 232 C1300 232 1330 110 1396 110"/><path class="h p" style="transition-delay:1.25s" d="M1390 98L1412 110L1390 122z"/>
+  <path class="e d" pathLength="1" style="transition-delay:0.9s" d="M1224 308 C1300 308 1330 430 1396 430"/><path class="h d" style="transition-delay:1.25s" d="M1390 418L1412 430L1390 442z"/>
+</svg>
+<div class="ovn  rv" style="--cx:100;--cy:270;transition-delay:0.05s"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 31V9"/><path d="M15 18l9-9 9 9"/><path d="M8 30v8a3 3 0 0 0 3 3h26a3 3 0 0 0 3-3v-8"/></svg></div><b class="ovt  rv" style="--cx:100;--cy:346;transition-delay:0.05s">업로드</b>
+<div class="ovn k rv" style="--cx:480;--cy:270;transition-delay:0.3s"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="21" cy="21" r="12"/><path d="M30 30l10 10"/></svg></div><b class="ovt  rv" style="--cx:480;--cy:346;transition-delay:0.3s">정적 분석<span>PE 머신러닝 · Office·PDF 규칙</span></b>
+<div class="ovn k rv" style="--cx:830;--cy:270;transition-delay:0.55s"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="7" width="38" height="26" rx="3"/><path d="M17 41h14M24 33v8"/><path d="M21 14l8 6-8 6z"/></svg></div><b class="ovt  rv" style="--cx:830;--cy:346;transition-delay:0.55s">동적 분석<span>의심 파일만 · 격리 환경</span></b>
+<div class="ovn k rv" style="--cx:1170;--cy:270;transition-delay:0.8s"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 7v34M15 41h18M9 13h30"/><path d="M9 13L4 25a5 5 0 0 0 10 0z"/><path d="M39 13l-5 12a5 5 0 0 0 10 0z"/></svg></div><b class="ovt  rv" style="--cx:1170;--cy:346;transition-delay:0.8s">최종 판정</b>
+<div class="ovn p rv" style="--cx:1480;--cy:110;transition-delay:1.1s"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M6 24h36"/><path d="M24 6c5 5 7.5 11 7.5 18S29 37 24 42c-5-5-7.5-11-7.5-18S19 11 24 6z"/></svg></div><b class="ovt p rv" style="--cx:1480;--cy:186;transition-delay:1.1s">배포</b>
+<div class="ovn d rv" style="--cx:1480;--cy:430;transition-delay:1.1s"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="21" width="28" height="21" rx="3"/><path d="M16 21v-6a8 8 0 0 1 16 0v6"/></svg></div><b class="ovt d rv" style="--cx:1480;--cy:506;transition-delay:1.1s">차단·보류</b>
+<span class="ovs sig rv" style="--cx:290;--cy:226;transition-delay:.3s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>업로드 이벤트</span>
+<span class="ovs sig rv" style="--cx:655;--cy:226;transition-delay:.55s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>의심 파일만</span>
+<span class="ovs rv" style="--cx:825;--cy:32;transition-delay:.55s">나머지는 바로 판정</span>
+<span class="ovs p rv" style="--cx:1300;--cy:138;transition-delay:1s">통과</span>
+<span class="ovs d rv" style="--cx:1252;--cy:432;transition-delay:1s">악성·근거 부족</span>
+</div></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="1" data-chs="소개" data-chn="프로젝트 소개 및 정의" data-label="팀 구성" aria-label="팀 구성">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅰ</span><span class="cn">프로젝트 소개 및 정의</span></div><h2 class="hl one rv d2"><span class="l2">팀 구성과 역할 분담</span></h2></div><div class="vis"><div class="cards c2"><div class="card k rv d3"><div class="ct">서비스 기획 및 설계 : 김윤준</div><div class="cb">고객별 검사 정책과 배포·차단·보류 기준</div></div><div class="card k rv d4"><div class="ct">정적 분석 : 구명회</div><div class="cb">PE 모델과 Office·PDF 검사 규칙</div></div><div class="card k rv d5"><div class="ct">동적 분석 : 남유진, 이인애</div><div class="cb">CAPEv2 격리 실행과 클라우드 연결</div></div><div class="card k rv d6"><div class="ct">검증 : 김윤준, 백선병</div><div class="cb">평가 표본과 성능 비교, 두 파일 시연 검증</div></div></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="2" data-chs="배경" data-chn="추진 배경과 서비스 설계" data-label="AI가 문턱을 없앰" aria-label="AI가 문턱을 없앰">
+<div class="frame">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅱ</span><span class="cn">추진 배경과 서비스 설계</span></div><h2 class="hl one rv d2"><span class="l1">악성코드를 만드는 문턱, </span><span class="l2">AI가 없앴습니다</span></h2></div><div class="vis"><div class="split">
+  <div class="col">
+    <p class="lead2 rv d3">코딩 경험이 적어도 <b>AI의 도움을 받아 악성코드를 만들 수 있습니다.</b></p>
+    <p class="evi rv d5"><span class="k">한국도</span>LLM으로 만들었을 가능성이 높은 백도어 ‘HelloDoor’가 군·공무원·방산 직원을 노렸어요.</p>
+  </div>
+  <div class="stat">
+    <div class="big rv d3"><b data-to="1.4" data-dec="1">1.4</b><span>%</span></div>
+    <div class="stat-r">
+      <p class="cap rv d4">AI 관련 악성코드 샘플 2만 2천여 개 중<br><strong>알려진 조직과 연결된 비율</strong></p>
+      <div class="bar fill"><i class="known"></i><i class="rest"></i></div>
+      <div class="bl rv d5"><span class="k">알려진 조직 1.4%</span><span class="r">나머지는 대부분 신원 미상</span></div>
+    </div>
+  </div>
+</div></div><p class="src rv d6">출처 · Arctic Wolf Labs, 2026.03.24 · 데일리시큐, 2026.05.14(카스퍼스키 분석)</p>
+</div>
+</section>
+
+<section class="slide" data-ch="2" data-chs="배경" data-chn="추진 배경과 서비스 설계" data-label="공식 배포 경로 사례" aria-label="공식 배포 경로 사례">
+<div class="frame">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅱ</span><span class="cn">추진 배경과 서비스 설계</span><span class="tag real">실제 사례</span></div><h2 class="hl one rv d2"><span class="l1">공식 다운로드 경로에서도 </span><span class="l2">악성 파일이 배포될 수 있다</span></h2></div><div class="vis"><div class="col"><div class="fl"><div class="fi  rv d3"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="7" width="32" height="14" rx="3"/><rect x="8" y="27" width="32" height="14" rx="3"/><path d="M14 14h2M14 34h2"/></svg></span><b>공식 다운로드 서버</b><span>회사·기관의 공식 경로</span></div><i class="fa  rv d3"></i><div class="fi d rv d4"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 5h15l10 10v26a3 3 0 0 1-3 3H13a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3z"/><path d="M28 5v10h10"/><path d="M17 25h14M17 32h14M17 39h8"/></svg></span><b>설치 파일</b><span>정상 서명 · 안에 악성코드</span></div><i class="fa d rv d4"></i><div class="fi  rv d5"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="18" cy="17" r="7"/><path d="M5 40c0-7.5 5.8-12 13-12s13 4.5 13 12"/><circle cx="33" cy="15" r="6"/><path d="M33 26c6 0 10 4 10 10"/></svg></span><b>사용자 PC</b><span>믿고 설치</span></div></div><div class="cards c2"><div class="card d rv d5"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M17 17l14 14M31 17L17 31"/></svg></span><div class="ct">CCleaner 5.33 · 2017</div></div><div class="cb">공식 다운로드 서버에서 정상 서명된 설치 파일로 배포</div><div class="cs">Cisco Talos, 2017.09.18</div></div><div class="card d rv d6"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M17 17l14 14M31 17L17 31"/></svg></span><div class="ct">한국 · 2024</div></div><div class="cb">건설 관련 협회 홈페이지의 설치 파일에 악성코드 → <b>약 3,000건 이상 설치</b></div><div class="cs">보안뉴스, 2024.02.20</div></div></div></div></div><p class="src rv d6">출처 · Cisco Talos, 2017.09.18 · 보안뉴스, 2024.02.20</p>
+</div>
+</section>
+
+<section class="slide" data-ch="2" data-chs="배경" data-chn="추진 배경과 서비스 설계" data-label="두 가지 문제" aria-label="두 가지 문제">
+<div class="frame">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅱ</span><span class="cn">추진 배경과 서비스 설계</span></div><h2 class="hl one rv d2"><span class="l1">배포 전 검사에서 </span><span class="l2">해결할 두 가지 문제</span></h2></div><div class="vis"><div class="cards c2"><div class="card k rv d3"><div class="ch"><span class="ci">1</span><div class="ct">정적 검사만으로는 이후 동작을 알기 어렵다</div></div><div class="cb">HONESTCUE — 실행 중에 Gemini API로 코드를 만들어 메모리에서 실행</div><div class="cs">Google 위협 인텔리전스(GTIG), 2026-02</div></div><div class="card k rv d4"><div class="ch"><span class="ci">2</span><div class="ct">모든 파일을 정밀 검사하면 늦고 비싸다</div></div><div class="cb">정적 분석은 파일당 <b>약 1초</b>, 동적 분석은 건당 <b>약 260초</b>(분석 200초 + 여유 60초)</div><div class="cs">기획서 1.3(미니 프로젝트 실측 · CAPEv2 기본 설정)</div></div></div></div><p class="src rv d6">출처 · Google GTIG, 2026-02 · 최종 기획서 1.3</p>
+</div>
+</section>
+
+<section class="slide" data-ch="2" data-chs="배경" data-chn="추진 배경과 서비스 설계" data-label="고객 맞춤 선별" aria-label="고객 맞춤 선별">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅱ</span><span class="cn">추진 배경과 서비스 설계</span></div><h2 class="hl one rv d2"><span class="l1">고객의 검사 수준과 비용에 맞춰 </span><span class="l2">선별한다</span></h2></div><div class="vis"><div class="col"><p class="lead2 rv d3"><b>예시</b> · 같은 교육기관의 두 운영 상황</p><div class="cards c2"><div class="card  rv d4"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M24 13v12l8 5"/></svg></span><div class="ct">배포 일정·예산을 우선할 때</div></div><div class="cb">위험도가 높은 파일부터 정밀 검사 — 대상을 <b>좁게</b></div></div><div class="card  rv d5"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="21" cy="21" r="12"/><path d="M30 30l10 10"/></svg></span><div class="ct">더 촘촘한 확인이 필요할 때</div></div><div class="cb">정밀 검사 대상을 <b>넓게</b></div></div></div><div class="card k rv d6"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l16 6v12c0 10-7 18-16 22C15 40 8 32 8 22V10z"/><path d="M17 24l5 5 10-11"/></svg></span><div class="ct">공통 원칙</div></div><div class="cb">악성이 확인되면 <b>차단</b> · 필요한 검사를 마치지 못해 판단이 어려우면 <b>보류</b></div></div></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="2" data-chs="배경" data-chn="추진 배경과 서비스 설계" data-label="아키텍처 ① 업로드·정적" aria-label="아키텍처 ① 업로드·정적" data-arch="1" data-astep="0">
+<div class="frame no-source">
+<div class="txt"><div class="arow rv d1"><span class="chip">Ⅱ</span><h2 class="atitle"><span class="l1">시스템 전체 아키텍처 · </span><span class="l2">업로드부터 배포까지</span></h2><span class="pgx">1/3</span></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="2" data-chs="배경" data-chn="추진 배경과 서비스 설계" data-label="아키텍처 ② 정밀 검사 경로" aria-label="아키텍처 ② 정밀 검사 경로" data-arch="2" data-astep="1">
+<div class="frame no-source">
+<div class="txt"><div class="arow rv d1"><span class="chip">Ⅱ</span><h2 class="atitle"><span class="l1">시스템 전체 아키텍처 · </span><span class="l2">업로드부터 배포까지</span></h2><span class="pgx">2/3</span></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="2" data-chs="배경" data-chn="추진 배경과 서비스 설계" data-label="아키텍처 ③ 판정·배포" aria-label="아키텍처 ③ 판정·배포" data-arch="3" data-astep="2">
+<div class="frame no-source">
+<div class="txt"><div class="arow rv d1"><span class="chip">Ⅱ</span><h2 class="atitle"><span class="l1">시스템 전체 아키텍처 · </span><span class="l2">업로드부터 배포까지</span></h2><span class="pgx">3/3</span></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="2" data-chs="배경" data-chn="추진 배경과 서비스 설계" data-label="아키텍처 한눈에" aria-label="아키텍처 한눈에">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅱ</span><span class="cn">추진 배경과 서비스 설계</span></div><h2 class="hl one rv d2"><span class="l1">시스템 전체 아키텍처 · </span><span class="l2">한눈에 보기</span></h2></div><div class="vis"><div class="ov ov2">
+<div class="ovz rv" style="left:720px;top:330px;width:350px;height:200px;transition-delay:.9s"></div>
+<span class="ovs zl rv" style="--cx:895;--cy:552;transition-delay:.9s">실습 PC · 격리 환경</span>
+<svg class="ovlines" width="1600" height="590" viewBox="0 0 1600 590" aria-hidden="true">
+  <path class="e n" pathLength="1" style="transition-delay:0.1s" d="M120.0 150.0 L190.0 150.0"/><path class="h n" style="transition-delay:0.4s" d="M180.0 161.0L198.0 150.0L180.0 139.0z"/>
+  <path class="e a" pathLength="1" style="transition-delay:0.25s" d="M300.0 150.0 L370.0 150.0"/><path class="h a" style="transition-delay:0.55s" d="M360.0 161.0L378.0 150.0L360.0 139.0z"/>
+  <path class="e n" pathLength="1" style="transition-delay:0.4s" d="M480.0 150.0 L550.0 150.0"/><path class="h n" style="transition-delay:0.7s" d="M540.0 161.0L558.0 150.0L540.0 139.0z"/>
+  <path class="e n" pathLength="1" style="transition-delay:0.6s" d="M660.0 150.0 L1120.0 150.0"/><path class="h n" style="transition-delay:0.8999999999999999s" d="M1110.0 161.0L1128.0 150.0L1110.0 139.0z"/>
+  <path class="e a" pathLength="1" style="transition-delay:0.6s" d="M610.0 200.0 L610.0 340.0"/><path class="h a" style="transition-delay:0.8999999999999999s" d="M599.0 330.0L610.0 348.0L621.0 330.0z"/>
+  <path class="e n" pathLength="1" style="transition-delay:0.8s" d="M660.0 400.0 L740.0 400.0"/><path class="h n" style="transition-delay:1.1s" d="M730.0 411.0L748.0 400.0L730.0 389.0z"/>
+  <path class="e n" pathLength="1" style="transition-delay:0.95s" d="M850.0 400.0 L930.0 400.0"/><path class="h n" style="transition-delay:1.25s" d="M920.0 411.0L938.0 400.0L920.0 389.0z"/>
+  <path class="e n" pathLength="1" style="transition-delay:1.1s" d="M1040.0 400.0 L1120.0 400.0"/><path class="h n" style="transition-delay:1.4000000000000001s" d="M1110.0 411.0L1128.0 400.0L1110.0 389.0z"/>
+  <path class="e n" pathLength="1" style="transition-delay:1.25s" d="M1180.0 350.0 L1180.0 210.0"/><path class="h n" style="transition-delay:1.55s" d="M1191.0 220.0L1180.0 202.0L1169.0 220.0z"/>
+  <path class="e p" pathLength="1" style="transition-delay:1.45s" d="M1230.0 150.0 L1300.0 150.0"/><path class="h p" style="transition-delay:1.75s" d="M1290.0 161.0L1308.0 150.0L1290.0 139.0z"/>
+  <path class="e p" pathLength="1" style="transition-delay:1.6s" d="M1410.0 150.0 L1470.0 150.0"/><path class="h p" style="transition-delay:1.9000000000000001s" d="M1460.0 161.0L1478.0 150.0L1460.0 139.0z"/>
+  <path class="e d" pathLength="1" style="transition-delay:1.45s" d="M1214.6 186.1 L1378.4 356.7"/><path class="h d" style="transition-delay:1.75s" d="M1363.6 357.1L1384.0 362.5L1379.5 341.9z"/>
+</svg>
+<div class="ovn sm  rv" style="--cx:70;--cy:150;transition-delay:0.05s"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 31V9"/><path d="M15 18l9-9 9 9"/><path d="M8 30v8a3 3 0 0 0 3 3h26a3 3 0 0 0 3-3v-8"/></svg></div><b class="ovt sm up rv" style="--cx:70;--cy:92;transition-delay:0.05s">업로드</b>
+<div class="ovn sm  rv" style="--cx:250;--cy:150;transition-delay:0.2s"><svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="11" rx="15" ry="6"/><path d="M9 11v26c0 3.3 6.7 6 15 6s15-2.7 15-6V11"/><path d="M9 24c0 3.3 6.7 6 15 6s15-2.7 15-6"/></svg></div><b class="ovt sm up rv" style="--cx:250;--cy:92;transition-delay:0.2s">S3 incoming/</b>
+<div class="ovn sm  rv" style="--cx:430;--cy:150;transition-delay:0.35s"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="32" height="8" rx="3"/><rect x="8" y="20" width="32" height="8" rx="3"/><rect x="8" y="32" width="32" height="8" rx="3"/></svg></div><b class="ovt sm up rv" style="--cx:430;--cy:92;transition-delay:0.35s">SQS 정적</b>
+<div class="ovn sm k rv" style="--cx:610;--cy:150;transition-delay:0.5s"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="21" cy="21" r="12"/><path d="M30 30l10 10"/></svg></div><b class="ovt sm up rv" style="--cx:610;--cy:92;transition-delay:0.5s">정적 분석<span>EC2</span></b>
+<div class="ovn sm  rv" style="--cx:610;--cy:400;transition-delay:0.75s"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="32" height="8" rx="3"/><rect x="8" y="20" width="32" height="8" rx="3"/><rect x="8" y="32" width="32" height="8" rx="3"/></svg></div><b class="ovt sm rv" style="--cx:610;--cy:456;transition-delay:0.75s">SQS 동적</b>
+<div class="ovn sm pcn rv" style="--cx:800;--cy:400;transition-delay:0.9s"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="7" width="32" height="14" rx="3"/><rect x="8" y="27" width="32" height="14" rx="3"/><path d="M14 14h2M14 34h2"/></svg></div><b class="ovt sm rv" style="--cx:800;--cy:456;transition-delay:0.9s">gateway</b>
+<div class="ovn sm pcn rv" style="--cx:990;--cy:400;transition-delay:1.05s"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="7" width="38" height="26" rx="3"/><path d="M17 41h14M24 33v8"/><path d="M21 14l8 6-8 6z"/></svg></div><b class="ovt sm rv" style="--cx:990;--cy:456;transition-delay:1.05s">CAPEv2<span>격리 VM</span></b>
+<div class="ovn sm  rv" style="--cx:1180;--cy:400;transition-delay:1.2s"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="32" height="8" rx="3"/><rect x="8" y="20" width="32" height="8" rx="3"/><rect x="8" y="32" width="32" height="8" rx="3"/></svg></div><b class="ovt sm rv" style="--cx:1180;--cy:456;transition-delay:1.2s">SQS 결과</b>
+<div class="ovn sm k rv" style="--cx:1180;--cy:150;transition-delay:1.35s"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 7v34M15 41h18M9 13h30"/><path d="M9 13L4 25a5 5 0 0 0 10 0z"/><path d="M39 13l-5 12a5 5 0 0 0 10 0z"/></svg></div><b class="ovt sm up rv" style="--cx:1180;--cy:92;transition-delay:1.35s">최종 판정<span>EC2</span></b>
+<div class="ovn sm p rv" style="--cx:1360;--cy:150;transition-delay:1.55s"><svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="11" rx="15" ry="6"/><path d="M9 11v26c0 3.3 6.7 6 15 6s15-2.7 15-6V11"/><path d="M17 27l5 5 9-10"/></svg></div><b class="ovt sm up rv" style="--cx:1360;--cy:92;transition-delay:1.55s">S3 public/</b>
+<div class="ovn sm p rv" style="--cx:1530;--cy:150;transition-delay:1.7s"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M6 24h36"/><path d="M24 6c5 5 7.5 11 7.5 18S29 37 24 42c-5-5-7.5-11-7.5-18S19 11 24 6z"/></svg></div><b class="ovt sm up rv" style="--cx:1530;--cy:92;transition-delay:1.7s">CDN</b>
+<div class="ovn sm d rv" style="--cx:1420;--cy:400;transition-delay:1.55s"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="21" width="28" height="21" rx="3"/><path d="M16 21v-6a8 8 0 0 1 16 0v6"/></svg></div><b class="ovt sm rv" style="--cx:1420;--cy:456;transition-delay:1.55s">S3 quarantine/</b>
+<span class="ovs rv" style="--cx:895;--cy:184;transition-delay:.7s">나머지는 바로 판정</span>
+<span class="ovs sig rv" style="--cx:716;--cy:275;transition-delay:.7s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>기준 이상</span>
+<span class="ovs p rv" style="--cx:1270;--cy:120;transition-delay:1.5s">통과</span>
+<span class="ovs d rv" style="--cx:1388;--cy:250;transition-delay:1.5s">차단·보류</span>
+</div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="2" data-chs="배경" data-chn="추진 배경과 서비스 설계" data-label="기술 및 인프라" aria-label="기술 및 인프라">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅱ</span><span class="cn">추진 배경과 서비스 설계</span></div><h2 class="hl one rv d2"><span class="l2">기술 및 인프라 구성</span></h2></div><div class="vis"><div class="col"><div class="zones">
+    <div class="zone2 rv d3"><div class="zh"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M6 24h36"/><path d="M24 6c5 5 7.5 11 7.5 18S29 37 24 42c-5-5-7.5-11-7.5-18S19 11 24 6z"/></svg>클라우드 · AWS</div>
+      <div class="zi"><b>EC2</b><span>정적 분석 · 최종 판정 · 웹 화면</span></div>
+      <div class="zi"><b>S3</b><span>incoming/ · public/ · quarantine/</span></div>
+      <div class="zi"><b>SQS</b><span>정적 · 동적 · 결과 대기열</span></div></div>
+    <div class="zlink rv d4"><span>나가는 연결만</span><svg class="arw" viewBox="0 0 64 24" aria-hidden="true"><path d="M61 12H7M19 3L7 12l12 9"/></svg><em>실습 PC가 먼저 연결</em></div>
+    <div class="zone2 pc rv d5"><div class="zh"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="7" width="32" height="14" rx="3"/><rect x="8" y="27" width="32" height="14" rx="3"/><path d="M14 14h2M14 34h2"/></svg>실습 PC</div>
+      <div class="zi"><b>gateway</b><span>동적 대기열에서 가져가기</span></div>
+      <div class="zi"><b>격리 VM</b><span>CAPEv2 · Windows 10 · 가짜 인터넷</span></div></div>
+  </div><ul class="pts rv d6"><li><span>정적 분석은 저장소·대기열과 같은 <b>AWS</b>에 둬서 파일을 옮길 일이 없다</span></li><li><span>파일 실행은 인터넷이 막힌 <b>격리 VM</b>에서만 한다</span></li></ul></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="3" data-chs="정적" data-chn="정적 분석과 정밀 검사 대상 선별" data-label="실제 형식·알려진 악성" aria-label="실제 형식·알려진 악성">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅲ</span><span class="cn">정적 분석과 정밀 검사 대상 선별</span></div><h2 class="hl one rv d2"><span class="l1">파일의 실제 형식과 </span><span class="l2">알려진 악성을 확인한다</span></h2></div><div class="vis"><div class="cards c2"><div class="card rv d3"><div class="ch"><span class="ci">⓪</span><div class="ct">형식 식별</div></div><div class="mini format-flow"><span class="ftk">보고서.docx</span><svg class="arw" viewBox="0 0 64 24" aria-hidden="true"><path d="M3 12h54M45 3l12 9-12 9"/></svg><span class="ftk m">앞부분(시그니처) %PDF-</span><svg class="arw" viewBox="0 0 64 24" aria-hidden="true"><path d="M3 12h54M45 3l12 9-12 9"/></svg><span class="ftk w">실제로는 PDF</span></div><div class="cb">확장자가 아니라 파일 앞부분(시그니처)과 구조로 판단 · 다르면 <b>확장자 불일치</b>로 기록</div></div><div class="card rv d4"><div class="ch"><span class="ci">①</span><div class="ct">1차 확정 검사</div></div><div class="mini"><span class="ftk">파일 지문</span><span class="ftk">백신</span><span class="ftk">규칙</span></div><div class="cb">알려진 악성과 하나라도 확정 일치 → <b>즉시 차단</b> · 아니면 다음 검사로</div></div></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="3" data-chs="정적" data-chn="정적 분석과 정밀 검사 대상 선별" data-label="PE 분석" aria-label="PE 분석">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅲ</span><span class="cn">정적 분석과 정밀 검사 대상 선별</span></div><h2 class="hl one rv d2"><span class="l1">Windows 실행 파일(PE)은 </span><span class="l2">어떻게 분석하는가?</span></h2></div><div class="vis"><div class="col"><div class="fl"><div class="fi  rv d3"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6l18 9-18 9-18-9z"/><path d="M6 24l18 9 18-9"/><path d="M6 33l18 9 18-9"/></svg></span><b>특징 추출</b><span>특성 2,568개</span></div><i class="fa  rv d3"></i><div class="fi k rv d4"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="12" width="24" height="24" rx="3"/><path d="M18 6v6M30 6v6M18 36v6M30 36v6M6 18h6M6 30h6M36 18h6M36 30h6"/></svg></span><b>LightGBM 위험 점수</b></div><i class="fa  rv d4"></i><div class="fi  rv d5"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 10v28M10 24h28"/></svg></span><b>단서 더하기</b><span>A 닮음 · B 약한 탐지 · F 넓은 규칙</span></div><i class="fa k rv d5"></i><div class="fi k rv d6"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 8h36L28 26v14l-8-4V26z"/></svg></span><b>정밀 검사 대상 선별</b><span>합친 점수 ≥ 기준선</span></div></div></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="3" data-chs="정적" data-chn="정적 분석과 정밀 검사 대상 선별" data-label="Office 검사" aria-label="Office 검사">
+<div class="frame">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅲ</span><span class="cn">정적 분석과 정밀 검사 대상 선별</span></div><h2 class="hl one rv d2"><span class="l1">Office 문서에서 </span><span class="l2">무엇을 검사할까?</span></h2></div><div class="vis"><div class="col"><div class="cards c3"><div class="card  rv d3"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 5h15l10 10v26a3 3 0 0 1-3 3H13a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3z"/><path d="M28 5v10h10"/><path d="M17 25h14M17 32h14M17 39h8"/></svg></span><div class="ct">Word</div></div><div class="cb">문서를 열면 <b>자동으로 실행되는 매크로</b>(M)</div></div><div class="card  rv d4"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 40h36"/><path d="M12 34V22M22 34V12M32 34V26"/></svg></span><div class="ct">Excel</div></div><div class="cb">구형 매크로 시트 <b>XLM</b>(M) · 폼에 <b>숨긴 명령</b>(O)</div></div><div class="card  rv d5"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M20 16l12 8-12 8z"/></svg></span><div class="ct">PowerPoint</div></div><div class="cb">안에 든 <b>삽입 파일</b>(E) · 실행 동작</div></div></div><div class="card d rv d6"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M17 17l14 14M31 17L17 31"/></svg></span><div class="ct">사례 · 공공기관(여성가족부·국세청) 사칭 메일</div></div><div class="cb">DOC 매크로 → VBS → PowerShell → HTA</div><div class="cs">안랩 ASEC, 「2025년 11월 APT 그룹 동향 보고서」(2025.12.12) 중 2025년 9월 사례</div></div></div></div><p class="src rv d6">출처 · 안랩 ASEC 2025.12.12</p>
+</div>
+</section>
+
+<section class="slide" data-ch="3" data-chs="정적" data-chn="정적 분석과 정밀 검사 대상 선별" data-label="PDF 검사 범위" aria-label="PDF 검사 범위">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅲ</span><span class="cn">정적 분석과 정밀 검사 대상 선별</span></div><h2 class="hl one rv d2"><span class="l1">PDF는 </span><span class="l2">어디까지 검사하는가?</span></h2></div><div class="vis"><div class="col"><div class="cards c3"><div class="card  rv d3"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M20 16l12 8-12 8z"/></svg></span><div class="ct">문서에 설정된 동작</div></div><div class="cb">열 때 실행되는 OpenAction · JavaScript</div></div><div class="card  rv d4"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M6 24h36"/><path d="M24 6c5 5 7.5 11 7.5 18S29 37 24 42c-5-5-7.5-11-7.5-18S19 11 24 6z"/></svg></span><div class="ct">링크 주소</div></div><div class="cb">문서에 적힌 주소를 꺼내 기록까지</div></div><div class="card  rv d5"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 5h15l10 10v26a3 3 0 0 1-3 3H13a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3z"/><path d="M28 5v10h10"/><path d="M17 25h14M17 32h14M17 39h8"/></svg></span><div class="ct">내부 첨부 파일</div></div><div class="cb">꺼내서 처음부터 다시 검사</div></div></div><div class="scope rv d6"><span class="on">1단계 정적 분석 · 이번 필수</span><span>2단계 동적 실행 · 조건부</span><span class="off">3단계 QR·OCR·피싱 목적지 · 확장</span></div></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="3" data-chs="정적" data-chn="정적 분석과 정밀 검사 대상 선별" data-label="결합층 원리" aria-label="결합층 원리">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅲ</span><span class="cn">정적 분석과 정밀 검사 대상 선별</span></div><h2 class="hl one rv d2"><span class="l1">신호를 합쳐 </span><span class="l2">하나의 위험 점수로 — 결합층</span></h2></div><div class="vis"><div class="col"><p class="lead2 rv d3">켜진 신호마다 <b>가중치를 더해</b> 하나의 점수로 만들고, <b>형식별 기준선</b>을 넘으면 정밀 검사로 보낸다.</p><div class="rules">
+    <div class="rule rv d4"><span class="rf">PE</span><span class="rc"><i class="s" style="--c:var(--sg-score)">LightGBM 점수</i>+<i style="--c:var(--sg-a)">A</i><i style="--c:var(--sg-b)">B</i><i style="--c:var(--sg-f)">F</i></span><span class="rr">합친 점수가 기준선 이상</span></div>
+    <div class="rule rv d5"><span class="rf">Office</span><span class="rc"><i style="--c:var(--sg-m)">M</i>또는<i style="--c:var(--sg-o)">O</i></span><span class="rr">하나라도 켜지면 (M ∪ O)</span></div>
+    <div class="rule rv d6"><span class="rf">PDF</span><span class="rc"><i style="--c:var(--sg-m)">M</i><i style="--c:var(--sg-o)">O</i><i style="--c:var(--sg-s)">S</i></span><span class="rr">하나라도 켜지면</span></div>
+  </div></div></div>
+<div class="cond bottom-notes rv d7"><span>같은 근거는 한 번만 센다</span><span>가중치는 데이터로 정한다</span><span>내부 파일도 꺼내 처음부터 다시 검사 · 묶음은 가장 나쁜 판정을 따른다</span></div>
+</div>
+</section>
+
+<section class="slide" data-ch="3" data-chs="정적" data-chn="정적 분석과 정밀 검사 대상 선별" data-label="결합층 애니메이션" aria-label="결합층 애니메이션" data-steps="4" data-fx="comb">
+<div class="frame">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅲ</span><span class="cn">정적 분석과 정밀 검사 대상 선별</span></div><h2 class="hl one rv d2"><span class="l1">어떤 신호가 켜지면 </span><span class="l2">정밀 검사로 가는가</span></h2></div><div class="vis"><div class="comb" aria-label="1차 확정과 형식별 신호, 결합층, 정밀 검사 흐름">
+<svg class="cl" width="1600" height="560" viewBox="0 0 1600 560" aria-hidden="true">
+  <path class="ot" d="M160 280 H208"/>
+  <path class="ot" d="M430 280 C462 280 466 140 500 140"/>
+  <path class="ot" d="M430 280 H500"/>
+  <path class="ot" d="M430 280 C462 280 466 420 500 420"/>
+  <path class="ot" data-o="blk" d="M400 148 V90"/>
+  <path class="bus" data-bus="pe" d="M1110 140 C1160 140 1150 280 1198 280"/>
+  <path class="bus" data-bus="of" d="M1110 280 H1198"/>
+  <path class="bus" data-bus="pd" d="M1110 420 C1160 420 1150 280 1198 280"/>
+  <path class="pl" data-bus="pe" pathLength="100" d="M1110 140 C1160 140 1150 280 1198 280"/>
+  <path class="pl" data-bus="of" pathLength="100" d="M1110 280 H1198"/>
+  <path class="pl" data-bus="pd" pathLength="100" d="M1110 420 C1160 420 1150 280 1198 280"/>
+  <path class="ot" data-o="k" d="M1382 220 C1412 220 1410 160 1438 160"/>
+  <path class="ot" data-o="p" d="M1382 340 C1412 340 1410 400 1438 400"/>
+</svg>
+<div class="box dock"><span class="dic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 31V9"/><path d="M15 18l9-9 9 9"/><path d="M8 30v8a3 3 0 0 0 3 3h26a3 3 0 0 0 3-3v-8"/></svg></span><div class="bt">업로드</div></div>
+<div class="box gate"><div class="bt">1차 확정</div><div class="gl" data-g="hash" style="top:78px"><span class="dot"></span>해시</div><div class="gl" data-g="av" style="top:128px"><span class="dot"></span>백신</div><div class="gl" data-g="yara" style="top:178px"><span class="dot"></span>YARA</div><div class="gck">통과</div></div>
+<div class="blk">차단</div>
+<div class="row" style="top:88px"><div class="rn">PE</div><div class="gauge" style="left:90px;width:170px"><i></i></div><span class="gtick" style="left:226px"></span><span class="lamp sc" data-l="pe-s" style="left:290px;--c:var(--sg-score)">점수</span><span class="lamp" data-l="pe-a" style="left:390px;--c:var(--sg-a)">A</span><span class="lamp" data-l="pe-b" style="left:462px;--c:var(--sg-b)">B</span><span class="lamp" data-l="pe-f" style="left:534px;--c:var(--sg-f)">F</span></div>
+<div class="row" style="top:228px"><div class="rn">Office</div><span class="lamp" data-l="of-m" style="left:150px;--c:var(--sg-m)">M</span><span class="lamp" data-l="of-o" style="left:222px;--c:var(--sg-o)">O</span><span class="rec" style="left:330px">기록만</span><span class="lamp dim" style="left:330px">E</span><span class="lamp dim" style="left:402px">X</span><span class="lamp dim" style="left:474px">S</span></div>
+<div class="row" style="top:368px"><div class="rn">PDF</div><span class="lamp" data-l="pd-m" style="left:150px;--c:var(--sg-m)">M</span><span class="lamp" data-l="pd-o" style="left:222px;--c:var(--sg-o)">O</span><span class="lamp" data-l="pd-s" style="left:294px;--c:var(--sg-s)">S</span><span class="rec" style="left:402px">기록만</span><span class="lamp dim" style="left:402px">X</span><span class="lamp dim" style="left:474px">E</span></div>
+<div class="box core"><div class="bt">결합층</div><div class="vbar"><i></i></div><span class="thr"></span><span class="gtx">기준</span><div class="mou">M 또는 O</div></div>
+<div class="out k">정밀 검사</div>
+<div class="out p">통과 후보</div>
+<div class="pdft">PDF 동적 준비 중<br>→ 지금은 보류</div>
+<p class="leg"><b>점수</b> LightGBM 위험 점수 · <b>A</b> 닮음 · <b>B</b> 약한 탐지 · <b>F</b> 넓은 규칙 · <b>M</b> 자동 실행 · <b>O</b> 숨김·난독화 · <b>S</b> 구조 이상 · 점선 칸은 기록만(가중치 0)</p>
+<div class="tok bad" data-t="a"><div class="tb2">악성</div></div>
+<div class="tok" data-t="b"><div class="tb2">일반</div></div>
+<div class="tok k" data-t="x"><div class="tb2">EXE</div></div>
+</div>
+<div class="stepdots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<p class="stepcap" aria-live="polite"><span data-k="0" class="on">파일은 1차 확정 → 형식별 신호 → 결합층 순서로 지나간다</span><span data-k="1"><b>①</b>알려진 악성은 1차에서 바로 차단 · 켜진 신호가 없는 파일은 통과 후보</span><span data-k="2"><b>②</b>PE: LightGBM 위험 점수가 기준을 넘으면 정밀 검사</span><span data-k="3"><b>③</b>Office: M 또는 O 하나만 켜져도 정밀 검사</span><span data-k="4"><b>④</b>PDF: M·O·S 중 하나만 켜져도 정밀 검사 — PDF 동적은 준비 중이라 지금은 보류</span></p></div><p class="slide-note rv d6">→ 키로 진행 · ① 1차 확정 ② PE ③ Office ④ PDF</p>
+</div>
+</section>
+
+<section class="slide" data-ch="3" data-chs="정적" data-chn="정적 분석과 정밀 검사 대상 선별" data-label="동적 분석 대상 고르기" aria-label="동적 분석 대상 고르기">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅲ</span><span class="cn">정적 분석과 정밀 검사 대상 선별</span></div><h2 class="hl one rv d2"><span class="l1">어떤 파일을 </span><span class="l2">동적 분석 대상으로 고르는가?</span></h2></div><div class="vis"><div class="col"><svg class="svgv dplot rv d3" viewBox="0 0 1600 360" width="1600" height="360" role="img" aria-label="위험 점수 분포와 기준선">
+  <rect x="1150" y="56" width="390" height="244" class="zone"/>
+  <text x="1530" y="96" text-anchor="end" class="zt">정밀 검사로</text>
+  <circle cx="192" cy="225" r="12" class="dn"/><circle cx="597" cy="125" r="12" class="dn"/><circle cx="469" cy="162" r="12" class="dn"/><circle cx="494" cy="188" r="12" class="dn"/><circle cx="282" cy="267" r="12" class="dn"/><circle cx="492" cy="157" r="12" class="dn"/><circle cx="423" cy="222" r="12" class="dn"/><circle cx="955" cy="156" r="12" class="dn"/><circle cx="810" cy="130" r="12" class="dn"/><circle cx="599" cy="179" r="12" class="dn"/><circle cx="430" cy="248" r="12" class="dn"/><circle cx="455" cy="254" r="12" class="dn"/><circle cx="247" cy="146" r="12" class="dn"/><circle cx="700" cy="238" r="12" class="dn"/><circle cx="826" cy="259" r="12" class="dn"/><circle cx="90" cy="232" r="12" class="dn"/><circle cx="200" cy="199" r="12" class="dn"/><circle cx="297" cy="238" r="12" class="dn"/><circle cx="478" cy="261" r="12" class="dn"/><circle cx="149" cy="178" r="12" class="dn"/><circle cx="365" cy="169" r="12" class="dn"/><circle cx="647" cy="174" r="12" class="dn"/><circle cx="539" cy="167" r="12" class="dn"/><circle cx="368" cy="249" r="12" class="dn"/><circle cx="401" cy="142" r="12" class="dn"/><circle cx="90" cy="190" r="12" class="dn"/><circle cx="498" cy="223" r="12" class="dn"/><circle cx="680" cy="238" r="12" class="dn"/><circle cx="246" cy="209" r="12" class="dn"/><circle cx="476" cy="250" r="12" class="dn"/><circle cx="464" cy="184" r="12" class="dn"/><circle cx="402" cy="250" r="12" class="dn"/><circle cx="803" cy="230" r="12" class="dn"/><circle cx="386" cy="162" r="12" class="dn"/><circle cx="220" cy="194" r="12" class="dn"/><circle cx="1039" cy="198" r="12" class="dn"/><circle cx="502" cy="129" r="12" class="dn"/><circle cx="90" cy="250" r="12" class="dn"/><circle cx="570" cy="263" r="12" class="dn"/><circle cx="136" cy="255" r="12" class="dn"/><circle cx="1425" cy="168" r="12" class="dm"/><circle cx="1196" cy="138" r="12" class="dm"/><circle cx="1117" cy="167" r="12" class="dm"/><circle cx="1379" cy="217" r="12" class="dm"/><circle cx="1216" cy="253" r="12" class="dm"/><circle cx="1356" cy="163" r="12" class="dm"/><circle cx="1136" cy="200" r="12" class="dm"/><circle cx="1478" cy="198" r="12" class="dm"/><circle cx="1382" cy="135" r="12" class="dm"/><circle cx="1198" cy="205" r="12" class="dm"/><circle cx="1508" cy="235" r="12" class="dm"/><circle cx="1389" cy="150" r="12" class="dm"/><circle cx="1339" cy="255" r="12" class="dm"/><circle cx="1090" cy="147" r="12" class="dm"/>
+  <line x1="60" y1="300" x2="1540" y2="300" class="ax"/>
+  <text x="1540" y="344" text-anchor="end" class="axl">위험 점수 →</text>
+  <line x1="1000" y1="70" x2="1000" y2="300" class="alt"/>
+  <line x1="1300" y1="70" x2="1300" y2="300" class="alt"/>
+  <line x1="1150" y1="40" x2="1150" y2="300" class="thr2"/>
+  <text x="1150" y="30" text-anchor="middle" class="tl">기준선 = 고객 정책</text>
+  <text x="990" y="66" text-anchor="end" class="al">← 넓게 검사</text>
+  <text x="1310" y="66" class="al">좁게 검사 →</text>
+  <circle cx="90" cy="344" r="11" class="dn"/><text x="110" y="353" class="lg">정상 파일</text>
+  <circle cx="290" cy="344" r="11" class="dm"/><text x="310" y="353" class="lg">악성 파일</text>
+</svg><ul class="pts rv d5"><li><span>기준선은 <b>고객 정책</b>: 형식마다 정상 파일의 <b>2~5%</b>만 보내도록 정한다</span></li><li><span>예: 시험 Excel 문서(d1_test.xlsm)가 기준선을 넘어 정밀 검사로 → <span data-ref="샌드박스 관찰">21장</span></span></li></ul></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="4" data-chs="동적" data-chn="동적 분석과 최종 판정" data-label="샌드박스 관찰" aria-label="샌드박스 관찰">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅳ</span><span class="cn">동적 분석과 최종 판정</span></div><h2 class="hl one rv d2"><span class="l1">샌드박스에서 </span><span class="l2">파일의 행동을 관찰한다</span></h2></div><div class="vis"><div class="col"><div class="fl"><div class="fi  rv d3"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="7" width="32" height="14" rx="3"/><rect x="8" y="27" width="32" height="14" rx="3"/><path d="M14 14h2M14 34h2"/></svg></span><b>CAPEv2에 제출</b><span>실습 PC gateway</span></div><i class="fa  rv d3"></i><div class="fi k rv d4"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="7" width="38" height="26" rx="3"/><path d="M17 41h14M24 33v8"/><path d="M21 14l8 6-8 6z"/></svg></span><b>격리된 Windows 10</b><span>열거나 실행 · 가짜 인터넷</span></div><i class="fa  rv d4"></i><div class="fi  rv d5"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M3 24s8-14 21-14 21 14 21 14-8 14-21 14S3 24 3 24z"/><circle cx="24" cy="24" r="6"/></svg></span><b>행동 기록</b><span>프로세스 · 파일 · 통신</span></div></div><div class="card d rv d6"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M15 24l6 6 12-13"/></svg></span><div class="ct">확인한 예 · 2026-11-22 전 경로</div></div><div class="ptree"><span>EXCEL.EXE</span><svg class="arw" viewBox="0 0 64 24" aria-hidden="true"><path d="M3 12h54M45 3l12 9-12 9"/></svg><span class="bad">cmd.exe</span><em>문서 프로그램이 실행기를 띄움 = 행동 규칙 R1 → 차단</em></div></div></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="4" data-chs="동적" data-chn="동적 분석과 최종 판정" data-label="행동이 없을 때" aria-label="행동이 없을 때">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅳ</span><span class="cn">동적 분석과 최종 판정</span></div><h2 class="hl one rv d2"><span class="l1">위험 행동이 기록되지 않으면 </span><span class="l2">어떻게 판단하는가?</span></h2></div><div class="vis"><div class="col"><div class="cards c2"><div class="card p rv d3"><div class="ch"><span class="ci">1</span><div class="ct">실행과 관찰을 마쳤고 위험 행동이 없음</div></div><div class="cb">정적 근거와 함께 판단 — <b>믿을 수 있는 결과만</b> 판정을 낮춘다</div></div><div class="card w rv d4"><div class="ch"><span class="ci">2</span><div class="ct">실행 실패 · 관찰을 마치지 못함</div></div><div class="cb">회피 흔적, 사람이 눌러야 하는 단계, 외부 내용을 못 봄 → <b>사유와 함께 보류</b></div></div></div></div></div>
+<div class="cond bottom-notes rv d5"><span>믿을 수 있나? 실제로 실행됐나</span><span>가상 환경 회피 흔적은 없나</span><span>사람 동작이 필요 없나</span><span>외부 내용까지 봤나</span></div>
+</div>
+</section>
+
+<section class="slide" data-ch="4" data-chs="동적" data-chn="동적 분석과 최종 판정" data-label="배포·차단·보류 근거" aria-label="배포·차단·보류 근거">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅳ</span><span class="cn">동적 분석과 최종 판정</span></div><h2 class="hl one rv d2"><span class="l1">어떤 근거로 </span><span class="l2">배포·차단·보류를 결정하는가?</span></h2></div><div class="vis"><div class="col"><div class="cards c3"><div class="card p rv d3"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M15 24l6 6 12-13"/></svg></span><div class="ct">배포</div></div><div class="cb">필요한 검사를 마치고 기준 충족 → CLEAN 태그 → public/ → CDN</div></div><div class="card d rv d4"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M17 17l14 14M31 17L17 31"/></svg></span><div class="ct">차단</div></div><div class="cb">악성이 확인됨 — 1차 확정 · 동적 악성 행동 · 관리자 판단</div></div><div class="card w rv d5"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M20 17v14M28 17v14"/></svg></span><div class="ct">보류</div></div><div class="cb">검사 실패·판단 근거 부족 → 관리자 확인 전까지 공개하지 않음</div></div></div></div></div>
+<p class="decision-conclusion rv d6"><b>점수만으로는 차단하지 않는다</b> — 차단은 확정 근거가 있을 때만</p>
+
+</div>
+</section>
+
+<section class="slide" data-ch="4" data-chs="동적" data-chn="동적 분석과 최종 판정" data-label="최종 판정 흐름도" aria-label="최종 판정 흐름도">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅳ</span><span class="cn">동적 분석과 최종 판정</span></div><h2 class="hl one rv d2"><span class="l2">최종 판정 흐름도</span></h2></div><div class="vis"><div class="fc">
+<svg class="svgv fcl" viewBox="0 0 1600 650" width="1600" height="650" aria-hidden="true">
+  <defs><marker id="f-n" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9AA8BD"/></marker><marker id="f-d" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto"><path d="M0 0L10 5L0 10z" fill="#D2384E"/></marker><marker id="f-w" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto"><path d="M0 0L10 5L0 10z" fill="#B4650A"/></marker><marker id="f-p" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0E8C7E"/></marker></defs>
+  <path class="fe" d="M560 72 V114"/>
+  <path class="fe" d="M560 212 V250"/>
+  <path class="fe" d="M560 348 V386"/>
+  <path class="fe" d="M560 484 V534"/>
+  <path class="fe w" d="M750 164 H898"/>
+  <path class="fe d" d="M750 300 H898"/>
+  <path class="fe p" d="M750 436 H898"/>
+  <path class="fe" d="M722 568 H822"/>
+  <path class="fe d" d="M1130 568 C1146 568 1144 512 1158 512 H1182"/>
+  <path class="fe w" d="M1130 568 H1182"/>
+  <path class="fe p" d="M1130 568 C1146 568 1144 624 1158 624 H1182"/>
+</svg>
+<div class="fn" style="--cx:560;--cy:40">정적 분석 결과</div>
+<div class="fd" style="--cx:560;--cy:164">검사를 다 마쳤나?</div>
+<div class="fd" style="--cx:560;--cy:300">알려진 악성인가?</div>
+<div class="fd" style="--cx:560;--cy:436">점수가 기준 이상?</div>
+<div class="fn k" style="--cx:560;--cy:568">정밀 검사(동적 분석)</div>
+<div class="fd" style="--cx:980;--cy:568;width:300px">악성 행동인가?</div>
+<span class="fy" style="--x:582;--y:216">예</span><span class="fy" style="--x:582;--y:352">아니오</span><span class="fy" style="--x:582;--y:494">예</span>
+<span class="fy c" style="--x:824;--y:128">아니오</span><span class="fy c" style="--x:824;--y:264">예</span><span class="fy c" style="--x:824;--y:400">아니오</span>
+<div class="fo w" style="--cx:980;--cy:164">보류</div><span class="fr" style="--x:1070;--y:164">암호·한도 초과·오류</span>
+<div class="fo d" style="--cx:980;--cy:300">차단</div><span class="fr" style="--x:1070;--y:300">해시·백신·YARA 일치</span>
+<div class="fo p" style="--cx:980;--cy:436">배포</div><span class="fr" style="--x:1070;--y:436">기준 미만 → CLEAN → CDN</span>
+<div class="fo d sm" style="--cx:1262;--cy:512">차단</div><span class="fr" style="--x:1340;--y:512">악성 행동 확인</span>
+<div class="fo w sm" style="--cx:1262;--cy:568">보류</div><span class="fr" style="--x:1340;--y:568">실행 실패·믿기 어려움</span>
+<div class="fo p sm" style="--cx:1262;--cy:624">배포</div><span class="fr" style="--x:1340;--y:624">행동 없음·믿을 수 있음</span>
+<div class="fnote"><b>원칙</b><span>점수만으로는 차단하지 않는다</span><span>판정마다 근거를 남긴다</span><em>시연판(11/22): 동적은 행동 규칙 R1만 보고, 그 밖의 동적 결과는 보류</em></div>
+</div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="5" data-chs="검증" data-chn="정적 분석 검증과 개선" data-label="데이터 학습 파이프라인" aria-label="데이터 학습 파이프라인">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅴ</span><span class="cn">정적 분석 검증과 개선</span></div><h2 class="hl one rv d2"><span class="l1">간단한 </span><span class="l2">데이터 학습 파이프라인</span><span class="tag chk" style="margin-left: 16px; vertical-align: middle; letter-spacing: normal;">확인 필요</span></h2></div><div class="vis"><div class="col"><div class="fl pipe"><div class="fi  rv d3"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="11" rx="15" ry="6"/><path d="M9 11v26c0 3.3 6.7 6 15 6s15-2.7 15-6V11"/><path d="M9 24c0 3.3 6.7 6 15 6s15-2.7 15-6"/></svg></span><b>수집</b><span>출처·약관 기록</span></div><i class="fa  rv d3"></i><div class="fi  rv d4"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 8h36L28 26v14l-8-4V26z"/></svg></span><b>정리</b><span>중복 제거 · 라벨 · 섞인 악성 빼기</span></div><i class="fa  rv d4"></i><div class="fi  rv d5"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6l18 9-18 9-18-9z"/><path d="M6 24l18 9 18-9"/><path d="M6 33l18 9 18-9"/></svg></span><b>나누기</b><span>학습 50 · 조정 25 · 평가 25</span></div><i class="fa  rv d5"></i><div class="fi k rv d6"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="12" width="24" height="24" rx="3"/><path d="M18 6v6M30 6v6M18 36v6M30 36v6M6 18h6M6 30h6M36 18h6M36 30h6"/></svg></span><b>학습 → 조정</b><span>PE 모델 · 문서 가중치 · 기준선</span></div><i class="fa  rv d6"></i><div class="fi  rv d7"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 40h36"/><path d="M12 34V22M22 34V12M32 34V26"/></svg></span><b>평가</b><span>형식별 지표 기록</span></div></div><div class="cards c3"><div class="card  rv d6"><div class="ch"><div class="ct">PE</div></div><div class="cb">pemml · EMBER · RanDS(2023년까지 학습)</div><div class="cs">평가: EMBER 2024 · RanDS 2024 · 최근 로컬</div></div><div class="card  rv d7"><div class="ch"><div class="ct">Office · 44,518개</div></div><div class="cb">정상: Zenodo · GovDocs1 · 팀원 수집<br>악성: Zenodo · Malicious_Excel · MalwareBazaar</div><div class="cs">MalwareBazaar는 평가 전용</div></div><div class="card  rv d8"><div class="ch"><div class="ct">PDF · 26,552개</div></div><div class="cb">정상: CLEAN9000 · GovDocs1 PDF<br>악성: PRE2011_PDF · VT_PDF</div></div></div></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="5" data-chs="검증" data-chn="정적 분석 검증과 개선" data-label="정밀 검사 목표·지표" aria-label="정밀 검사 목표·지표">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅴ</span><span class="cn">정적 분석 검증과 개선</span></div><h2 class="hl rv d2"><span class="l1">모든 파일을 정밀 검사하지 않고도</span><span class="l2">위험 파일을 골라낼 수 있을까?</span></h2></div><div class="vis"><div class="split w5">
+  <div class="col c"><div class="dgrid rv d3" aria-label="정상 100개 중 2~5개만 정밀 검사"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="mid"></i><i class="mid"></i><i class="mid"></i><i class="on"></i><i class="on"></i></div><p class="lead2 rv d4"><b>정상 100개 중 2~5개만</b><br>정밀 검사로 보낸다 (설계 목표)</p></div>
+  <div class="col"><div class="card  rv d5"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="14" rx="15" ry="6"/><path d="M9 14v10c0 3.3 6.7 6 15 6s15-2.7 15-6V14"/><path d="M9 24v10c0 3.3 6.7 6 15 6s15-2.7 15-6V24"/></svg></span><div class="ct">정상 전송률</div></div><div class="cb">정상 파일 중 정밀 검사로 보낸 비율 — <b>낮을수록</b> 비용이 적다</div></div><div class="card k rv d6"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l16 6v12c0 10-7 18-16 22C15 40 8 32 8 22V10z"/><path d="M17 24l5 5 10-11"/></svg></span><div class="ct">악성 선별률</div></div><div class="cb">평가한 악성 중 정밀 검사 대상으로 표시된 비율 — <b>높을수록</b> 좋다</div></div></div>
+</div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="5" data-chs="검증" data-chn="정적 분석 검증과 개선" data-label="PE 비교 1 · 모델" aria-label="PE 비교 1 · 모델">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅴ</span><span class="cn">정적 분석 검증과 개선</span><span class="pgx">1/2 · 모델</span></div><h2 class="hl one rv d2"><span class="l2">PE 정적 선별 성능 비교</span></h2></div><div class="vis"><div class="col"><p class="lead2 rv d3">옛 모델 → <b>B 모델</b>(신종 데이터로 다시 학습)</p><div class="bas"><div class="ba rv d4"><div class="bl">악성 적발 · EMBER 2024 시험</div><div class="bv"><span class="f">90.7<small>%</small></span><svg class="arw" viewBox="0 0 64 24" aria-hidden="true"><path d="M3 12h54M45 3l12 9-12 9"/></svg><span class="t ">99.2<small>%</small></span></div><div class="bn">높을수록 좋음</div></div><div class="ba rv d5"><div class="bl">정상 전송 · EMBER 2024 정상</div><div class="bv"><span class="f">28.4<small>%</small></span><svg class="arw" viewBox="0 0 64 24" aria-hidden="true"><path d="M3 12h54M45 3l12 9-12 9"/></svg><span class="t p">12.0<small>%</small></span></div><div class="bn">낮을수록 좋음</div></div></div></div></div>
+<div class="cond bottom-notes rv d6"><span>문턱: RanDS 2024 정상 2% 지점(11/20 기준)</span><span>최근 로컬 묶음 AUC 0.665 → 0.915</span></div>
+</div>
+</section>
+
+<section class="slide" data-ch="5" data-chs="검증" data-chn="정적 분석 검증과 개선" data-label="PE 비교 2 · 문턱" aria-label="PE 비교 2 · 문턱">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅴ</span><span class="cn">정적 분석 검증과 개선</span><span class="pgx">2/2 · 문턱</span></div><h2 class="hl one rv d2"><span class="l2">PE 정적 선별 성능 비교</span><span class="tag chk" style="margin-left: 16px; vertical-align: middle; letter-spacing: normal;">그래프 수정</span></h2></div><div class="vis"><div class="split w9">
+  <svg class="svgv sct rv d3" viewBox="0 0 900 560" width="900" height="560" role="img" aria-label="문턱 후보별 정상 전송과 악성 적발">
+  <rect x="132.8" y="40" width="34.2" height="440" class="band"/>
+  <text x="128.8" y="32" class="bt2">목표 2~5%</text>
+  <line x1="110" y1="480" x2="860" y2="480" class="ax"/><line x1="110" y1="40" x2="110" y2="480" class="ax"/>
+  <text x="110.0" y="514" text-anchor="middle" class="tk">0%</text><text x="337.7" y="514" text-anchor="middle" class="tk">20%</text><text x="565.4" y="514" text-anchor="middle" class="tk">40%</text><text x="793.1" y="514" text-anchor="middle" class="tk">60%</text>
+  <text x="96" y="489.0" text-anchor="end" class="tk">60%</text><text x="96" y="279.0" text-anchor="end" class="tk">80%</text><text x="96" y="69.0" text-anchor="end" class="tk">100%</text>
+  <text x="860" y="552" text-anchor="end" class="axl">최근 로컬 정상을 보낸 비율 →</text>
+  <text x="122" y="72" class="axl">↑ 최근 악성 적발</text>
+  <circle cx="793.1" cy="107.3" r="10" class="pn"/><text x="775.1" y="115.3" text-anchor="end" class="pl2">RanDS 2024 정상 2%</text><circle cx="328.6" cy="219.6" r="10" class="pn"/><text x="346.6" y="227.6" text-anchor="start" class="pl2">두 정상 합쳐 2%</text><circle cx="146.4" cy="385.5" r="10" class="pn"/><text x="164.4" y="415.5" text-anchor="start" class="pl2">최근 로컬 정상 2%</text><circle cx="173.8" cy="309.9" r="14" class="pk"/><text x="191.8" y="299.9" text-anchor="start" class="plk">최근 로컬 정상 5% (선택)</text>
+</svg>
+  <div class="col"><ul class="pts rv d4"><li><span>운영 문턱을 <b>우리 정상 데이터</b>로 다시 맞춤(11/22)</span></li><li><span>최근 로컬 정상 <b>5.6%</b> 보냄 · 최근 악성 <b>76.2%</b> 적발</span></li><li><span>합친 점수로 재면 6.0% — 2~5% 원칙의 <b>예외로 기록</b></span></li><li><span>최근 악성의 약 24%는 놓침 — 모델 쪽 한계, 문턱 아래는 자동 통과를 끄고 사람이 확인</span></li></ul></div>
+</div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="5" data-chs="검증" data-chn="정적 분석 검증과 개선" data-label="Office 1 · 선택" aria-label="Office 1 · 선택">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅴ</span><span class="cn">정적 분석 검증과 개선</span><span class="pgx">1/2 · 선택</span></div><h2 class="hl one rv d2"><span class="l2">Office 규칙을 선택하고 개선한 이유</span></h2></div><div class="vis"><div class="cards c3"><div class="card w rv d3"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M17 17l14 14M31 17L17 31"/></svg></span><div class="ct">최신 정상 PPTX 0개</div></div><div class="cb">PowerPoint는 정상 전송률을 잴 수 없음</div></div><div class="card w rv d4"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6l18 9-18 9-18-9z"/><path d="M6 24l18 9 18-9"/><path d="M6 33l18 9 18-9"/></svg></span><div class="ct">출처 편중</div></div><div class="cb">정상 문서가 일부 출처에 몰려 있음</div></div><div class="card k rv d5"><div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l16 6v12c0 10-7 18-16 22C15 40 8 32 8 22V10z"/><path d="M17 24l5 5 10-11"/></svg></span><div class="ct">→ 규칙 기반</div></div><div class="cb">징후 가족(M·O·E·X·S)에 데이터로 가중치를 잰 규칙</div></div></div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="5" data-chs="검증" data-chn="정적 분석 검증과 개선" data-label="Office 2 · 개선" aria-label="Office 2 · 개선">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅴ</span><span class="cn">정적 분석 검증과 개선</span><span class="pgx">2/2 · 개선</span></div><h2 class="hl one rv d2"><span class="l2">Office 규칙을 선택하고 개선한 이유</span></h2></div><div class="vis"><div class="split w6">
+  <div class="col">
+    <div class="code rv d3"><span class="m">Module1</span>자동 실행 진입점 → <b>Main</b> 호출</div>
+    <div class="code rv d4"><span class="m">Module2</span><b>Main</b> → 실행·쓰기</div>
+    <p class="lead2 rv d5">같은 모듈만 보면 놓친다 → <b>호출을 따라가서</b> 잡는다</p>
+  </div>
+  <div class="col"><div class="ba rv d5"><div class="bl">악성 적발</div><div class="bv"><span class="f">81.10<small>%</small></span><svg class="arw" viewBox="0 0 64 24" aria-hidden="true"><path d="M3 12h54M45 3l12 9-12 9"/></svg><span class="t ">94.01<small>%</small></span></div></div><div class="ba rv d6"><div class="bl">정상 전송</div><div class="bv"><span class="f">2.62<small>%</small></span><svg class="arw" viewBox="0 0 64 24" aria-hidden="true"><path d="M3 12h54M45 3l12 9-12 9"/></svg><span class="t p">2.08<small>%</small></span></div></div><div class="cond rv d7"><span>학습 구간 · 판정한 것만 분모</span><span>M ∪ O 기준</span></div></div>
+</div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="5" data-chs="검증" data-chn="정적 분석 검증과 개선" data-label="Office 결과" aria-label="Office 결과">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅴ</span><span class="cn">정적 분석 검증과 개선</span></div><h2 class="hl one rv d2"><span class="l1">Office 정적 선별 결과와 </span><span class="l2">지표 해석</span></h2></div><div class="vis"><div class="split w6">
+  <div class="col"><div class="kpi rv d3"><div class="kv">1.37<small>%</small></div><div class="kl">정상 전송률</div><div class="ks">평가 구간 정상 1,242개 중 17개</div></div><div class="kpi rv d4"><div class="kv">85.73<small>%</small></div><div class="kl">악성 선별률</div><div class="ks">평가 구간 악성 6,390개 중 5,478개</div></div></div>
+  <div class="col"><ul class="pts rv d5"><li><span>학습에 쓰지 않은 <b>평가 구간</b> · 전체 행 기준</span></li><li><span>정상 PowerPoint 표본이 없어 PPT는 따로 봐야 함</span></li><li><span>다른 출처(MalwareBazaar 평가 전용)에서는 <b>50.7%</b> — 출처에 따라 달라짐</span></li></ul></div>
+</div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="5" data-chs="검증" data-chn="정적 분석 검증과 개선" data-label="PDF 결과" aria-label="PDF 결과">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅴ</span><span class="cn">정적 분석 검증과 개선</span></div><h2 class="hl one rv d2"><span class="l1">PDF 정적 선별 결과와 </span><span class="l2">평가 표본</span></h2></div><div class="vis"><div class="split w6">
+  <div class="col"><div class="kpi rv d3"><div class="kv">4.14<small>%</small></div><div class="kl">정상 전송률</div><div class="ks">평가 구간</div></div><div class="kpi rv d4"><div class="kv">99.1<small>%</small></div><div class="kl">악성 선별률</div><div class="ks">평가 구간</div></div></div>
+  <div class="col"><ul class="pts rv d5"><li><span>악성 표본이 <b>2010~2017년</b> 자료 → 최신 수법은 따로 확인 필요</span></li><li><span>PDF 동적 실행은 이번 범위 밖 → 정밀 검사 대상은 지금 <b>보류</b></span></li></ul></div>
+</div></div>
+</div>
+</section>
+
+<section class="slide" data-ch="6" data-chs="시연" data-chn="정적 분석 시연" data-label="시연 · 두 파일" aria-label="시연 · 두 파일">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅵ</span><span class="cn">정적 분석 시연</span></div><h2 class="hl one rv d2"><span class="l1">두 시험 파일을 </span><span class="l2">분석한다</span></h2></div><div class="vis"><div class="col"><div class="fl demo-flow">
+  <div class="fi rv d3"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 5h15l10 10v26a3 3 0 0 1-3 3H13a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3z"/><path d="M28 5v10h10"/><path d="M17 25h14M17 32h14M17 39h8"/></svg></span><b>파일 업로드</b></div>
+  <i class="fa  rv d3"></i>
+  <div class="fi  rv d4"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="21" cy="21" r="12"/><path d="M30 30l10 10"/></svg></span><b>형식 식별 ⓪</b></div>
+  <i class="fa  rv d4"></i>
+  <div class="fi  rv d5"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l16 6v12c0 10-7 18-16 22C15 40 8 32 8 22V10z"/><path d="M17 24l5 5 10-11"/></svg></span><b>1차 확정 ②</b></div>
+  <i class="fa  rv d5"></i>
+  <div class="fi wide rv d6"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6l18 9-18 9-18-9z"/><path d="M6 24l18 9 18-9"/><path d="M6 33l18 9 18-9"/></svg></span><b>징후 ④ · 결합층 ⑤</b></div>
+  <i class="fa rv d6"></i>
+  <div class="fi rv d7"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="21" cy="21" r="12"/><path d="M30 30l10 10"/></svg></span><b>동적 분석 ⑥</b></div>
+  <i class="fa rv d7"></i>
+  <div class="fi k wide rv d8"><span class="ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 7v34M15 41h18M9 13h30"/><path d="M9 13L4 25a5 5 0 0 0 10 0z"/><path d="M39 13l-5 12a5 5 0 0 0 10 0z"/></svg></span><b>판정 · 근거 기록</b></div>
+</div></div></div>
+<div class="demo-actions rv d8"><button class="demo-play" id="demoPlay" type="button" aria-haspopup="dialog" aria-controls="demoDialog"><span aria-hidden="true">▶</span>시연 영상 재생</button></div>
+</div>
+</section>
+
+<section class="slide" data-ch="7" data-chs="마무리" data-chn="서비스 기대 효과와 운영 한계" data-label="기대 효과" aria-label="기대 효과">
+<div class="frame">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅶ</span><span class="cn">서비스 기대 효과와 운영 한계</span></div><h2 class="hl one rv d2"><span class="l2">서비스 기대 효과</span></h2></div>
+<div class="vis">
+  <div class="cards c2">
+    <div class="card k rv d3">
+      <div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l16 6v12c0 10-7 18-16 22C15 40 8 32 8 22V10z"/><path d="M17 24l5 5 10-11"/></svg></span><div class="ct">배포 위험 감소</div></div>
+      <div class="cb"><b>검사를 통과한 파일만 CDN에 배포</b>합니다. 악성 파일은 차단하고, 판단 근거가 부족한 파일은 관리자 확인까지 공개를 보류합니다.</div>
+    </div>
+    <div class="card p rv d4">
+      <div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="6"/><path d="M24 4v6M24 38v6M4 24h6M38 24h6M9.9 9.9l4.2 4.2M33.9 33.9l4.2 4.2M9.9 38.1l4.2-4.2M33.9 14.1l4.2-4.2"/></svg></span><div class="ct">고객 맞춤 검사</div></div>
+      <div class="cb">별도 보안 장비 없이 업로드 파일을 검사하고, 고객이 원하는 검사 수준과 예산에 맞춰 의심 파일에 정밀 검사를 집중합니다.</div>
+      <div class="cs">정상 파일 2~5% 전송 목표 기준, 정밀 검사 환경 사용 시간은 정상 파일 전수 검사 대비 약 1/50~1/20(계산값)</div>
+    </div>
+    <div class="card rv d5">
+      <div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="8" width="28" height="34" rx="4"/><path d="M18 18h12M18 25h12M18 32h8"/></svg></span><div class="ct">관리자 검토 부담 완화</div></div>
+      <div class="cb">판정과 보류 사유를 자동으로 기록합니다. 관리자는 <b>보류된 파일을 중심으로 검토</b>하고, 오탐이 확인되면 파일을 복구할 수 있습니다.</div>
+    </div>
+    <div class="card rv d6">
+      <div class="ch"><span class="ci"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="7" width="34" height="14" rx="4"/><rect x="7" y="27" width="34" height="14" rx="4"/><path d="M14 14h2M14 34h2M24 14h10M24 34h10"/></svg></span><div class="ct">CDN 보안 서비스 확장</div></div>
+      <div class="cb">스피디 CDN에 파일 검사를 추가하고, 추출기를 더해 지원 형식을 넓힐 수 있습니다. 문서 중심 고객에게는 매크로·스크립트 등 위험 요소를 제거한 뒤 문서를 다시 만드는 파트너의 문서 무해화(CDR) 서비스를 연계할 수 있습니다.</div>
+    </div>
+  </div>
+</div>
+<p class="slide-note rv d6">운영 효과는 실제 고객 데이터로 검증 필요</p>
+</div>
+</section>
+
+<section class="slide" data-ch="7" data-chs="마무리" data-chn="서비스 기대 효과와 운영 한계" data-label="한계와 향후 개선" aria-label="한계와 향후 개선">
+<div class="frame no-source">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅶ</span><span class="cn">서비스 기대 효과와 운영 한계</span></div><h2 class="hl one rv d2"><span class="l2">프로젝트의 한계와 향후 개선</span><span class="tag chk" style="margin-left: 16px; vertical-align: middle; letter-spacing: normal;">확인 필요</span></h2></div><div class="vis"><table class="tbl rv d3">
+  <thead><tr><th>영역</th><th>이번 프로젝트의 한계</th><th>향후 개선</th></tr></thead>
+  <tbody>
+    <tr><td class="h">검증 데이터의 대표성</td><td>학습에 쓰지 않은 별도 출처의 Office 악성 표본 1,763개에서 적발률 <b>50.7%</b></td><td>고객 환경의 정상 파일과 다양한 출처의 최신 악성 표본을 확보해 다시 검증</td></tr>
+    <tr><td class="h">PE 선별의 한계</td><td>모델 점수 기준으로 최근 악성 표본의 <b>약 24%</b>가 정밀 검사 대상으로 선별되지 않음</td><td>기준선 미만인 PE 파일은 관리자가 확인하고, 최신 표본으로 모델 성능을 다시 검증</td></tr>
+    <tr><td class="h">정밀 검사의 처리 용량</td><td>11월 22일 실측에서 문서 한 건의 동적 분석에 <b>약 400초</b>가 걸림</td><td>실제 요청량에서 대기 시간과 비용을 측정하고 검사 우선순위와 분석 장비 수 조정</td></tr>
+    <tr><td class="h">격리 환경의 관찰 범위</td><td>외부 서버가 주는 내용은 확인하기 어려움</td><td>주소 평판 등 다른 근거와 함께 보고, 부족하면 보류</td></tr>
+  </tbody>
+</table></div>
+</div>
+</section>
+
+<section class="slide" data-ch="7" data-chs="마무리" data-chn="서비스 기대 효과와 운영 한계" data-label="결론 및 Q&A" aria-label="결론 및 Q&A">
+<div class="frame">
+<div class="txt"><div class="eyebrow rv d1"><span class="chip">Ⅶ</span><span class="cn">서비스 기대 효과와 운영 한계</span></div><h2 class="hl one rv d2"><span class="l2">결론 및 Q&A</span></h2></div><div class="vis"><div class="endc">
+  <p class="end1 rv d3">고객의 검사 수준에 맞춰 위험 파일부터 확인하고,</p>
+  <p class="end2 rv d4">검사를 통과한 파일만 배포합니다</p>
+  <span class="qa rv d6">질의응답</span>
+</div></div>
+</div>
+</section>
+
+<div class="archview" id="archview" aria-hidden="true"><div class="atrack" id="atrack" data-offs="-4,536,1076">
+<svg class="alines" width="1600" height="1800" viewBox="0 0 1600 1800">
+  <defs><marker id="m-n" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9AA8BD"/></marker><marker id="m-a" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0B3A8F"/></marker><marker id="m-d" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto"><path d="M0 0L10 5L0 10z" fill="#D2384E"/></marker><marker id="m-p" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0E8C7E"/></marker></defs>
+  <path data-lv="2 3" class="lane" d="M1124 628 H1520 V1528 H1128"/>
+  <path data-lv="1" class="ln" d="M800 142 V212"/>
+  <path data-lv="1" class="ln a" d="M800 322 V392"/>
+  <path data-lv="1" class="ln" d="M800 502 V572"/>
+  <path data-lv="2" class="ln a" d="M800 682 V752"/>
+  <path data-lv="2" class="ln" d="M800 862 V932"/>
+  <path data-lv="2" class="ln" d="M800 1042 V1112"/>
+  <path data-lv="3" class="ln" d="M800 1222 V1292"/>
+  <path data-lv="3" class="ln" d="M800 1402 V1472"/>
+  <path data-lv="3" class="ln d" d="M600 1582 V1652"/>
+  <path data-lv="3" class="ln p" d="M1000 1582 V1652"/>
+</svg>
+<div class="an " data-lv="1" style="--cx:800;top:40px"><span class="ai"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 31V9"/><path d="M15 18l9-9 9 9"/><path d="M8 30v8a3 3 0 0 0 3 3h26a3 3 0 0 0 3-3v-8"/></svg></span><span class="at"><b>파일 업로드</b><span>고객사 운영자</span></span></div>
+<span class="al2 " data-lv="1" style="--x:828;top:156px">Presigned URL로 업로드</span>
+<div class="an " data-lv="1" style="--cx:800;top:220px"><span class="ai"><svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="11" rx="15" ry="6"/><path d="M9 11v26c0 3.3 6.7 6 15 6s15-2.7 15-6V11"/><path d="M9 24c0 3.3 6.7 6 15 6s15-2.7 15-6"/></svg></span><span class="at"><b>S3 incoming/</b><span>AWS · 검사 전 보관 · 밖에서 못 받음</span></span></div>
+<span class="al2 " data-lv="1" style="--x:828;top:336px"><span class="sig"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>업로드 이벤트</span>S3가 바로 알림</span>
+<div class="an " data-lv="1" style="--cx:800;top:400px"><span class="ai"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="32" height="8" rx="3"/><rect x="8" y="20" width="32" height="8" rx="3"/><rect x="8" y="32" width="32" height="8" rx="3"/></svg></span><span class="at"><b>SQS 정적 대기열</b><span>AWS · 검사할 파일 차례</span></span></div>
+<span class="al2 " data-lv="1" style="--x:828;top:516px">EC2 worker가 하나씩 가져감</span>
+<div class="an key" data-lv="1 2" style="--cx:800;top:580px"><span class="ai"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="21" cy="21" r="12"/><path d="M30 30l10 10"/></svg></span><span class="at"><b>정적 분석 ⓪~⑤</b><span>AWS EC2 · worker · 파일당 약 1초</span></span></div>
+<span class="al2 c" data-lv="2" style="--x:1320;top:640px">나머지는 바로 판정</span>
+<span class="al2 " data-lv="2" style="--x:828;top:696px"><span class="sig"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>위험 점수 기준 이상</span>정상 파일의 2~5%만</span>
+<div class="an " data-lv="2" style="--cx:800;top:760px"><span class="ai"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="32" height="8" rx="3"/><rect x="8" y="20" width="32" height="8" rx="3"/><rect x="8" y="32" width="32" height="8" rx="3"/></svg></span><span class="at"><b>SQS 동적 대기열</b><span>AWS · 정밀 검사할 파일</span></span></div>
+<span class="al2 " data-lv="2" style="--x:828;top:876px">가져가기 · 실습 PC로 들어오는 연결 없음</span>
+<div class="an pc" data-lv="2" style="--cx:800;top:940px"><span class="ai"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="7" width="32" height="14" rx="3"/><rect x="8" y="27" width="32" height="14" rx="3"/><path d="M14 14h2M14 34h2"/></svg></span><span class="at"><b>gateway</b><span>실습 PC · 호스트 프로그램</span></span></div>
+<span class="al2 " data-lv="2" style="--x:828;top:1056px">격리 VM에 제출</span>
+<div class="an pc" data-lv="2 3" style="--cx:800;top:1120px"><span class="ai"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="7" width="38" height="26" rx="3"/><path d="M17 41h14M24 33v8"/><path d="M21 14l8 6-8 6z"/></svg></span><span class="at"><b>CAPEv2 동적 분석 ⑥</b><span>실습 PC · 격리 VM · Windows 10 · 가짜 인터넷</span></span></div>
+<span class="al2 " data-lv="3" style="--x:828;top:1236px">행동 요약을 돌려줌</span>
+<div class="an " data-lv="3" style="--cx:800;top:1300px"><span class="ai"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="32" height="8" rx="3"/><rect x="8" y="20" width="32" height="8" rx="3"/><rect x="8" y="32" width="32" height="8" rx="3"/></svg></span><span class="at"><b>SQS 결과 대기열</b><span>AWS · 동적 분석 결과</span></span></div>
+<span class="al2 " data-lv="3" style="--x:828;top:1416px">EC2 worker가 받아서</span>
+<span class="al2 c" data-lv="3" style="--x:1320;top:1476px">나머지는 바로 판정</span>
+<span class="al2 fb" data-lv="3" style="--x:56;top:1506px"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M38 20a15 15 0 1 0 1 9"/><path d="M40 9v11H29"/></svg>악성 해시는 1차 차단 목록에 등록</span>
+<div class="an de" data-lv="3" style="--cx:800;top:1480px"><span class="ai"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 7v34M15 41h18M9 13h30"/><path d="M9 13L4 25a5 5 0 0 0 10 0z"/><path d="M39 13l-5 12a5 5 0 0 0 10 0z"/></svg></span><span class="at"><b>최종 판정 ⑦</b><span>Decision Engine · AWS EC2</span></span></div>
+<span class="al2 d r" data-lv="3" style="--x:580;top:1596px"><b>차단·보류</b></span>
+<span class="al2 p" data-lv="3" style="--x:1024;top:1596px"><b>통과</b></span>
+<div class="an q" data-lv="3" style="--cx:440;top:1660px"><span class="ai"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="21" width="28" height="21" rx="3"/><path d="M16 21v-6a8 8 0 0 1 16 0v6"/></svg></span><span class="at"><b>S3 quarantine/</b><span>격리 · 알림 · 관제 화면</span></span></div>
+<div class="an p" data-lv="3" style="--cx:1160;top:1660px"><span class="ai"><svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="11" rx="15" ry="6"/><path d="M9 11v26c0 3.3 6.7 6 15 6s15-2.7 15-6V11"/><path d="M17 27l5 5 9-10"/></svg></span><span class="at"><b>S3 public/ → CDN</b><span>CLEAN 태그 붙은 파일만 사용자에게</span></span></div>
+</div></div>
+<header class="chrome topbar"><span class="brand"><i></i>미리막음</span><span class="right"><span class="meta">최종 발표</span><button class="tb fs" id="fsBtn" aria-label="전체 화면" title="전체 화면 (F)"><svg class="en" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="ex" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button></span></header>
+<nav class="chrome rail" aria-label="대목차 이동"><!-- 대목차 탭은 스크립트가 장의 data-ch로 만든다 --></nav>
+<footer class="chrome foot"><span class="pg"><b data-cur>01</b> / <span data-total>36</span><span class="lab" data-lab>표지</span></span><span class="nav"><button class="tb" data-step="-1" aria-label="이전">←</button><button class="tb" data-step="1" aria-label="다음">→</button></span></footer>
+<div class="chrome prog"><i></i></div>
+<div class="chrome story asteps" id="asteps" aria-hidden="true"><span class="ind"></span>
+  <span class="st"><i>1</i>업로드·정적</span><span class="st"><i>2</i>정밀 검사 경로</span><span class="st"><i>3</i>판정·배포</span>
+</div>
+</main>
+</div>
+<dialog class="demo-dialog" id="demoDialog" aria-label="시연 영상">
+  <div class="demo-dialog-toolbar"><button type="button" class="demo-close" id="demoClose" autofocus>닫기</button></div>
+  <video id="demoVideo" src="https://raw.githubusercontent.com/YoonJoony/axi-final-presentation/60358d3ddc3650e6af600a593352ad8865916eae/%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C/%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81/%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81_v00.mp4" preload="none" controls playsinline></video>
+  <p id="demoVideoStatus" class="demo-video-status" role="status" hidden>시연 영상을 재생할 수 없습니다. 인터넷 연결과 영상 주소를 확인해 주세요.</p>
+</dialog>
+<nav class="deck-controls" id="ctrl" aria-label="슬라이드 이동"><button id="prev" aria-label="이전">◀</button><span id="counter">1 / 36</span><button id="next" aria-label="다음">▶</button></nav>
+<script>
+
+(() => {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  document.querySelectorAll('[data-range]').forEach((el) => {
+    const c = el.dataset.range;
+    const idx = slides.map((s, i) => (s.dataset.ch === c ? i + 1 : 0)).filter(Boolean);
+    if (idx.length) el.textContent = (idx[0] === idx[idx.length - 1] ? idx[0] : idx[0] + '~' + idx[idx.length - 1]) + '장';
+  });
+  // 다른 장 가리키기: data-ref="장 이름|장 이름" → 그 장들의 번호(장을 넣거나 빼도 저절로 맞음)
+  document.querySelectorAll('[data-ref]').forEach((el) => {
+    const ns = el.dataset.ref.split('|').map((l) => slides.findIndex((s) => s.dataset.label === l) + 1).filter((n) => n > 0);
+    if (ns.length) el.textContent = ns.join('·') + '장';
+  });
+})();
+(() => {
+  const stage = document.getElementById('stage');
+  const slides = Array.from(stage.querySelectorAll('.slide'));
+  const N = slides.length;
+  const ctrl = document.getElementById('ctrl');
+  const counter = document.getElementById('counter');
+  const pad = (n) => String(n).padStart(2, '0');
+  const ROMAN = ['', 'Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ', 'Ⅸ', 'Ⅹ'];
+  const embedded = window.self !== window.top;
+  if (embedded) document.documentElement.classList.add('embedded');
+  const FONT = "'SUIT Variable', 'SUIT', 'Malgun Gothic', sans-serif";
+
+  // 장 순서에서 저절로 맞추는 것: 대목차 탭(장의 data-ch·data-chs), 장 번호, 총 장수
+  const rail = document.querySelector('.rail');
+  if (rail) {
+    const firsts = [];
+    slides.forEach((s, i) => { const c = s.dataset.ch; if (c && !firsts.some((f) => f.c === c)) firsts.push({ c, i, short: s.dataset.chs || '', name: s.dataset.chn || '' }); });
+    rail.innerHTML = firsts.map((f) => '<button class="tb" data-go="' + f.i + '" data-ch="' + f.c + '" title="' + f.name + '">' + ROMAN[+f.c] + '<span>' + f.short + '</span></button>').join('');
+  }
+  document.querySelectorAll('[data-total]').forEach((el) => { el.textContent = pad(N); });
+  const tabs = Array.from(document.querySelectorAll('[data-go]'));
+
+  let cur = -1;
+  let step = 0;
+  let chart = null;
+
+  const demoDialog = document.getElementById('demoDialog');
+  const demoPlay = document.getElementById('demoPlay');
+  const demoVideo = document.getElementById('demoVideo');
+  const demoVideoStatus = document.getElementById('demoVideoStatus');
+  const showDemoError = () => {
+    if (demoDialog.open) demoVideoStatus.hidden = false;
+  };
+  demoPlay.addEventListener('click', () => {
+    demoVideoStatus.hidden = true;
+    demoDialog.showModal();
+    demoVideo.play().catch((error) => {
+      if (error.name !== 'AbortError') showDemoError();
+    });
+  });
+  document.getElementById('demoClose').addEventListener('click', () => demoDialog.close());
+  demoVideo.addEventListener('error', showDemoError);
+  demoVideo.addEventListener('playing', () => { demoVideoStatus.hidden = true; });
+  demoDialog.addEventListener('close', () => {
+    demoVideo.pause();
+    if (demoVideo.readyState) demoVideo.currentTime = 0;
+  });
+
+  function fit() {
+    const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+    stage.style.transform = 'translate(' + (innerWidth - 1920 * f) / 2 + 'px,' + (innerHeight - 1080 * f) / 2 + 'px) scale(' + f + ')';
+  }
+
+  // 숫자 올라가기 (한 번만)
+  function countUp(slide) {
+    slide.querySelectorAll('[data-to]').forEach((el) => {
+      const to = parseFloat(el.dataset.to);
+      const dec = parseInt(el.dataset.dec || '0', 10);
+      const fmt = (v) => (v < 0 && Math.abs(v) >= 0.5 / Math.pow(10, dec) ? '−' : '') + Math.abs(v).toFixed(dec);
+      const t0 = performance.now() + 150;
+      const dur = 800;
+      el.textContent = fmt(0);
+      const tick = (now) => {
+        const p = Math.min(1, Math.max(0, (now - t0) / dur));
+        el.textContent = fmt(to * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      setTimeout(() => { el.textContent = fmt(to); }, 1400);
+    });
+  }
+
+  // Chart.js 막대 (canvas[data-chart]에 JSON: {labels, series:[{label, data, color}], max, unit})
+  function drawChart(slide) {
+    const cv = slide.querySelector('canvas[data-chart]');
+    if (!cv || !window.Chart) return;
+    if (cv._chart) { cv._chart.reset(); cv._chart.update(); return; }
+    const cfg = JSON.parse(cv.dataset.chart);
+    const cs = getComputedStyle(document.documentElement);
+    const v = (n) => cs.getPropertyValue(n).trim();
+    const col = (c) => (c && c.startsWith('--') ? v(c) : c);
+    cv._chart = new window.Chart(cv, {
+      type: 'bar',
+      data: { labels: cfg.labels, datasets: cfg.series.map((s) => ({ label: s.label, data: s.data, backgroundColor: col(s.color), borderRadius: 18, borderSkipped: 'start', barPercentage: 0.8, categoryPercentage: 0.7 })) },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        animation: { duration: 900, easing: 'easeOutQuart', delay: 80 },
+        layout: { padding: { top: 64 } },
+        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+        scales: { y: { display: false, beginAtZero: true, max: cfg.max || undefined }, x: { grid: { display: false }, border: { color: v('--line2'), width: 3 }, ticks: { color: v('--ink'), font: { family: FONT, size: 28, weight: '700' } } } },
+      },
+      plugins: [{
+        id: 'vals',
+        afterDatasetsDraw(c) {
+          const ctx = c.ctx; ctx.save(); ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.font = '800 40px ' + FONT;
+          c.data.datasets.forEach((ds, di) => c.getDatasetMeta(di).data.forEach((bar, i) => { ctx.fillStyle = ds.backgroundColor; ctx.fillText(ds.data[i] + (cfg.unit || ''), bar.x, bar.y - 10); }));
+          ctx.restore();
+        },
+      }],
+    });
+  }
+
+  // ---------- 아키텍처 카메라 ----------
+  const arch = document.getElementById('archview');
+  const atrack = document.getElementById('atrack');
+  const asteps = document.getElementById('asteps');
+  const AOFF = atrack ? atrack.dataset.offs.split(',').map(Number) : [];
+  function setArch(i, s, prev) {
+    if (arch) {
+      const k = s.dataset.arch ? +s.dataset.arch : 0;
+      const fwd = prev < 0 || i > prev;
+      if (k) {
+        if (!arch.classList.contains('on')) {
+          atrack.style.transition = 'none';
+          atrack.style.setProperty('--off', AOFF[k - 1] + (fwd ? -260 : 260));
+          void atrack.offsetHeight;
+          atrack.style.transition = '';
+        }
+        arch.classList.add('on');
+        atrack.style.setProperty('--off', AOFF[k - 1]);
+        atrack.querySelectorAll('[data-lv]').forEach((e) => e.classList.toggle('lvon', e.dataset.lv.split(' ').includes(String(k))));
+      } else if (arch.classList.contains('on')) {
+        const now = parseFloat(atrack.style.getPropertyValue('--off')) || 0;
+        atrack.style.setProperty('--off', now + (fwd ? 320 : -320));
+        arch.classList.remove('on');
+      }
+    }
+    if (asteps) {
+      const st = s.dataset.astep;
+      asteps.classList.toggle('on', st !== undefined);
+      if (st !== undefined) {
+        asteps.style.setProperty('--pos', st);
+        asteps.querySelectorAll('.st').forEach((e, n) => e.classList.toggle('on', n === +st));
+      }
+    }
+  }
+
+  // ---------- 장 안 단계 (→ 를 누를 때마다 진행) ----------
+  const FX = {};
+  function setStep(s, k, animate) {
+    step = k;
+    s.dataset.step = String(k);
+    s.querySelectorAll('.stepdots i').forEach((d, n) => d.classList.toggle('on', n < k));
+    const fn = FX[s.dataset.fx];
+    if (fn) fn(s, k, animate);
+  }
+
+  // 18장: 신호가 켜지면 결합층을 거쳐 정밀 검사로 (→ 한 번에 한 예시, 빠르게)
+  FX.comb = (s, k, animate) => {
+    const root = s.querySelector('.comb');
+    if (!root) return;
+    // 단계 설명 한 줄: 지금 단계(k)만 보이게
+    s.querySelectorAll('.stepcap [data-k]').forEach((e) => e.classList.toggle('on', +e.dataset.k === k));
+    (root._timers || []).forEach(clearTimeout);
+    root._timers = [];
+    root.querySelectorAll('*').forEach((e) => e.getAnimations && e.getAnimations().forEach((a) => a.cancel()));
+    const pos = (x, y) => 'translate(' + (x - 38) + 'px,' + (y - 45) + 'px)';
+    // 초기화
+    root.querySelectorAll('.tok').forEach((t) => { t.style.opacity = '0'; t.style.transform = pos(90, 280); });
+    root.querySelectorAll('.lamp').forEach((l) => l.classList.remove('on'));
+    root.querySelectorAll('.gl').forEach((g) => g.classList.remove('red', 'ok'));
+    root.querySelectorAll('.hit').forEach((h) => h.classList.remove('hit'));
+    const gate = root.querySelector('.gate');
+    gate.classList.remove('ok');
+    root.querySelectorAll('.bus').forEach((b) => b.classList.remove('lit'));
+    root.querySelectorAll('.ot').forEach((o) => o.classList.remove('k', 'p', 'd'));
+    root.querySelectorAll('.gauge i').forEach((g) => { g.style.width = '0'; });
+    const vb = root.querySelector('.vbar i');
+    vb.style.height = '8%'; vb.classList.remove('hi');
+    root.querySelector('.mou').classList.remove('on');
+    root.querySelector('.pdft').classList.remove('on');
+    if (!k) return;
+
+    const ROWX = 465;
+    const ROWY = [140, 280, 420];
+    const at = (ms, fn) => { if (animate) root._timers.push(setTimeout(fn, ms)); else fn(); };
+    const move = (t, x, y, dur) => {
+      const to = pos(x, y);
+      if (animate) {
+        t.animate([{ transform: t.style.transform }, { transform: to }], { duration: dur, easing: 'cubic-bezier(.34,1.45,.64,1)' });
+        root._timers.push(setTimeout(() => t.firstElementChild.animate([{ transform: 'scale(1.18,.82)' }, { transform: 'scale(.94,1.06)' }, { transform: 'scale(1)' }], { duration: 240, easing: 'ease-out' }), Math.max(0, dur - 40)));
+      }
+      t.style.transform = to;
+    };
+    const appear = (t, x, y, dur = 300) => {
+      t.style.transform = pos(x, y);
+      t.style.opacity = '1';
+      if (animate) t.animate([{ opacity: 0, transform: pos(x, y + 60) + ' scale(.6)' }, { opacity: 1, transform: pos(x, y - 18) + ' scale(1.08)' }, { opacity: 1, transform: pos(x, y) }], { duration: dur, easing: 'ease-out' });
+    };
+    // 파일이 결과 칸으로 쏙 들어가 사라지고, 칸이 한 번 빛남
+    const sink = (t, box, x, y, dur) => {
+      move(t, x, y, dur);
+      const end = () => { t.style.opacity = '0'; box.classList.add('hit'); };
+      if (animate) {
+        root._timers.push(setTimeout(() => {
+          t.animate([{ opacity: 1, transform: pos(x, y) }, { opacity: 0, transform: pos(x, y) + ' scale(.45)' }], { duration: 200, easing: 'ease-in' });
+          root._timers.push(setTimeout(end, 190));
+        }, dur));
+      } else end();
+    };
+    const pulse = (bus, color) => {
+      const pl = root.querySelector('.pl[data-bus="' + bus + '"]');
+      const b = root.querySelector('.bus[data-bus="' + bus + '"]');
+      pl.style.setProperty('--c', color);
+      b.style.setProperty('--c', color);
+      if (animate) {
+        pl.animate([{ strokeDashoffset: 14, opacity: 1 }, { strokeDashoffset: -100, opacity: 1 }], { duration: 380, easing: 'linear' });
+        root._timers.push(setTimeout(() => b.classList.add('lit'), 280));
+      } else b.classList.add('lit');
+    };
+    const tok = (n) => root.querySelector('.tok[data-t="' + n + '"]');
+    const cs = getComputedStyle(document.documentElement);
+    const C = (n) => cs.getPropertyValue(n).trim();
+    const blk = root.querySelector('.blk');
+    const outK = root.querySelector('.out.k');
+    const outP = root.querySelector('.out.p');
+
+    if (k === 1) {
+      // ① 1차 확정: 알려진 악성은 차단, 일반 파일은 통과 — 동시에.
+      //    v02: 사용자 "빠르다" → 약 2배 느리게, 해시 일치(빨강) → 통과(초록) 순서가 보이게 사이를 둠(전체 약 4.4초)
+      const a = tok('a');
+      const b = tok('b');
+      at(0, () => { appear(a, 90, 236, 420); appear(b, 90, 326, 420); });
+      at(520, () => { move(a, 395, 236, 560); move(b, 395, 326, 560); });
+      at(1200, () => root.querySelector('.gl[data-g="hash"]').classList.add('red'));
+      at(1550, () => gate.classList.add('ok'));
+      at(1900, () => { root.querySelector('.ot[data-o="blk"]').classList.add('d'); sink(a, blk, 440, 58, 620); move(b, ROWX, 280, 520); });
+      at(2620, () => move(b, 1290, 280, 760));
+      at(3460, () => { vb.style.height = '14%'; root.querySelector('.ot[data-o="p"]').classList.add('p'); });
+      at(3760, () => sink(b, outP, 1520, 400, 620));
+      return;
+    }
+    const spec = {
+      2: { label: 'EXE', row: 0, bus: 'pe', color: C('--sg-score'), gauge: true, lamp: 'pe-s' },
+      3: { label: 'DOCM', row: 1, bus: 'of', color: C('--sg-m'), lamp: 'of-m', mou: true },
+      4: { label: 'PDF', row: 2, bus: 'pd', color: C('--sg-o'), lamp: 'pd-o', pdf: true },
+    }[k];
+    const t = tok('x');
+    t.querySelector('.tb2').textContent = spec.label;
+    const y = ROWY[spec.row];
+    at(0, () => appear(t, 90, 280));
+    at(260, () => move(t, 395, 280, 300));
+    at(600, () => gate.classList.add('ok'));
+    at(760, () => move(t, ROWX, y, 300));
+    at(1080, () => {
+      if (spec.gauge) root.querySelector('.gauge i').style.width = '92%';
+      if (spec.lamp) root.querySelector('.lamp[data-l="' + spec.lamp + '"]').classList.add('on');
+    });
+    at(1240, () => pulse(spec.bus, spec.color));
+    at(1560, () => { vb.style.height = '82%'; vb.classList.add('hi'); if (spec.mou) root.querySelector('.mou').classList.add('on'); });
+    at(1660, () => move(t, 1290, 280, 320));
+    at(2000, () => { root.querySelector('.ot[data-o="k"]').classList.add('k'); sink(t, outK, 1520, 160, 320); });
+    if (spec.pdf) at(2360, () => root.querySelector('.pdft').classList.add('on'));
+  };
+
+  function show(i, opts) {
+    i = Math.max(0, Math.min(i, N - 1));
+    if (i === cur) return;
+    if (demoDialog.open) demoDialog.close();
+    const prev = cur;
+    cur = i;
+    slides.forEach((s, k) => { s.classList.toggle('active', k === i); s.classList.remove('visible'); });
+    const s = slides[i];
+    const back = !!(opts && opts.back);
+    setStep(s, back ? +(s.dataset.steps || 0) : 0, false);
+    setTimeout(() => {
+      s.classList.add('visible');
+      countUp(s);
+      if (s.querySelector('canvas[data-chart]')) (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(() => drawChart(s));
+    }, 20);
+    setArch(i, s, prev);
+    tabs.forEach((t) => t.classList.toggle('on', t.dataset.ch ? t.dataset.ch === s.dataset.ch : +t.dataset.go === i));
+    document.querySelectorAll('[data-cur]').forEach((el) => { el.textContent = pad(i + 1); });
+    document.querySelectorAll('[data-lab]').forEach((el) => { el.textContent = s.dataset.label; });
+    stage.style.setProperty('--p', String((i + 1) / N));
+    if (counter) counter.textContent = (i + 1) + ' / ' + N;
+    if (!embedded) history.replaceState(null, '', '#' + (i + 1));
+  }
+  function next() {
+    const s = slides[cur];
+    const n = +(s.dataset.steps || 0);
+    if (n && step < n) setStep(s, step + 1, true);
+    else show(cur + 1);
+  }
+  function prev() {
+    const s = slides[cur];
+    if (+(s.dataset.steps || 0) && step > 0) setStep(s, step - 1, false);
+    else show(cur - 1, { back: true });
+  }
+
+  // 전체 화면
+  const fsBtn = document.getElementById('fsBtn');
+  const toggleFs = () => {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {});
+  };
+  if (fsBtn) fsBtn.addEventListener('click', toggleFs);
+  document.addEventListener('fullscreenchange', (e) => {
+    const fullscreen = document.fullscreenElement;
+    if (demoDialog.open && (!fullscreen || (e.target === demoVideo && fullscreen !== demoVideo))) demoDialog.close();
+    document.documentElement.classList.toggle('is-fs', !!document.fullscreenElement);
+    if (fsBtn) fsBtn.setAttribute('aria-label', document.fullscreenElement ? '전체 화면 끝내기' : '전체 화면');
+    fit();
+  });
+
+  const fromHash = () => (parseInt(location.hash.slice(1), 10) || 1) - 1;
+  addEventListener('resize', fit);
+  addEventListener('hashchange', () => show(fromHash()));
+  addEventListener('keydown', (e) => {
+    if (demoDialog.open) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        demoDialog.close();
+      }
+      return;
+    }
+    if (e.defaultPrevented || (e.target === demoPlay && (e.key === ' ' || e.key === 'Enter'))) return;
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); next(); }
+    else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(N - 1);
+    else if (e.key === 'f' || e.key === 'F') toggleFs();
+  });
+  let tx = null;
+  addEventListener('touchstart', (e) => { tx = demoDialog.open ? null : e.touches[0].clientX; }, { passive: true });
+  addEventListener('touchend', (e) => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) { if (dx < 0) next(); else prev(); } tx = null; });
+  tabs.forEach((t) => t.addEventListener('click', () => show(+t.dataset.go)));
+  document.querySelectorAll('[data-step]').forEach((b) => b.addEventListener('click', () => (+b.dataset.step > 0 ? next() : prev())));
+  document.getElementById('prev').addEventListener('click', prev);
+  document.getElementById('next').addEventListener('click', next);
+  let idle;
+  const wake = () => { ctrl.classList.add('on'); clearTimeout(idle); idle = setTimeout(() => ctrl.classList.remove('on'), 2200); };
+  addEventListener('mousemove', wake);
+  fit(); show(fromHash()); wake();
+  window.__deck = { show, next, prev, get step() { return step; }, get cur() { return cur; } };
+})();
+
+</script>
+</body>
+</html>

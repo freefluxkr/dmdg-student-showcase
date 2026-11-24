@@ -194,11 +194,15 @@
   function updateTrackHeaderAndKpis() {
     const tr = getTrack(activeTrackId);
     const tTabs = getTrackTabs(activeTrackId);
+    const totalTracks = manifest.stats.totalTracks || (manifest.tracks || []).length;
+    if (!ALLOW_DOWNLOAD && !SHOW_SCORES && $("modeBadge")) {
+      $("modeBadge").textContent = `✨ DMDG ACADEMY SHOWCASE · ${totalTracks}개 교육과정 · ${manifest.stats.totalProjects}개 프로젝트 통합 아카이브`;
+    }
     if (tr) {
       $("siteTitle").textContent = tr.heroTitle || manifest.siteTitle;
       const guide = $("heroSubGuide");
       if (guide) {
-        guide.innerHTML = `${esc(tr.subtitle)} <span style="color:#94a3b8;">(전체 6개 과정 · 총 ${manifest.stats.totalProjects}개 프로젝트 아카이브)</span>`;
+        guide.innerHTML = `${esc(tr.subtitle)} <span style="color:#94a3b8;">(전체 ${totalTracks}개 과정 · 총 ${manifest.stats.totalProjects}개 프로젝트 아카이브)</span>`;
       }
       const hint = $("trackPeriodHint");
       if (hint) {
