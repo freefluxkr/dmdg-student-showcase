@@ -1,6 +1,6 @@
 {
   "siteTitle": "DMDG ACADEMY SHOWCASE · 전체 교육과정 프로젝트 통합 아카이브",
-  "generatedAt": "2026-11-26 16:19",
+  "generatedAt": "2026-11-26 16:46",
   "repoUrl": "https://github.com/freefluxkr/dmdg-student-showcase",
   "pagesUrl": "https://freefluxkr.github.io/dmdg-student-showcase/",
   "releaseTag": "v1.0-assets",
@@ -5562,9 +5562,9 @@
           "authors": [
             "신상아"
           ],
-          "grade": "B+",
-          "score": 82,
-          "summary": "초기 프로젝트 분석 기획안 정밀 검토 · 시계열/출신국 세분화 전략 및 HR 피드백 통합 — 고령화·대학 정원 미달과 맞물린 높은 시의성 및 2주 단기 집중 실행에 적합한 명확한 주제",
+          "grade": "C+",
+          "score": 66,
+          "summary": "시의성 있는 주제이나 수집 불가 민간·개인정보(은행계좌·고용보험·카드결제) 의존, '~일 것이다' 추측성 가설, 원인/결과 혼재 및 D-2/D-4 세분화·정량 KPI 부재로 전면 수정 필요",
           "presentations": [
             {
               "name": "261002_유학생증가세분석_신상아.pdf",
@@ -5590,7 +5590,7 @@
               "name": "adv2_02_신상아_유학생증가세분석_피드백.pdf",
               "relPath": "adv2_02_신상아_유학생증가세분석_피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 686139,
+              "sizeBytes": 637803,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/adv2_analysis/adv2_p02/adv2_analysis_adv2_p02_adv2_02______.pdf_16fca029.pdf",
@@ -5625,7 +5625,7 @@
               "name": "adv2_02_신상아_유학생증가세분석_피드백.pdf",
               "relPath": "adv2_02_신상아_유학생증가세분석_피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 686139,
+              "sizeBytes": 637803,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/adv2_analysis/adv2_p02/adv2_analysis_adv2_p02_adv2_02______.pdf_16fca029.pdf",
@@ -6290,9 +6290,9 @@
             "신상아",
             "이인애"
           ],
-          "grade": "A-",
-          "score": 89,
-          "summary": "시니어 특화 금융 안전망. Data Leakage 차단, SMOTENC, Soft Voting 앙상블(PR-AUC 0.80) 및 FastAPI·Streamlit·TTS 실시간 경고 구현",
+          "grade": "B",
+          "score": 77,
+          "summary": "PR-AUC·누수 차단·FastAPI 서빙 기본기는 갖췄으나, 비현실적 합성데이터(3.68%)·무작위 분할·고령자 알람피로 유발 '주의 TTS'·Velocity 피처/룰엔진 부재·`pr_auc_score` 오기 보완 필요",
           "presentations": [
             {
               "name": "1차 프로젝트_URL 주소_오주원, 김지선, 신상아, 이인애.txt",
@@ -6352,7 +6352,7 @@
               "name": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_피드백.pdf",
               "relPath": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 669948,
+              "sizeBytes": 639519,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N_____.pdf_35907f31.pdf",
@@ -6420,7 +6420,7 @@
               "name": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_피드백.pdf",
               "relPath": "CARD-FDS-N 프로젝트_오주원, 김지선, 신상아, 이인애_피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 669948,
+              "sizeBytes": 639519,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/stage1/s1_card_fds/stage1_s1_card_fds_CARD-FDS-N_____.pdf_35907f31.pdf",
@@ -7346,9 +7346,9 @@
             "신상아",
             "이인애"
           ],
-          "grade": "A",
-          "score": 92,
-          "summary": "중간점검 제출 노트북 3종, 슬라이드 기획안, 파이프라인 장표, 분석 차트, AI 오디오 브리핑(.m4a) 및 기준 기술 감사 피드백 패키지",
+          "grade": "B",
+          "score": 74,
+          "summary": "고도화버전 노트북의 누수 차단·Val PR-AUC 0.8073은 양호하나, 제출 노트북 3종 중 2종 런타임 크래시·SMOTENC PR-AUC 하락(0.7503→0.7426) 오독·시간순 분할 및 Velocity 피처 부재 보완 필요",
           "presentations": [
             {
               "name": "card.ipynb",
@@ -7496,7 +7496,7 @@
               "name": "피드백.pdf",
               "relPath": "피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 1085220,
+              "sizeBytes": 720967,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__.pdf_16c61356.pdf",
@@ -7652,7 +7652,7 @@
               "name": "피드백.pdf",
               "relPath": "피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 1085220,
+              "sizeBytes": 720967,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/stage1/s1_midterm/stage1_s1_midterm__.pdf_16c61356.pdf",
@@ -8548,9 +8548,9 @@
           "authors": [
             "신상아"
           ],
-          "grade": "B+",
-          "score": 85,
-          "summary": "NASA IMS 진동(RMS·Kurtosis·FFT/STFT) 분석, RF 결함 분류(97.35%), 실측 MAD×5 경보 + 조건부 FFT 워터폴(Render·Streamlit Cloud 배포)",
+          "grade": "B",
+          "score": 73,
+          "summary": "실패 수치 투명 보고와 Render/Streamlit 배포는 긍정적이나, BiLSTM(57.50h > 기준 38.21h)·교차 RUL(R² -191) 전면 실패·동일 베어링 회고적 97.35% 한계·수명 97.3% 시점 지연경보 보완 필요",
           "presentations": [
             {
               "name": "베어링예지보전_신상아.pdf",
@@ -8576,7 +8576,7 @@
               "name": "베어링예지보전_신상아_피드백.pdf",
               "relPath": "베어링예지보전_신상아_피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 682055,
+              "sizeBytes": 620841,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/mini/m_shinsanga/mini_m_shinsanga______.pdf_18fdf94a.pdf",
@@ -8600,7 +8600,7 @@
               "name": "베어링예지보전_신상아_피드백.pdf",
               "relPath": "베어링예지보전_신상아_피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 682055,
+              "sizeBytes": 620841,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/mini/m_shinsanga/mini_m_shinsanga______.pdf_18fdf94a.pdf",
@@ -8956,9 +8956,9 @@
             "김지선",
             "방호원"
           ],
-          "grade": "A-",
-          "score": 87,
-          "summary": "KTDB 실데이터 기반 PostGIS/OSRM·Extreme Point 3D 적재·LightGBM·헝가리안 전역 배차 및 FSM/SHA-256 감사 로그 플랫폼 기획서",
+          "grade": "B",
+          "score": 75,
+          "summary": "KTDB 실데이터 기반 문제 정의는 탄탄하나 21일 일정에 15종+ 과잉 스코프·`(기획 전용: Redis, Celery)` 문서 자기모순·6.1절 정량 KPI 0건·PM 1인 AI 병목 해소 필요",
           "presentations": [
             {
               "name": "배차의 민족_오주원_신상아, 김지선, 방호원.pdf",
@@ -8984,7 +8984,7 @@
               "name": "배차의 민족_오주원_신상아, 김지선, 방호원_피드백.pdf",
               "relPath": "배차의 민족_오주원_신상아, 김지선, 방호원_피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 676941,
+              "sizeBytes": 738750,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/final/p_baemin/final_p_baemin________.pdf_9d4f6fd3.pdf",
@@ -9008,7 +9008,7 @@
               "name": "배차의 민족_오주원_신상아, 김지선, 방호원_피드백.pdf",
               "relPath": "배차의 민족_오주원_신상아, 김지선, 방호원_피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 676941,
+              "sizeBytes": 738750,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/final/p_baemin/final_p_baemin________.pdf_9d4f6fd3.pdf",
@@ -9436,9 +9436,9 @@
             "김지선",
             "신상아"
           ],
-          "grade": "A+",
-          "score": 93,
-          "summary": "Clean Architecture 기반 3D 적재검증(R0~R10·Extreme Point·LIFO), 3단계 하이브리드 매칭(PostGIS·LightGBM 0.850·헝가리안·매칭 P95 0.0309s), Redis Streams(GPS 6,000건 무유실)·Gemini 조회전용 관제탑 및 172항목 동시성/보안 QA를 통과한 물류 자동화 플랫폼",
+          "grade": "B+",
+          "score": 82,
+          "summary": "Clean Architecture 기반 172항목 QA 및 GPS 6,000건 무유실·Mock 한계 투명 고지는 우수하나, 매칭 P95(0.0309s)가 라운드당 화물 1건 측정치인 점·주문생성 P95 3.075s 병목·pickup_km 59.2% 가상 ML 편중·물리 FK 미제약 보완 필요",
           "presentations": [
             {
               "name": "PDF_배차의민족_오주원, 방호원, 김지선, 신상아.pdf",
@@ -9476,7 +9476,7 @@
               "name": "axi2_final_04_배차의민족_화물매칭_피드백.pdf",
               "relPath": "axi2_final_04_배차의민족_화물매칭_피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 602584,
+              "sizeBytes": 801641,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/axi_adv2_final/axi2_f_04/axi_adv2_final_axi2_f_04_axi2_final_04______.pdf_6da23e65.pdf",
@@ -9511,7 +9511,7 @@
               "name": "axi2_final_04_배차의민족_화물매칭_피드백.pdf",
               "relPath": "axi2_final_04_배차의민족_화물매칭_피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 602584,
+              "sizeBytes": 801641,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/axi_adv2_final/axi2_f_04/axi_adv2_final_axi2_f_04_axi2_final_04______.pdf_6da23e65.pdf",
