@@ -289,9 +289,9 @@ def main():
             "id": "axi2_f_04",
             "title": "배차의 민족: 알고리즘 기반 자동 화물 기사 매칭 & AI 실시간 관제 플랫폼",
             "authors": ["배차의 민족", "오주원", "방호원", "김지선", "신상아"],
-            "grade": "A+",
-            "score": 93,
-            "summary": "Clean Architecture 기반 3D 적재검증(R0~R10·Extreme Point·LIFO), 3단계 하이브리드 매칭(PostGIS·LightGBM 0.850·헝가리안·매칭 P95 0.0309s), Redis Streams(GPS 6,000건 무유실)·Gemini 조회전용 관제탑 및 172항목 동시성/보안 QA를 통과한 물류 자동화 플랫폼",
+            "grade": "B+",
+            "score": 82,
+            "summary": "Clean Architecture 기반 172항목 QA 및 GPS 6,000건 무유실·Mock 한계 투명 고지는 우수하나, 매칭 P95(0.0309s)가 라운드당 화물 1건 측정치인 점·주문생성 P95 3.075s 병목·pickup_km 59.2% 가상 ML 편중·물리 FK 미제약 보완 필요",
             "docs": [
                 (os.path.join(SRC_ROOT, r"배차의 민족_오주원, 방호원, 김지선, 신상아\PDF_배차의민족_오주원, 방호원, 김지선, 신상아.pdf"), "PDF_배차의민족_오주원, 방호원, 김지선, 신상아.pdf"),
             ],
