@@ -248,9 +248,9 @@ def main():
             "id": "axi2_f_01",
             "title": "SafePredict 3D: 월드모델 기반 산업현장 충돌위험 예측 및 3D 안전관제 PoC",
             "authors": ["신상아"],
-            "grade": "A",
-            "score": 91,
-            "summary": "PyTorch 신경망 월드모델로 2.5초 뒤 경로를 예측해 코너회전(S06) ADE 53.0%·FDE 48.2%를 감축하고, 작업자 5인 평균 16.2ms·충돌 3.9초 전 경보(자동서행 시 최소거리 7.98m)를 구현한 Three.js 3D 안전관제 PoC",
+            "grade": "B",
+            "score": 76,
+            "summary": "1인 E2E 3D 관제 프로토타입(Three.js·Docker 2컨테이너·pytest 34건)을 완주했으나, 물리합성 MLP를 CV와 16표본만 비교한 순환 검증·CTRV 미비교·직진 +21.7% 열화·FPR/노이즈/가중치 영속화 미검증 보완 필요",
             "docs": [
                 (os.path.join(SRC_ROOT, r"Safepredict-3D_신상아\SafePredict_3D_발표자료_신상아.pdf"), "SafePredict_3D_발표자료_신상아.pdf"),
             ],
