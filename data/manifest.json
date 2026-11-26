@@ -1,6 +1,6 @@
 {
   "siteTitle": "DMDG ACADEMY SHOWCASE · 전체 교육과정 프로젝트 통합 아카이브",
-  "generatedAt": "2026-11-24 09:29",
+  "generatedAt": "2026-11-26 16:19",
   "repoUrl": "https://github.com/freefluxkr/dmdg-student-showcase",
   "pagesUrl": "https://freefluxkr.github.io/dmdg-student-showcase/",
   "releaseTag": "v1.0-assets",
@@ -82,16 +82,26 @@
       "tabIds": [
         "axi_adv2_final"
       ]
+    },
+    {
+      "id": "samsung_axi_adv2_improved",
+      "label": "8. 삼성AXI 심화2 최종프로젝트 (개선 · 4팀)",
+      "shortLabel": "AXI 심화2 개선",
+      "heroTitle": "삼성AXI 심화2 최종프로젝트 (개선 · 4팀)",
+      "subtitle": "최종 발표 피드백 반영 개선안 4팀 — SafePredict 3D(신상아) · 예지보전 AS-IS/TO-BE(김지선) · 미리막음(인프라 개선) · 배차의 민족(아키텍처·ERD 보완)",
+      "tabIds": [
+        "axi_adv2_improved"
+      ]
     }
   ],
   "stats": {
-    "totalTracks": 7,
-    "totalTabs": 14,
-    "totalProjects": 68,
-    "totalFiles": 358,
+    "totalTracks": 8,
+    "totalTabs": 15,
+    "totalProjects": 72,
+    "totalFiles": 366,
     "videosAvailable": 29,
-    "videosMissing": 39,
-    "totalFeedbackPdfs": 69
+    "videosMissing": 43,
+    "totalFeedbackPdfs": 73
   },
   "tabs": [
     {
@@ -9097,9 +9107,9 @@
           "authors": [
             "신상아"
           ],
-          "grade": "A",
-          "score": 91,
-          "summary": "PyTorch 신경망 월드모델로 2.5초 뒤 경로를 예측해 코너회전(S06) ADE 53.0%·FDE 48.2%를 감축하고, 작업자 5인 평균 16.2ms·충돌 3.9초 전 경보(자동서행 시 최소거리 7.98m)를 구현한 Three.js 3D 안전관제 PoC",
+          "grade": "B",
+          "score": 76,
+          "summary": "1인 E2E 3D 관제 프로토타입(Three.js·Docker 2컨테이너·pytest 34건)을 완주했으나, 물리합성 MLP를 CV와 16표본만 비교한 순환 검증·CTRV 미비교·직진 +21.7% 열화·FPR/노이즈/가중치 영속화 미검증 보완 필요",
           "presentations": [
             {
               "name": "SafePredict_3D_발표자료_신상아.pdf",
@@ -9137,7 +9147,7 @@
               "name": "axi2_final_01_SafePredict3D_신상아_피드백.pdf",
               "relPath": "axi2_final_01_SafePredict3D_신상아_피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 770296,
+              "sizeBytes": 620479,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/axi_adv2_final/axi2_f_01/axi_adv2_final_axi2_f_01_axi2_final_01_SafePredi_fb4ec932.pdf",
@@ -9172,7 +9182,7 @@
               "name": "axi2_final_01_SafePredict3D_신상아_피드백.pdf",
               "relPath": "axi2_final_01_SafePredict3D_신상아_피드백.pdf",
               "ext": "pdf",
-              "sizeBytes": 770296,
+              "sizeBytes": 620479,
               "role": "feedback",
               "hostedOn": "pages",
               "previewUrl": "./assets/files/axi_adv2_final/axi2_f_01/axi_adv2_final_axi2_f_01_axi2_final_01_SafePredi_fb4ec932.pdf",
@@ -9511,6 +9521,301 @@
           ],
           "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_axi_adv2_final_axi2_f_04.zip",
           "bundleZipBytes": 5437444
+        }
+      ]
+    },
+    {
+      "id": "axi_adv2_improved",
+      "label": "최종 개선안 · 실무 피드백 (4팀)",
+      "tabBadge": "AXI 심화2 개선",
+      "trackId": "samsung_axi_adv2_improved",
+      "trackLabel": "8. 삼성AXI 심화2 최종프로젝트 (개선 · 4팀)",
+      "sourceFolder": "Downloads/최종 개선안 4팀",
+      "projects": [
+        {
+          "id": "axi2_i_01",
+          "title": "SafePredict-3D 피드백 개선안 (랙 배치 외부화 · 타깃 현장 재정의)",
+          "authors": [
+            "신상아"
+          ],
+          "grade": "B",
+          "score": 74,
+          "summary": "SCENARIO_RACKS/VIEW의 layouts/*.json 외부화 및 동적 GridHelper 설계는 합리적이나, 저예산 중소 현장 타깃에 고가 RTLS+LiDAR를 전제한 단가 모순과 랙 충돌/NLOS 배제·v1 코어 결함 미조치 보완 필요",
+          "presentations": [
+            {
+              "name": "SafePredict-3D_개선안_신상아.pdf",
+              "relPath": "SafePredict-3D_개선안_신상아.pdf",
+              "ext": "pdf",
+              "sizeBytes": 314369,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_01/axi_adv2_improved_axi2_i_01_SafePredict-3D____.p_d067a6b5.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_01/axi_adv2_improved_axi2_i_01_SafePredict-3D____.p_d067a6b5.pdf",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": false,
+            "statusText": "미제공",
+            "files": []
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "axi2_imp_01_SafePredict3D_개선안_신상아_피드백.pdf",
+              "relPath": "axi2_imp_01_SafePredict3D_개선안_신상아_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 888198,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_01/axi_adv2_improved_axi2_i_01_axi2_imp_01_SafePred_8f6333b9.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_01/axi_adv2_improved_axi2_i_01_axi2_imp_01_SafePred_8f6333b9.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "SafePredict-3D_개선안_신상아.pdf",
+              "relPath": "SafePredict-3D_개선안_신상아.pdf",
+              "ext": "pdf",
+              "sizeBytes": 314369,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_01/axi_adv2_improved_axi2_i_01_SafePredict-3D____.p_d067a6b5.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_01/axi_adv2_improved_axi2_i_01_SafePredict-3D____.p_d067a6b5.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "axi2_imp_01_SafePredict3D_개선안_신상아_피드백.pdf",
+              "relPath": "axi2_imp_01_SafePredict3D_개선안_신상아_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 888198,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_01/axi_adv2_improved_axi2_i_01_axi2_imp_01_SafePred_8f6333b9.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_01/axi_adv2_improved_axi2_i_01_axi2_imp_01_SafePred_8f6333b9.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_axi_adv2_improved_axi2_i_01.zip",
+          "bundleZipBytes": 398866
+        },
+        {
+          "id": "axi2_i_02",
+          "title": "예지보전 시스템 아키텍처 개선안 (AS-IS vs TO-BE · 폐쇄망 Qwen3)",
+          "authors": [
+            "김지선"
+          ],
+          "grade": "B+",
+          "score": 84,
+          "summary": "가상 PLC+DAQ 단일 스트림과 폐쇄망 Qwen3(32B/8B)+Kafka 비동기 워커 전환 방향은 우수하나, 이종 데이터셋(진동 vs C-MAPSS) 단일 스트림 전제 오류·로컬 CPU LLM 실측 부재·문서 오탈자 교정 필요",
+          "presentations": [
+            {
+              "name": "예지보전_시스템_개선안_ASIS_TOBE_김지선.pdf",
+              "relPath": "예지보전_시스템_개선안_ASIS_TOBE_김지선.pdf",
+              "ext": "pdf",
+              "sizeBytes": 235676,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_02/axi_adv2_improved_axi2_i_02_______ASIS_TOBE__.pd_080d5f34.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_02/axi_adv2_improved_axi2_i_02_______ASIS_TOBE__.pd_080d5f34.pdf",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": false,
+            "statusText": "미제공",
+            "files": []
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "axi2_imp_02_SmartFactory_PdM_개선안_김지선_피드백.pdf",
+              "relPath": "axi2_imp_02_SmartFactory_PdM_개선안_김지선_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 633367,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_02/axi_adv2_improved_axi2_i_02_axi2_imp_02_SmartFac_9e6bb61c.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_02/axi_adv2_improved_axi2_i_02_axi2_imp_02_SmartFac_9e6bb61c.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "예지보전_시스템_개선안_ASIS_TOBE_김지선.pdf",
+              "relPath": "예지보전_시스템_개선안_ASIS_TOBE_김지선.pdf",
+              "ext": "pdf",
+              "sizeBytes": 235676,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_02/axi_adv2_improved_axi2_i_02_______ASIS_TOBE__.pd_080d5f34.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_02/axi_adv2_improved_axi2_i_02_______ASIS_TOBE__.pd_080d5f34.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "axi2_imp_02_SmartFactory_PdM_개선안_김지선_피드백.pdf",
+              "relPath": "axi2_imp_02_SmartFactory_PdM_개선안_김지선_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 633367,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_02/axi_adv2_improved_axi2_i_02_axi2_imp_02_SmartFac_9e6bb61c.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_02/axi_adv2_improved_axi2_i_02_axi2_imp_02_SmartFac_9e6bb61c.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_axi_adv2_improved_axi2_i_02.zip",
+          "bundleZipBytes": 436705
+        },
+        {
+          "id": "axi2_i_03",
+          "title": "팀 미리막음: 기업 첨부파일 검사 인프라 개선안 (CAPE 병렬·캐시·RDS)",
+          "authors": [
+            "미리막음",
+            "구명회",
+            "김윤준",
+            "남유진",
+            "백선병",
+            "이인애"
+          ],
+          "grade": "A-",
+          "score": 89,
+          "summary": "CAPE 제출/회수 디커플링·정적 캐시 연결·RDS Multi-AZ·DoD까지 실무 수준으로 정확히 진단했으나, 오전 피크(3~5x) 슬롯 과소산정(133슬롯)과 AWS Bare Metal KVM TCO·실측 겹침/복구 로그 검증 보완 필요",
+          "presentations": [
+            {
+              "name": "팀 미리막음_피드백반영_개선안_구명회,김윤준,남유진,백선병,이인애.pdf",
+              "relPath": "팀 미리막음_피드백반영_개선안_구명회,김윤준,남유진,백선병,이인애.pdf",
+              "ext": "pdf",
+              "sizeBytes": 154358,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_03/axi_adv2_improved_axi2_i_03________.pdf_4d5d3a92.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_03/axi_adv2_improved_axi2_i_03________.pdf_4d5d3a92.pdf",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": false,
+            "statusText": "미제공",
+            "files": []
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "axi2_imp_03_미리막음_개선안_피드백.pdf",
+              "relPath": "axi2_imp_03_미리막음_개선안_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 606981,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_03/axi_adv2_improved_axi2_i_03_axi2_imp_03______.pd_007f074c.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_03/axi_adv2_improved_axi2_i_03_axi2_imp_03______.pd_007f074c.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "팀 미리막음_피드백반영_개선안_구명회,김윤준,남유진,백선병,이인애.pdf",
+              "relPath": "팀 미리막음_피드백반영_개선안_구명회,김윤준,남유진,백선병,이인애.pdf",
+              "ext": "pdf",
+              "sizeBytes": 154358,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_03/axi_adv2_improved_axi2_i_03________.pdf_4d5d3a92.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_03/axi_adv2_improved_axi2_i_03________.pdf_4d5d3a92.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "axi2_imp_03_미리막음_개선안_피드백.pdf",
+              "relPath": "axi2_imp_03_미리막음_개선안_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 606981,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_03/axi_adv2_improved_axi2_i_03_axi2_imp_03______.pd_007f074c.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_03/axi_adv2_improved_axi2_i_03_axi2_imp_03______.pd_007f074c.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_axi_adv2_improved_axi2_i_03.zip",
+          "bundleZipBytes": 389154
+        },
+        {
+          "id": "axi2_i_04",
+          "title": "배차의 민족 최종 발표 개선안 (Phase 0~8 아키텍처 & 10테이블 ERD)",
+          "authors": [
+            "배차의 민족",
+            "오주원",
+            "방호원",
+            "김지선",
+            "신상아"
+          ],
+          "grade": "B+",
+          "score": 80,
+          "summary": "Phase 0~8 구조도와 실제 backend/models 기반 10테이블 ERD 공개는 투명하나, 본문 2-1~2-5절이 추가 학습 계획 수준에 머물러 있고 DB 물리 FK 미제약(논리적 FK)·토큰 만료 부재·실측 지표 누락 보완 필요",
+          "presentations": [
+            {
+              "name": "최종 개선안_배차의 민족_오주원, 방호원, 김지선, 신상아.pdf",
+              "relPath": "최종 개선안_배차의 민족_오주원, 방호원, 김지선, 신상아.pdf",
+              "ext": "pdf",
+              "sizeBytes": 427771,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_04/axi_adv2_improved_axi2_i_04______.pdf_eb1e3376.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_04/axi_adv2_improved_axi2_i_04______.pdf_eb1e3376.pdf",
+              "externalUrl": null
+            }
+          ],
+          "demoVideo": {
+            "available": false,
+            "statusText": "미제공",
+            "files": []
+          },
+          "audios": [],
+          "datasets": [],
+          "feedbacks": [
+            {
+              "name": "axi2_imp_04_배차의민족_개선안_피드백.pdf",
+              "relPath": "axi2_imp_04_배차의민족_개선안_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 687595,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_04/axi_adv2_improved_axi2_i_04_axi2_imp_04______.pd_b3f1d489.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_04/axi_adv2_improved_axi2_i_04_axi2_imp_04______.pd_b3f1d489.pdf",
+              "externalUrl": null
+            }
+          ],
+          "allFiles": [
+            {
+              "name": "최종 개선안_배차의 민족_오주원, 방호원, 김지선, 신상아.pdf",
+              "relPath": "최종 개선안_배차의 민족_오주원, 방호원, 김지선, 신상아.pdf",
+              "ext": "pdf",
+              "sizeBytes": 427771,
+              "role": "presentation",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_04/axi_adv2_improved_axi2_i_04______.pdf_eb1e3376.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_04/axi_adv2_improved_axi2_i_04______.pdf_eb1e3376.pdf",
+              "externalUrl": null
+            },
+            {
+              "name": "axi2_imp_04_배차의민족_개선안_피드백.pdf",
+              "relPath": "axi2_imp_04_배차의민족_개선안_피드백.pdf",
+              "ext": "pdf",
+              "sizeBytes": 687595,
+              "role": "feedback",
+              "hostedOn": "pages",
+              "previewUrl": "./assets/files/axi_adv2_improved/axi2_i_04/axi_adv2_improved_axi2_i_04_axi2_imp_04______.pd_b3f1d489.pdf",
+              "downloadUrl": "./assets/files/axi_adv2_improved/axi2_i_04/axi_adv2_improved_axi2_i_04_axi2_imp_04______.pd_b3f1d489.pdf",
+              "externalUrl": null
+            }
+          ],
+          "bundleZipUrl": "https://github.com/freefluxkr/dmdg-student-showcase/releases/download/v1.0-assets/bundle_axi_adv2_improved_axi2_i_04.zip",
+          "bundleZipBytes": 597359
         }
       ]
     }
